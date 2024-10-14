@@ -1,0 +1,104 @@
+$text-color: #B4B4B4
+$primary-color: #212121
+$secondary-color: #171717
+
+
+div
+  width: 100%
+  height: 100vh
+  display: flex
+  align-items: center
+  justify-content: start
+
+
+  form
+    height: 380px
+    width: 600px
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: center
+    background-color: $secondary-color
+    border-radius: 10px
+    margin-left: 100px
+    -moz-user-select: none
+    -ms-touch-select: none
+    -webkit-user-select: none
+
+
+    h1
+      font-family: Verdana, Geneva, Tahoma, sans-serif
+      font-weight: 100
+      font-size: 38px
+      color: $text-color
+
+
+    input[type="submit"],
+    section
+      height: 40px
+      width: 80%
+
+    
+    input[type="submit"],
+    input[type="text"]
+      font-family: sans-serif
+      font-size: 17px
+      border: none
+      outline: none
+      color: $text-color
+      border-radius: 5px
+
+
+    section,
+    label,
+    input[type="submit"]
+      -moz-user-select: none
+      -ms-touch-select: none
+      -webkit-user-select: none
+
+
+    section
+      margin-top: 20px
+      display: flex
+      align-items: center
+      justify-content: start
+      position: relative
+      text-indent: 20px
+      background-color: $primary-color
+
+
+      input:focus ~ label,
+      input:not(:placeholder-shown) ~ label
+        margin-bottom: 40px
+        font-size: 15px
+
+
+      input
+        position: absolute
+        background: none
+        color: $text-color
+        text-indent: 15px
+        height: 100%
+        width: 100%
+      
+
+      label
+        color: $text-color
+        position: absolute
+        font-family: sans-serif
+        font-size: 17px
+        transition: .1s ease
+
+
+    input[type="submit"]
+      margin-top: 15px
+      background-color: $primary-color
+
+
+    h4
+      margin-top: 30px
+      font-family: sans-serif
+      font-weight: 100
+      color: $text-color
+      text-decoration: underline
+      cursor: pointer

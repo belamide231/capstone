@@ -4,6 +4,7 @@
 // dotnet add package StackExchange.Redis
 // dotnet add package Newtonsoft.Json
 // dotnet add package MailKit
+// dotnet add package BCrypt.Net-Next
 
 
 using AspNetCore.Identity.Mongo;

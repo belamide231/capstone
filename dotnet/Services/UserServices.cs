@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Identity;
+using MongoDB.Driver;
 
 
 public class UserServices {
@@ -76,6 +77,29 @@ public class UserServices {
 
         if(!result.Succeeded)
             return new CreateAccountResult.PasswordConflict(result.Errors.FirstOrDefault()!.Description);
+
+
+        if(DTO.Trust) {
+
+
+            if(string.IsNullOrEmpty(DTO.DeviceId)) {
+
+                DTO.DeviceId = Guid.NewGuid() + "-" + DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + "-" + Guid.NewGuid();
+                DTO.DeviceIdIdentifier = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds().ToString();
+            }
+                
+            
+            var HashedDeviceId = BCryptHelper.Hash(DTO.DeviceId);
+            var DeviceInfoForDb = new DeviceIdSchema(DTO.DeviceIdIdentifier, HashedDeviceId);
+            await _mongo.ApplicationUsers().FindOneAndUpdateAsync(
+                Builders<ApplicationUser>.Filter.Eq(f => f.Id, user.Id),
+                Builders<ApplicationUser>.Update.Push(f => f.DeviceIds, DeviceInfoForDb) 
+            );
+
+            
+            var DeviceInfoForResponse = new DeviceIdSchema(DTO.DeviceIdIdentifier, DTO.DeviceId);
+            return new CreateAccountResult.AccountSuccessfullyCreatedTrust(DTO.Email!, DTO.Password!, DeviceInfoForResponse);
+        }
 
 
         return new CreateAccountResult.AccountSuccessfullyCreated(DTO.Email!, DTO.Password!);

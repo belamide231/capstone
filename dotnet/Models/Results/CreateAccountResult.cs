@@ -14,6 +14,18 @@ public class Credential {
 public class CreateAccountResult {
 
 
+    public class AccountSuccessfullyCreatedTrust : StatusObject {
+        public Credential Credential { get; set; }
+        public string Message { get; set; } 
+        public DeviceIdSchema DeviceInfo { get; set; }
+        public AccountSuccessfullyCreatedTrust(string email, string password, DeviceIdSchema deviceInfo) : base(StatusCodes.Status200OK) {
+            Credential = new Credential(email, password);
+            Message = "Account successfully created.";
+            DeviceInfo = deviceInfo;
+        }
+    }
+
+
     public class AccountSuccessfullyCreated : StatusObject {
         public Credential Credential { get; set; }
         public string Message { get; set; } 
