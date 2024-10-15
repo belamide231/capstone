@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { RegisterModels } from './register.models';
 import { api } from '../api';
+import { DeferBlockFixture } from '@angular/core/testing';
 
 
 @Injectable({
@@ -14,7 +15,7 @@ export class RegisterService {
 
 
 	private setLoad = new BehaviorSubject<boolean>(false);
-	private setPhase = new BehaviorSubject<number>(3);
+	private setPhase = new BehaviorSubject<number>(1);
 	private setMessage = new BehaviorSubject<string>("");
 
 
@@ -80,10 +81,10 @@ export class RegisterService {
 			if(error.response.data.status === 409) {
 				this.setMessage.next("Incorrect code");
 			} else if(error.response.data.status === 403) {
-				this.setMessage.next("Email is locked");
+				this.setMessage.next("Email is temporarily locked");
 			} else if(error.response.data.status === 410) {
 				this.setPhase.next(1);
-				this.setMessage.next("Verification code expire.");
+				this.setMessage.next("Verification code expire");
 			}
 
 		} finally {
@@ -104,7 +105,7 @@ export class RegisterService {
 		const body = new RegisterModels.CreateAccountModel(email, password, trust);
 
 
-		if(trust && (document.cookie.split("DeviceID=")[1] !== undefined || document.cookie.split("DeviceIDIdentifier")[1] !== undefined)) {
+		if(trust && (document.cookie.split("deviceId=")[1] !== undefined || document.cookie.split("deviceIdIdentifier")[1] !== undefined)) {
 
 			body.deviceId = document.cookie.split("deviceId=")[1].split(";")[0];
 			body.deviceIdIdentifier = document.cookie.split("deviceIdIdentifier=")[1].split(";")[0];
@@ -115,6 +116,17 @@ export class RegisterService {
 
 			const result = await api.post(endpoint, body);
 			console.log(result.data);
+
+
+			if(trust && (document.cookie.split("deviceId=")[1] === undefined || document.cookie.split("deviceIdIdentifier")[1] === undefined)) {
+				
+				document.cookie = `deviceId=${result.data.deviceInfo.deviceId}`;
+				document.cookie = `deviceIdIdentifier=${result.data.deviceInfo.deviceIdIdentifier}`;
+			}
+
+
+			this.setPhase.next(4);
+			
 
 		} catch (error: any) {
 

@@ -4,6 +4,7 @@ import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { RegisterModule } from './register/register.module';
 import { RoutesModule } from './routes.module';
+import { LoginModule } from './login/login.module';
 
 
 
@@ -13,7 +14,8 @@ import { RoutesModule } from './routes.module';
     BrowserModule,
     FormsModule,
     RoutesModule,
-    RegisterModule
+    RegisterModule,
+    LoginModule
   ],
   bootstrap: [AppComponent]
 })

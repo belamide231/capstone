@@ -1838,24 +1838,26 @@
     ]
   },
   "packageFolders": {
-    "/Users/belamidemillsb/.nuget/packages/": {}
+    "C:\\Users\\Mills\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/belamidemillsb/Desktop/capstone/dotnet/dotnet.csproj",
+      "projectUniqueName": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\dotnet.csproj",
       "projectName": "dotnet",
-      "projectPath": "/Users/belamidemillsb/Desktop/capstone/dotnet/dotnet.csproj",
-      "packagesPath": "/Users/belamidemillsb/.nuget/packages/",
-      "outputPath": "/Users/belamidemillsb/Desktop/capstone/dotnet/obj/",
+      "projectPath": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\dotnet.csproj",
+      "packagesPath": "C:\\Users\\Mills\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/belamidemillsb/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\Mills\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -1927,7 +1929,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.401/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

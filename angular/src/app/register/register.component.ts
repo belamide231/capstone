@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RegisterService } from './register.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -18,22 +19,43 @@ export class RegisterComponent implements OnInit {
 	public email: string = "";
 	public code: string = "";
 	public password: string = "";
-	public remember: boolean = false;
+	public trust: boolean = false;
 
 
-	constructor(private readonly service: RegisterService) {}
+	constructor(private readonly service: RegisterService, private readonly router: Router) {}
 
 
 	ngOnInit(): void {
 		this.service.updatedPhase.subscribe(value => this.phase = value);
 		this.service.updatedLoad.subscribe(load => this.load = load);
 		this.service.updatedMessage.subscribe(value => this.message = value);
+		console.log(this.phase);
 	}
 
 
 	showIconSwitch() {
 		this.show = !this.show;
 		console.log(this.show);
+	}
+
+
+	trustSwitch() {
+		this.trust = !this.trust;
+		console.log(this.trust);
+	}
+
+
+	resetIconSwitch() {
+		this.phase = 1;
+		this.email = "";
+		this.password = "";
+		this.code = "";
+	}
+
+
+	redirectToLogin() {
+		console.log("SHIT");
+		this.router.navigate(["/login"]);
 	}
 
 
@@ -50,8 +72,9 @@ export class RegisterComponent implements OnInit {
 				break;
 
 			case 3:
-				await this.service.CreateAccountAsync(this.email, this.password, true);
+				await this.service.CreateAccountAsync(this.email, this.password, this.trust);
 				break;
+
 		}
 
 	}

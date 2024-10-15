@@ -21,7 +21,7 @@ div
 
 
   form
-    height: 450px
+    height: 500px
     width: 600px
     display: flex
     flex-direction: column
@@ -52,7 +52,8 @@ div
     section.email,
     section.password,
     input[type="submit"],
-    section.parentCode
+    section.parentCode,
+    section.username
       height: 40px
       width: 80%
 
@@ -83,7 +84,8 @@ div
 
 
     section.parentCode,
-    section.password
+    section.password,
+    section.username
       margin-top: 10px
 
 
@@ -145,17 +147,37 @@ div
           cursor: pointer
           margin-right: 15px
 
-        svg.close
-          margin-top: 5px
 
+    section.checkbox
+      margin-top: 20px
+      height: 20px
+      width: 80%
+      display: flex
+      align-content: center
+      justify-content: start
+      background: none
 
+  
+      input[type="checkbox"]
+        margin-left: 15px
+        width: 13px
+        outline: none
+        border: none
+        accent-color: $primary-color
+        position: relative
+
+      
+      span.checkbox
+        position: relative
+  
+  
     svg.load
       margin-top: 15px
       height: 40px
 
 
     input[type="submit"]
-      margin-top: 30px
+      margin-top: 20px
       background-color: $primary-color
       cursor: pointer
 

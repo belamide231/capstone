@@ -12,7 +12,7 @@ public class VerifyResults {
     public class EmailIsLocked : StatusObject {
         public string Message { get; set; }
         public EmailIsLocked() : base(StatusCodes.Status403Forbidden) { 
-            Message = "Email is locked.";
+            Message = "Email is temporarily locked.";
         }
     }
 
