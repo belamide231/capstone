@@ -1,6 +1,13 @@
 $text-color: #B4B4B4
 $primary-color: #212121
-$secondary-color: #171717
+$secondary-color: #171717  
+
+
+@keyframes fade-in 
+  from
+    opacity: 0
+  to 
+    opacity: 1
 
 
 div
@@ -9,10 +16,12 @@ div
   display: flex
   align-items: center
   justify-content: start
+  transition: all .1s ease
+  animation: fade-in .3s ease forwards
 
 
   form
-    height: 380px
+    height: 450px
     width: 600px
     display: flex
     flex-direction: column
@@ -32,21 +41,50 @@ div
       font-size: 38px
       color: $text-color
 
+    
+    p
+      font-size: 17px
+      font-family: sans-serif
+      color: $text-color
+      height: 20px
 
+
+    section.email,
+    section.password,
     input[type="submit"],
-    section
+    section.parentCode
       height: 40px
       width: 80%
 
     
+    section.parentCode
+      display: flex
+      justify-content: start
+      background: none
+
+    section.code
+      height: 100%
+      width: 100px
+
+    
     input[type="submit"],
-    input[type="text"]
+    input[type="text"],
+    input[type="password"]
       font-family: sans-serif
       font-size: 17px
       border: none
       outline: none
       color: $text-color
       border-radius: 5px
+
+
+    section.email
+      margin-top: 20px
+
+
+    section.parentCode,
+    section.password
+      margin-top: 10px
 
 
     section,
@@ -58,7 +96,6 @@ div
 
 
     section
-      margin-top: 20px
       display: flex
       align-items: center
       justify-content: start
@@ -80,6 +117,8 @@ div
         text-indent: 15px
         height: 100%
         width: 100%
+        &::placeholder
+          color: transparent
       
 
       label
@@ -90,9 +129,35 @@ div
         transition: .1s ease
 
 
-    input[type="submit"]
+      aside
+        height: 100%
+        width: 100%
+        position: absolute
+        display: flex
+        align-items: center
+        justify-content: flex-end
+        pointer-events: none
+
+
+        svg.show,
+        svg.close
+          pointer-events: auto
+          cursor: pointer
+          margin-right: 15px
+
+        svg.close
+          margin-top: 5px
+
+
+    svg.load
       margin-top: 15px
+      height: 40px
+
+
+    input[type="submit"]
+      margin-top: 30px
       background-color: $primary-color
+      cursor: pointer
 
 
     h4

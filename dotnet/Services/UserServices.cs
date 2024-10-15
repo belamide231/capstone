@@ -48,23 +48,39 @@ public class UserServices {
     }
 
 
-    public async Task<StatusObject> IncrementFailAttemptAsync(IncrementFailAttemptDTO DTO) {
+    public async Task<StatusObject> UpdateCodeAsync(UpdateCodeDTO DTO) {
 
 
         var verificationCodeString = await _redis.VerificationCodes().StringGetAsync(DTO.Email);
-        if(!string.IsNullOrEmpty(verificationCodeString)) {
-
-            var timeRemaining = await _redis.VerificationCodes().KeyTimeToLiveAsync(DTO.Email);
-            var verificationCode = Newtonsoft.Json.JsonConvert.DeserializeObject<RegistrationCodeObject>(verificationCodeString!);
-            verificationCode!.FailCount++;
+        var verificationCode = Newtonsoft.Json.JsonConvert.DeserializeObject<RegistrationCodeObject>(verificationCodeString!);
 
 
-            verificationCodeString = Newtonsoft.Json.JsonConvert.SerializeObject(verificationCode);
-            await _redis.VerificationCodes().StringSetAsync(DTO.Email, verificationCodeString, timeRemaining);
+        if(DTO.Match) {
+
+
+            await _redis.VerificationCodes().KeyDeleteAsync(DTO.Email);
+            return new StatusObject(StatusCodes.Status202Accepted);
+
+
+        } else {
+
+            
+            if(!string.IsNullOrEmpty(verificationCodeString)) {
+
+                var timeRemaining = await _redis.VerificationCodes().KeyTimeToLiveAsync(DTO.Email);
+                verificationCode!.FailCount++;
+
+
+                verificationCodeString = Newtonsoft.Json.JsonConvert.SerializeObject(verificationCode);
+                await _redis.VerificationCodes().StringSetAsync(DTO.Email, verificationCodeString, timeRemaining);
+            
+            } else
+                return new StatusObject(StatusCodes.Status410Gone);
+
         }
 
 
-        return new IncrementResult();
+        return new StatusObject(verificationCode!.FailCount >= 3 ? StatusCodes.Status403Forbidden : StatusCodes.Status409Conflict);
     }
 
 

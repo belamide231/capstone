@@ -3,7 +3,7 @@ public class VerifyResults {
 
     public class EmailAlreadyTaken : StatusObject {
         public string Message { get; set; }
-        public EmailAlreadyTaken() : base(StatusCodes.Status401Unauthorized) {
+        public EmailAlreadyTaken() : base(StatusCodes.Status403Forbidden) {
             Message = "Email is already taken.";
         }
     }
@@ -11,7 +11,7 @@ public class VerifyResults {
 
     public class EmailIsLocked : StatusObject {
         public string Message { get; set; }
-        public EmailIsLocked() : base(StatusCodes.Status401Unauthorized) { 
+        public EmailIsLocked() : base(StatusCodes.Status403Forbidden) { 
             Message = "Email is locked.";
         }
     }
