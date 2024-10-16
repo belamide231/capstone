@@ -5,6 +5,7 @@
 // dotnet add package Newtonsoft.Json
 // dotnet add package MailKit
 // dotnet add package BCrypt.Net-Next
+// dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer
 
 
 using AspNetCore.Identity.Mongo;

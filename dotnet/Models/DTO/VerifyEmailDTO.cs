@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-public class VerifyDTO {
+public class VerifyEmailDTO {
     
     [Required(ErrorMessage = "Email should not be blank.")]
     [MinLength(8, ErrorMessage = "Email contained 8 characters or more.")]

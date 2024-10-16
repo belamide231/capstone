@@ -8,5 +8,6 @@ public class ApplicationUser : MongoUser {
         Email = email;
         UserName = email;
         EmailConfirmed = true;
+        Roles.Add("User");
     }
 }

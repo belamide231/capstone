@@ -7,7 +7,7 @@ public class MailHelper
 
     public MailHelper() => _mailbox = new MailboxAddress("PORTAL", EnvHelper._GmailUsername);
 
-    public static async Task<bool> MailRecepient(string recepient, string verificationCode) {
+    public static async Task<bool> MailRecepientAsync(string recepient, string verificationCode) {
         
         try {
 
