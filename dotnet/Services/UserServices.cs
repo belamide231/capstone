@@ -176,15 +176,22 @@ public class UserServices {
 
 
         await _userManager.ResetAccessFailedCountAsync(user);
-        var deviceInfo = user.DeviceIds.FirstOrDefault(f => f.DeviceIdIdentifier == DTO.DeviceIdIdentifier);
-        if(deviceInfo != null) {
 
-            if((!string.IsNullOrEmpty(DTO.DeviceId) || !string.IsNullOrEmpty(DTO.DeviceIdIdentifier)) && BCryptHelper.Verify(DTO.DeviceId, deviceInfo.DeviceId)) {
 
-                var token = new JwtHelper(user.Roles);
-                return new CredentialVerificationResult(token.ToString(), StatusCodes.Status200OK);                                 
+        if(user.DeviceIds.Count != 0) {
+
+
+            var deviceInfo = user.DeviceIds.FirstOrDefault(f => f.DeviceIdIdentifier == DTO.DeviceIdIdentifier);
+            if(deviceInfo != null) {
+
+                if((!string.IsNullOrEmpty(DTO.DeviceId) || !string.IsNullOrEmpty(DTO.DeviceIdIdentifier)) && BCryptHelper.Verify(DTO.DeviceId, deviceInfo.DeviceId)) {
+
+                    var token = new JwtHelper(user.Roles);
+                    return new CredentialVerificationResults.CredentialVerification(token.ToString(), StatusCodes.Status200OK);                                 
+                }
             }
         }
+
 
 
         var verificationObject = new VerificationObject(VerificationObject.VerifyingCredential);
@@ -196,7 +203,7 @@ public class UserServices {
             return new StatusObject(StatusCodes.Status500InternalServerError);
 
 
-        var storingResult = await _redis.VerificationCodes().StringSetAsync(user.Email, verificationObjectSerialize, TimeSpan.FromMicroseconds(5));
+        var storingResult = await _redis.VerificationCodes().StringSetAsync(user.Email, verificationObjectSerialize, TimeSpan.FromMinutes(5));
         if(!storingResult) 
             return new StatusObject(StatusCodes.Status500InternalServerError);
 
@@ -250,10 +257,15 @@ public class UserServices {
         );
 
 
-        if(result == null && !result!.DeviceIds.Contains(deviceInfo))
-
-
         var token = new JwtHelper(user.Roles);
-        return new CredentialVerificationResult(token.ToString(), StatusCodes.Status200OK);   
+        if(result == null && !result!.DeviceIds.Contains(deviceInfo)) 
+            return new CredentialVerificationResults.CredentialVerification(token.ToString(), StatusCodes.Status200OK);   
+
+
+        if(DTO.Trust && (string.IsNullOrEmpty(DTO.DeviceIdIdentifier) || string.IsNullOrEmpty(DTO.DeviceId))) 
+            return new CredentialVerificationResults.CredentialVerificationWithDeviceInfo(token.ToString(), StatusCodes.Status202Accepted, DTO.DeviceId, DTO.DeviceId);
+
+
+        return new CredentialVerificationResults.CredentialVerification(token.ToString(), StatusCodes.Status200OK);   
     }
 }

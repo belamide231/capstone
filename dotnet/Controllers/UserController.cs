@@ -36,4 +36,17 @@ public class UserController : ControllerBase {
         var result = await _services.VerifyCredentialAsync(DTO);
         return StatusCode(result.Status, result);
     } 
+
+
+    [HttpPost("login/verifyLoginCode")]
+    public async Task<IActionResult> VerifyLoginCode([FromBody] VerifyLoginCodeDTO DTO) {
+        var result = await _services.VerifyLoginCodeAsync(DTO);
+        return StatusCode(result.Status, result);
+    }
+
+
+    [HttpPost("forgotPassword/verifySyncedEmail")]
+    public async Task<IActionResult> VerifySyncedEmail() {
+        return Ok();
+    }
 }
