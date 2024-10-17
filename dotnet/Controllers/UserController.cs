@@ -45,8 +45,8 @@ public class UserController : ControllerBase {
     }
 
 
-    [HttpPost("forgotPassword/verifySyncedEmail")]
-    public async Task<IActionResult> VerifySyncedEmail() {
-        return Ok();
-    }
+    //[HttpPost("forgotPassword/verifySyncedEmail")]
+    //public async Task<IActionResult> VerifySyncedEmail() {
+    //    return Ok();
+    //}
 }

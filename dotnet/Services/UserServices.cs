@@ -171,7 +171,7 @@ public class UserServices {
         var match = await _userManager.CheckPasswordAsync(user, DTO.Password);
         if(!match) {
             await _userManager.AccessFailedAsync(user);
-            return new StatusObject(StatusCodes.Status403Forbidden);
+            return new StatusObject(StatusCodes.Status409Conflict);
         }
 
 
@@ -184,8 +184,10 @@ public class UserServices {
             var deviceInfo = user.DeviceIds.FirstOrDefault(f => f.DeviceIdIdentifier == DTO.DeviceIdIdentifier);
             if(deviceInfo != null) {
 
+                Console.WriteLine(deviceInfo.DeviceId);
+                Console.WriteLine(deviceInfo.DeviceIdIdentifier);
+                Console.WriteLine((!string.IsNullOrEmpty(DTO.DeviceId) || !string.IsNullOrEmpty(DTO.DeviceIdIdentifier)) && BCryptHelper.Verify(DTO.DeviceId, deviceInfo.DeviceId));
                 if((!string.IsNullOrEmpty(DTO.DeviceId) || !string.IsNullOrEmpty(DTO.DeviceIdIdentifier)) && BCryptHelper.Verify(DTO.DeviceId, deviceInfo.DeviceId)) {
-
                     var token = new JwtHelper(user.Roles);
                     return new CredentialVerificationResults.CredentialVerification(token.ToString(), StatusCodes.Status200OK);                                 
                 }

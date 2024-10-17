@@ -8,9 +8,6 @@ public class VerifyCredentialDTO {
     [JsonPropertyName("password")]
     public string Password { get; set; } = string.Empty;
 
-    [JsonPropertyName("trust")]
-    public bool Trust { get; set; } = false;
-
     [JsonPropertyName("deviceIdIdentifier")]
     public string DeviceIdIdentifier { get; set; } = string.Empty;
 

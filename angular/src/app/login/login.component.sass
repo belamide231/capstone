@@ -1,0 +1,152 @@
+$text-color: #B4B4B4
+$primary-color: #212121
+$secondary-color: #171717
+	
+	
+div
+	height: 100vh
+	width: 100%
+	display: flex
+	align-items: center
+	justify-content: start
+
+
+	form
+		margin: 0 50px 0 50px
+		height: 500px
+		width: 600px
+		background-color: $secondary-color
+		border-radius: 10px
+		display: flex
+		flex-direction: column
+		align-items: center
+		justify-content: center
+
+
+		h1.title
+			font-size: 40px
+			font-family: Verdana, Geneva, Tahoma, sans-serif
+			font-weight: 100
+			color: $text-color
+			-moz-user-select: none
+			-ms-user-select: none
+			-webkit-user-select: none
+
+
+		p.message
+			font-size: 17px
+			font-family: sans-serif
+			color: $text-color
+
+
+		section.username
+			margin-top: 20px
+
+	
+		section.username,
+		section.password
+			height: 40px
+			width: 80%
+			display: flex
+			align-items: center
+			justify-content: flex-start
+			position: relative
+			background-color: $primary-color
+			border-radius: 3px
+			
+
+			input.username,
+			input.password
+				height: 100%
+				width: 100%
+				position: absolute
+				background: none
+				text-indent: 15px
+				font-family: sans-serif
+				font-size: 17px
+				border: none
+				outline: none
+				color: $text-color
+				&::placeholder
+					color: transparent
+
+
+			label.username,
+			label.password
+				font-family: sans-serif
+				font-size: 17px
+				text-indent: 20px
+				color: $text-color
+				transition: .1s ease
+
+
+			input.username:focus ~ label.username,
+			input.username:not(:placeholder-shown) ~ label.username,
+			input.password:focus ~ label.password,
+			input.password:not(:placeholder-shown) ~ label.password
+				margin-bottom: 40px
+				font-size: 15px
+
+
+			aside
+				height: 100%
+				width: 100%
+				position: absolute
+				display: flex
+				align-items: center
+				justify-content: flex-end
+				pointer-events: none
+
+
+				svg
+					pointer-events: auto
+					cursor: pointer
+					margin-right: 15px
+
+		
+		section.password
+			margin-top: 10px
+
+
+		section.checkbox
+			height: 50px
+			width: 70%
+			display: flex
+			flex-direction: row
+			align-items: center
+			justify-content: start
+			background: none
+
+
+			input.checkbox
+				height: 10px
+				width: 10px
+				cursor: pointer
+
+
+			span.checkbox
+				margin-left: 15px
+				font-family: sans-serif
+				font-size: 17px
+				color: $text-color
+
+		
+		input.submit
+			height: 40px
+			width: 80%
+			background-color: $primary-color
+			color: $text-color
+			font-size: 17px
+			outline: none
+			border: none
+			border-radius: 3px
+			cursor: pointer
+
+	h4.sign-up
+		font-size: 17px
+		font-family: sans-serif
+		font-weight: 100
+		color: $text-color
+		text-decoration: underline
+		cursor: pointer
+	

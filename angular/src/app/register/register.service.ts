@@ -76,7 +76,6 @@ export class RegisterService {
 
 		} catch (error: any) {
 
-			console.log(error.response.data);
 
 			if(error.response.data.status === 409) {
 				this.setMessage.next("Incorrect code");
