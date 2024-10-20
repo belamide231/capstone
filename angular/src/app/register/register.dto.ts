@@ -1,4 +1,4 @@
-export class RegisterModels {
+export class RegisterDTO {
 
 
     static VerifyEmailModel = class {

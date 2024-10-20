@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { RegisterService } from './register.service';
-import { Router } from '@angular/router';
 
 
 @Component({
@@ -16,66 +15,75 @@ export class RegisterComponent implements OnInit {
 	public show: boolean = false;	
 	public message: string = "";
 
+
 	public email: string = "";
 	public code: string = "";
 	public password: string = "";
-	public trust: boolean = false;
+	public trust: boolean = true;
 
 
-	constructor(private readonly service: RegisterService, private readonly router: Router) {}
+	constructor(private readonly service: RegisterService) {}
 
 
 	ngOnInit(): void {
-		this.service.updatedPhase.subscribe(value => this.phase = value);
-		this.service.updatedLoad.subscribe(load => this.load = load);
+
 		this.service.updatedMessage.subscribe(value => this.message = value);
-		console.log(this.phase);
+		this.service.updatedPhase.subscribe(value => this.phase = value);
+		this.service.updatedCode.subscribe(value => this.code = value);
+		this.service.updatedLoad.subscribe(value => this.load = value);
+		this.phase = 1;
 	}
 
 
-	showIconSwitch() {
+	showIconSwitch(): void {
+
 		this.show = !this.show;
-		console.log(this.show);
 	}
 
 
-	trustSwitch() {
-		this.trust = !this.trust;
-		console.log(this.trust);
-	}
+	resetIconSwitch(): void {
 
-
-	resetIconSwitch() {
 		this.phase = 1;
 		this.email = "";
 		this.password = "";
 		this.code = "";
+		this.message = "";
 	}
 
 
-	redirectToLogin() {
-		console.log("SHIT");
-		this.router.navigate(["/login"]);
+	public redirectToLogin(): void {
+
+		this.service.redirectToLogin();
 	}
 
 
-	async ngSubmit() {
+	ngSubmit(): void {
 
-		switch(this.phase) {
 
-			case 1:
-				await this.service.VerifyEmailAsync(this.email);
-				break;
+		this.load = true;
 
-			case 2:
-				await this.service.UpdateEmailAsync(this.email, this.code);
-				break;
 
-			case 3:
-				await this.service.CreateAccountAsync(this.email, this.password, this.trust);
-				break;
+		setTimeout(() => {
 
-		}
 
+			switch(this.phase) {
+
+
+				case 1:
+	
+					this.service.VerifyEmailAsync(this.email);
+					break;
+	
+				case 2:
+	
+					this.service.UpdateEmailAsync(this.email, this.code);
+					break;
+	
+				case 3:
+	
+					this.service.CreateAccountAsync(this.email, this.password, this.trust);
+					break;
+			}
+		}, 3000);
 	}
 }

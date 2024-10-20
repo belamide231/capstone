@@ -3,24 +3,24 @@
 		<h1>{{ phase === 4 ? "ACCOUNT IS CREATED" : "CREATE YOUR ACCOUNT"}}</h1>
 		<p>{{message}}</p>
 		<section class="email">
-			<input [(ngModel)]="email" [readOnly]="phase > 1" name="email" type="text" id="email" autocomplete="off" autocapitalize="off" placeholder="holder">
+			<input [(ngModel)]="email" [readOnly]="phase > 1 || load" name="email" type="text" id="email" autocomplete="off" autocapitalize="off" placeholder="holder">
 			<label class="email" for="email">Email</label>
-			<aside *ngIf="phase !== 1">
+			<aside *ngIf="phase !== 1 && !load">
 				<svg (click)="resetIconSwitch()" class="close" height="20px" width="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289Z" fill="#B4B4B4"></path> </g></svg>
 			</aside>
 		</section>
 		<section *ngIf="phase === 4" class="username">
-			<input [(ngModel)]="email" [readOnly]="phase > 1" name="email" type="text" id="email" autocomplete="off" autocapitalize="off" placeholder="holder">
+			<input [(ngModel)]="email" [readOnly]="phase > 1 || load" name="email" type="text" id="email" autocomplete="off" autocapitalize="off" placeholder="holder">
 			<label class="email" for="email">Username</label>
 		</section>
 		<section *ngIf="phase === 2" class="parentCode">
 			<section class="code">
-				<input [(ngModel)]="code" name="code" maxlength="6" type="text" id="code" autocomplete="off" autocapitalize="off" placeholder="holder">
+				<input [(ngModel)]="code" name="code" [readOnly]="load" maxlength="6" type="text" id="code" autocomplete="off" autocapitalize="off" placeholder="holder">
 				<label class="code" for="code">Code</label>
 			</section>
 		</section>
 		<section *ngIf="phase >= 3" class="password">
-			<input [(ngModel)]="password" name="password" [type]="show ? 'text' : 'password' " [readOnly]="phase === 4" id="password" autocomplete="off" autocapitalize="off" placeholder="holder">
+			<input [(ngModel)]="password" name="password" [type]="show ? 'text' : 'password' " [readOnly]="phase === 4 || load" id="password" autocomplete="off" autocapitalize="off" placeholder="holder">
 			<label class="password" for="password">Password</label>
 			<aside class="show">
 				<svg (click)="showIconSwitch()" *ngIf="!show" class="show" fill="#B4B4B4" height="20px" width="20px" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><title>ionicons-v5-i</title><path d="M432,448a15.92,15.92,0,0,1-11.31-4.69l-352-352A16,16,0,0,1,91.31,68.69l352,352A16,16,0,0,1,432,448Z"></path><path d="M248,315.85l-51.79-51.79a2,2,0,0,0-3.39,1.69,64.11,64.11,0,0,0,53.49,53.49A2,2,0,0,0,248,315.85Z"></path><path d="M264,196.15,315.87,248a2,2,0,0,0,3.4-1.69,64.13,64.13,0,0,0-53.55-53.55A2,2,0,0,0,264,196.15Z"></path><path d="M491,273.36a32.2,32.2,0,0,0-.1-34.76c-26.46-40.92-60.79-75.68-99.27-100.53C349,110.55,302,96,255.68,96a226.54,226.54,0,0,0-71.82,11.79,4,4,0,0,0-1.56,6.63l47.24,47.24a4,4,0,0,0,3.82,1.05,96,96,0,0,1,116,116,4,4,0,0,0,1.05,3.81l67.95,68a4,4,0,0,0,5.4.24A343.81,343.81,0,0,0,491,273.36Z"></path><path d="M256,352a96,96,0,0,1-93.3-118.63,4,4,0,0,0-1.05-3.81L94.81,162.69a4,4,0,0,0-5.41-.23c-24.39,20.81-47,46.13-67.67,75.72a31.92,31.92,0,0,0-.64,35.54c26.41,41.33,60.39,76.14,98.28,100.65C162.06,402,207.92,416,255.68,416a238.22,238.22,0,0,0,72.64-11.55,4,4,0,0,0,1.61-6.64l-47.47-47.46a4,4,0,0,0-3.81-1.05A96,96,0,0,1,256,352Z"></path></g></svg>
@@ -28,11 +28,11 @@
 			</aside>	
 		</section>
 		<section *ngIf="phase !== 4" class="checkbox">
-			<input (click)="trustSwitch()" [value]="trust" type="checkbox">
-			<p class="checkbox">Trust this device</p>
+			<input [(ngModel)]="trust" name="trust" [disabled]="load" type="checkbox">
+			<p class="checkbox">Trust device</p>
 		</section>
 		<svg *ngIf="load" class="load" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 150"><path fill="none" stroke="#B4B4B4" stroke-width="15" stroke-linecap="round" stroke-dasharray="300 385" stroke-dashoffset="0" d="M275 75c0 31-27 50-50 50-58 0-92-100-150-100-28 0-50 22-50 50s23 50 50 50c58 0 92-100 150-100 24 0 50 19 50 50Z"><animate attributeName="stroke-dashoffset" calcMode="spline" dur="2" values="685;-685" keySplines="0 0 1 1" repeatCount="indefinite"></animate></path></svg>
-		<input *ngIf="phase !== 4" type="submit">
+		<input *ngIf=" !load && phase !== 4" type="submit">
 		<h4 (click)="redirectToLogin()">Login</h4>
 	</form>
 </div>

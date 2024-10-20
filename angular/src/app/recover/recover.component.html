@@ -1,0 +1,13 @@
+<div>
+    <form (ngSubmit)="onSubmit()">
+        <h1>RECOVER YOUR ACCOUNT</h1>
+        <p>{{ message }}</p>
+        <text-input class="username" [(value)]="email" placeholder="Email" [readonly]="phase === 1 ? 'off' : 'on' " readonly="off" [svg]=" phase !== 1 ? 'on' : 'off' " (svgClicked)="onSvgClicked()"></text-input>
+        <code-input *ngIf="phase === 2" [(code)]="code"></code-input>
+        <password-input *ngIf="phase > 2" [(password)]="password" [readonly]=" loading || phase === 4 ? 'on' : 'off' " ></password-input>
+        <checkbox-input *ngIf="phase !== 4" [(value)]="trust" [disabled]="loading" span="Trust device"></checkbox-input>
+        <input *ngIf="!loading && phase !== 4" type="submit">
+        <svg *ngIf="loading" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 150"><path fill="none" stroke="#B4B4B4" stroke-width="15" stroke-linecap="round" stroke-dasharray="300 385" stroke-dashoffset="0" d="M275 75c0 31-27 50-50 50-58 0-92-100-150-100-28 0-50 22-50 50s23 50 50 50c58 0 92-100 150-100 24 0 50 19 50 50Z"><animate attributeName="stroke-dashoffset" calcMode="spline" dur="2" values="685;-685" keySplines="0 0 1 1" repeatCount="indefinite"></animate></path></svg>
+        <h4 (click)="redirectToLogin()">Login</h4>
+    </form>
+</div>

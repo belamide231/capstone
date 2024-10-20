@@ -45,8 +45,23 @@ public class UserController : ControllerBase {
     }
 
 
-    //[HttpPost("forgotPassword/verifySyncedEmail")]
-    //public async Task<IActionResult> VerifySyncedEmail() {
-    //    return Ok();
-    //}
+    [HttpPost("recover/verifySyncedEmail")]
+    public async Task<IActionResult> VerifySyncedEmail([FromBody] VerifyEmailRecoveryDTO DTO) {
+        var result = await _services.VerifyEmailForRecoveryAsync(DTO);
+        return StatusCode(result.Status, result);
+    }
+
+
+    [HttpPost("recover/verifyCode")]
+    public async Task<IActionResult> VerifyRecoveryCode([FromBody] VerifyRecoveryCodeDTO DTO) {
+        var result = await _services.VerifyRecoveryCodeAsync(DTO);
+        return StatusCode(result.Status, result);
+    }   
+
+
+    [HttpPost("recover/newPassword")]
+    public async Task<IActionResult> NewPassword([FromBody] NewPasswordRecoveryDTO DTO) {
+        var result = await _services.NewPasswordRecoveryAsync(DTO);
+        return StatusCode(result.Status, result);
+    }
 }

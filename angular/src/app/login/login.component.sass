@@ -2,6 +2,23 @@ $text-color: #B4B4B4
 $primary-color: #212121
 $secondary-color: #171717
 	
+
+@keyframes fade-in 
+	from
+		opacity: 0
+	to
+		opacity: 1
+
+
+*
+	animation: fade-in .3s ease forwards
+
+
+@mixin UnableToSelecT()
+	-moz-user-select: none
+	-ms-user-select: none
+	-webkit-user-select: none
+
 	
 div
 	height: 100vh
@@ -9,10 +26,11 @@ div
 	display: flex
 	align-items: center
 	justify-content: start
+	@include UnableToSelecT()
 
 
 	form
-		margin: 0 50px 0 50px
+		margin: 0 100px 0 100px
 		height: 500px
 		width: 600px
 		background-color: $secondary-color
@@ -23,9 +41,15 @@ div
 		justify-content: center
 
 
+		section,
+		input
+			@include UnableToSelecT()
+			
+
+
 		h1.title
 			font-size: 40px
-			font-family: Verdana, Geneva, Tahoma, sans-serif
+			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
 			font-weight: 100
 			color: $text-color
 			-moz-user-select: none
@@ -34,6 +58,7 @@ div
 
 
 		p.message
+			height: 20px
 			font-size: 17px
 			font-family: sans-serif
 			color: $text-color
@@ -42,17 +67,26 @@ div
 		section.username
 			margin-top: 20px
 
+
+		section.parentCode
+			margin-top: 10px
+
 	
 		section.username,
-		section.password
+		section.password,
+		section.parentCode
 			height: 40px
 			width: 80%
 			display: flex
 			align-items: center
 			justify-content: flex-start
 			position: relative
-			background-color: $primary-color
 			border-radius: 3px
+
+
+		section.username,
+		section.password
+			background-color: $primary-color
 			
 
 			input.username,
@@ -103,6 +137,53 @@ div
 					cursor: pointer
 					margin-right: 15px
 
+
+		section.code
+			height: 40px
+			width: 100px
+			background-color: $primary-color
+			border-radius: 3px
+			position: relative
+			display: flex
+			justify-content: start
+			align-items: center
+			z-index: 1
+
+
+			input.code
+				@include UnableToSelecT()
+				height: 100%
+				width: 100%
+				background: none
+				border: none
+				outline: none
+				position: absolute
+				color: $text-color
+				z-index: 2
+				text-indent: 15px
+				font-size: 17px
+				font-family: sans-serif
+				&::placeholder
+					color: transparent
+
+
+			label.code
+				font-size: 17px
+				font-family: sans-serif
+				color: $text-color
+				pointer-events: none
+				margin-left: 20px
+				position: absolute
+				transition: all .1s ease
+				@include UnableToSelecT()
+				
+
+			
+			input.code:focus ~ label.code,
+			input.code:not(:placeholder-shown) ~ label.code
+				margin-bottom: 40px
+				font-size: 15px
+
 		
 		section.password
 			margin-top: 10px
@@ -116,19 +197,28 @@ div
 			align-items: center
 			justify-content: start
 			background: none
+			z-index: 1
 
 
-			input.checkbox
-				height: 10px
-				width: 10px
+			input
+				accent-color: $secondary-color
 				cursor: pointer
-
+				height: 12px
+				width: 12px
+				cursor: pointer
+				z-index: 2
+				&:disabled
+					background: red				
 
 			span.checkbox
 				margin-left: 15px
 				font-family: sans-serif
 				font-size: 17px
 				color: $text-color
+
+
+		svg.load
+			height: 40px
 
 		
 		input.submit
@@ -141,12 +231,15 @@ div
 			border: none
 			border-radius: 3px
 			cursor: pointer
+			@include UnableToSelecT()
 
-	h4.sign-up
-		font-size: 17px
-		font-family: sans-serif
-		font-weight: 100
-		color: $text-color
-		text-decoration: underline
-		cursor: pointer
-	
+
+		h4.sign-up
+			font-size: 17px
+			font-family: sans-serif
+			font-weight: 100
+			color: $text-color
+			text-decoration: underline
+			cursor: pointer
+			
+		

@@ -7,16 +7,16 @@ public class MailHelper
 
     public MailHelper() => _mailbox = new MailboxAddress("PORTAL", EnvHelper._GmailUsername);
 
-    public static async Task<bool> MailRecepientAsync(string recepient, string verificationCode) {
+    public static async Task<bool> MailRecepientAsync(string recepient, string verificationCode, string verificationName) {
         
         try {
 
             var email = new MimeMessage();
             email.From.Add(_mailbox);
             email.To.Add(new MailboxAddress("", recepient));
-            email.Subject = "Your Verification Code";
+            email.Subject = verificationName;
             email.Body = new TextPart("plain") {
-                Text = $"Your verification code is: {verificationCode}\nThis will expire after {DateTime.UtcNow.AddHours(-4).AddMinutes(5).Add(TimeSpan.FromHours(12))}"
+                Text = $"This verification code serves as proof that you own the account you are attempting to access.\n\nYour verification code is: {verificationCode}\nThis will expire after {DateTime.UtcNow.AddHours(-4).AddMinutes(5).Add(TimeSpan.FromHours(12))}"
             };
 
             using (var smtp = new SmtpClient()) {

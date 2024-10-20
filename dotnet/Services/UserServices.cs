@@ -1,3 +1,4 @@
+using Amazon.Runtime;
 using Microsoft.AspNetCore.Identity;
 using MongoDB.Driver;
 
@@ -36,7 +37,7 @@ public class UserServices {
 
 
         var verificationCode = new VerificationObject(VerificationObject.VerifyingEmailCode);
-        var mailingResult = await MailHelper.MailRecepientAsync(DTO.Email, verificationCode.Code);
+        var mailingResult = await MailHelper.MailRecepientAsync(DTO.Email, verificationCode.Code, "Your verification code for verifying your email");
 
 
         if(!mailingResult) 
@@ -159,7 +160,7 @@ public class UserServices {
 
             var existingVerificationObject = Newtonsoft.Json.JsonConvert.DeserializeObject<VerificationObject>(existingVerificationString!);
             if(existingVerificationObject!.FailCount >= 3) 
-                return new StatusObject(StatusCodes.Status423Locked);
+                return new StatusObject(StatusCodes.Status202Accepted);
         }
 
 
@@ -182,11 +183,11 @@ public class UserServices {
 
 
             var deviceInfo = user.DeviceIds.FirstOrDefault(f => f.DeviceIdIdentifier == DTO.DeviceIdIdentifier);
+
+
             if(deviceInfo != null) {
 
-                Console.WriteLine(deviceInfo.DeviceId);
-                Console.WriteLine(deviceInfo.DeviceIdIdentifier);
-                Console.WriteLine((!string.IsNullOrEmpty(DTO.DeviceId) || !string.IsNullOrEmpty(DTO.DeviceIdIdentifier)) && BCryptHelper.Verify(DTO.DeviceId, deviceInfo.DeviceId));
+
                 if((!string.IsNullOrEmpty(DTO.DeviceId) || !string.IsNullOrEmpty(DTO.DeviceIdIdentifier)) && BCryptHelper.Verify(DTO.DeviceId, deviceInfo.DeviceId)) {
                     var token = new JwtHelper(user.Roles);
                     return new CredentialVerificationResults.CredentialVerification(token.ToString(), StatusCodes.Status200OK);                                 
@@ -195,19 +196,20 @@ public class UserServices {
         }
 
 
-
         var verificationObject = new VerificationObject(VerificationObject.VerifyingCredential);
         var verificationObjectSerialize = Newtonsoft.Json.JsonConvert.SerializeObject(verificationObject);
 
 
-        var emailResult = await MailHelper.MailRecepientAsync(user.Email!, verificationObject.Code);
-        if(!emailResult)
+        var emailResult = await MailHelper.MailRecepientAsync(user.Email!, verificationObject.Code, "Your verification code for login");
+        if(!emailResult) 
             return new StatusObject(StatusCodes.Status500InternalServerError);
+    
 
 
         var storingResult = await _redis.VerificationCodes().StringSetAsync(user.Email, verificationObjectSerialize, TimeSpan.FromMinutes(5));
         if(!storingResult) 
             return new StatusObject(StatusCodes.Status500InternalServerError);
+        
 
 
         return new StatusObject(StatusCodes.Status202Accepted);
@@ -245,29 +247,183 @@ public class UserServices {
         }
 
 
-        if(DTO.Trust && (string.IsNullOrEmpty(DTO.DeviceIdIdentifier) || string.IsNullOrEmpty(DTO.DeviceId))) {
+        var token = new JwtHelper(user.Roles);
 
-            DTO.DeviceIdIdentifier = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds().ToString();
-            DTO.DeviceId = Guid.NewGuid() + "-" + DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + "-" + Guid.NewGuid();
+
+        if(DTO.Trust) {
+
+
+            if(DTO.Trust && (string.IsNullOrEmpty(DTO.DeviceIdIdentifier) || string.IsNullOrEmpty(DTO.DeviceId))) {
+
+                DTO.DeviceIdIdentifier = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds().ToString();
+                DTO.DeviceId = Guid.NewGuid() + "-" + DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + "-" + Guid.NewGuid();
+            }
+
+            var deviceInfo = new DeviceIdSchema(DTO.DeviceIdIdentifier, BCryptHelper.Hash(DTO.DeviceId));
+            var result = await _mongo.ApplicationUsers().FindOneAndUpdateAsync(
+                Builders<ApplicationUser>.Filter.Eq(f => f.UserName, user.UserName),
+                Builders<ApplicationUser>.Update.Push(f => f.DeviceIds, deviceInfo)
+            );
+
+            if(result == null && !result!.DeviceIds.Contains(deviceInfo))
+                return new CredentialVerificationResults.CredentialVerification(token.ToString(), StatusCodes.Status200OK);   
+
+
+            return new CredentialVerificationResults.CredentialVerificationWithDeviceInfo(token.ToString(), StatusCodes.Status202Accepted, DTO.DeviceIdIdentifier, DTO.DeviceId);
         }
 
 
-        var deviceInfo = new DeviceIdSchema(DTO.DeviceIdIdentifier, DTO.DeviceId);
-        var result = await _mongo.ApplicationUsers().FindOneAndUpdateAsync(
-            Builders<ApplicationUser>.Filter.Eq(f => f.UserName, user.UserName),
-            Builders<ApplicationUser>.Update.Push(f => f.DeviceIds, deviceInfo)
-        );
-
-
-        var token = new JwtHelper(user.Roles);
-        if(result == null && !result!.DeviceIds.Contains(deviceInfo)) 
-            return new CredentialVerificationResults.CredentialVerification(token.ToString(), StatusCodes.Status200OK);   
-
-
-        if(DTO.Trust && (string.IsNullOrEmpty(DTO.DeviceIdIdentifier) || string.IsNullOrEmpty(DTO.DeviceId))) 
-            return new CredentialVerificationResults.CredentialVerificationWithDeviceInfo(token.ToString(), StatusCodes.Status202Accepted, DTO.DeviceId, DTO.DeviceId);
-
-
         return new CredentialVerificationResults.CredentialVerification(token.ToString(), StatusCodes.Status200OK);   
+    }
+
+
+    public async Task<StatusObject> VerifyEmailForRecoveryAsync(VerifyEmailRecoveryDTO DTO) {
+
+
+        var user = await _userManager.FindByEmailAsync(DTO.Email);
+        if(user == null) 
+            return new StatusObject(StatusCodes.Status404NotFound);
+
+
+        var serializedVerificationObject = await _redis.VerificationCodes().StringGetAsync(DTO.Email);
+        if(!string.IsNullOrEmpty(serializedVerificationObject)) {
+
+
+            var existingVerificationObject = Newtonsoft.Json.JsonConvert.DeserializeObject<VerificationObject>(serializedVerificationObject!);
+            if(existingVerificationObject!.FailCount >= 3)
+                return new StatusObject(StatusCodes.Status423Locked);
+
+
+            if(existingVerificationObject.Event == VerificationObject.RecoveryOfAccount)
+                return new StatusObject(StatusCodes.Status200OK);
+        }
+
+
+        var verificationObject = new VerificationObject(VerificationObject.RecoveryOfAccount);
+        var mailed = await MailHelper.MailRecepientAsync(DTO.Email, verificationObject.Code, "Your verification code for your recovery");
+        if(!mailed)
+            return new StatusObject(StatusCodes.Status500InternalServerError);
+
+
+        serializedVerificationObject = Newtonsoft.Json.JsonConvert.SerializeObject(verificationObject);
+        var duration = TimeSpan.FromMinutes(5);
+        var stored = await _redis.VerificationCodes().StringSetAsync(DTO.Email, serializedVerificationObject, duration);
+
+
+        if(!stored)
+            return new StatusObject(StatusCodes.Status500InternalServerError);
+
+
+        return new StatusObject(StatusCodes.Status202Accepted);
+    }
+
+
+    public async Task<StatusObject> VerifyRecoveryCodeAsync(VerifyRecoveryCodeDTO DTO) {
+
+
+        var serializedVerificationObject = await _redis.VerificationCodes().StringGetAsync(DTO.Email);
+        if(string.IsNullOrEmpty(serializedVerificationObject))
+            return new StatusObject(StatusCodes.Status419AuthenticationTimeout);
+
+
+        var verificationObject = Newtonsoft.Json.JsonConvert.DeserializeObject<VerificationObject>(serializedVerificationObject!);
+        if(verificationObject?.FailCount >= 3)
+            return new StatusObject(StatusCodes.Status423Locked);
+
+
+        if(verificationObject!.Code != DTO.Code!) {
+            
+            
+            verificationObject.FailCount++;
+            serializedVerificationObject = Newtonsoft.Json.JsonConvert.SerializeObject(verificationObject);
+
+
+            var duration = await _redis.VerificationCodes().KeyTimeToLiveAsync(DTO.Email);
+            var stored = await _redis.VerificationCodes().StringSetAsync(DTO.Email, serializedVerificationObject, duration);
+            if(!stored)
+                return new StatusObject(StatusCodes.Status419AuthenticationTimeout);
+
+
+            return new StatusObject(StatusCodes.Status409Conflict);
+        }
+
+
+        verificationObject.Event = VerificationObject.AccountNewPassword;
+        serializedVerificationObject = Newtonsoft.Json.JsonConvert.SerializeObject(verificationObject);
+        var storingSuccess = await _redis.VerificationCodes().StringSetAsync(DTO.Email, serializedVerificationObject);
+        if(!storingSuccess)
+            return new StatusObject(StatusCodes.Status500InternalServerError);
+
+
+        return new StatusObject(StatusCodes.Status202Accepted);
+    }
+
+
+    public async Task<StatusObject> NewPasswordRecoveryAsync(NewPasswordRecoveryDTO DTO) {
+
+
+        var user = await _userManager.FindByEmailAsync(DTO.Email!);
+        if(user == null)
+            return new StatusObject(StatusCodes.Status401Unauthorized);
+
+
+        var same = await _userManager.CheckPasswordAsync(user, DTO.Password!);
+        if(same)
+            return new StatusObject(StatusCodes.Status302Found);
+
+        var serializedVerificationObject = await _redis.VerificationCodes().StringGetAsync(DTO.Email);
+        if(string.IsNullOrEmpty(serializedVerificationObject))
+            return new StatusObject(StatusCodes.Status401Unauthorized); 
+
+
+        var verificationObject = Newtonsoft.Json.JsonConvert.DeserializeObject<VerificationObject>(serializedVerificationObject!);
+        if(verificationObject!.Event != VerificationObject.AccountNewPassword) 
+            return new StatusObject(StatusCodes.Status401Unauthorized);
+
+
+        var newPassword = _userManager.PasswordHasher.HashPassword(user, DTO.Password!);
+        user.PasswordHash = newPassword;
+
+        
+        var updated = await _userManager.UpdateAsync(user);
+        if(!updated.Succeeded)
+            return new StatusObject(StatusCodes.Status500InternalServerError);
+
+
+        await _redis.VerificationCodes().KeyDeleteAsync(DTO.Email);
+        await _userManager.SetLockoutEndDateAsync(user, DateTime.UtcNow);
+
+
+        if(DTO.Trust) {
+
+
+            if(user.DeviceIds.Any(f => f.DeviceIdIdentifier == DTO.DeviceIdIdentifier))
+                return new StatusObject(StatusCodes.Status200OK);
+
+
+            var result = new RecoverResult();
+            if(!string.IsNullOrEmpty(DTO.DeviceIdIdentifier) && !string.IsNullOrEmpty(DTO.DeviceId)) {
+
+                Console.WriteLine("SHIT");
+                result.deviceIdIdentifier = DTO.DeviceIdIdentifier;
+                result.deviceId = result.deviceId;
+            }
+
+
+            var hashedDeviceId = BCryptHelper.Hash(result.deviceId);
+            var newDevice = new DeviceIdSchema(result.deviceIdIdentifier, hashedDeviceId);
+            user.DeviceIds.Add(newDevice);
+
+
+            updated = await _userManager.UpdateAsync(user);
+            if(!updated.Succeeded)
+                return new StatusObject(StatusCodes.Status200OK);
+
+
+            return result;
+        }
+
+        
+        return new StatusObject(StatusCodes.Status200OK);
     }
 }

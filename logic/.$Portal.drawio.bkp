@@ -1,6 +1,6 @@
 <mxfile host="Electron" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.7.17 Chrome/128.0.6613.36 Electron/32.0.1 Safari/537.36" version="24.7.17" pages="4">
   <diagram id="tnUM5xUFvw0N8UM88nOm" name="System">
-    <mxGraphModel dx="4253" dy="2236" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="980" pageHeight="1390" background="none" math="0" shadow="0">
+    <mxGraphModel dx="4611" dy="2760" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="980" pageHeight="1390" background="none" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -8,7 +8,7 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="-oYKiOpJ51SeuBJ-101u-2" value="Register" style="ellipse;whiteSpace=wrap;html=1;fillColor=#647687;fontColor=#ffffff;strokeColor=none;rounded=1;fontSize=5;" vertex="1" parent="1">
-          <mxGeometry x="-1205.08" y="161" width="120" height="80" as="geometry" />
+          <mxGeometry x="-1073.0199999999998" y="161" width="120" height="80" as="geometry" />
         </mxCell>
         <mxCell id="-oYKiOpJ51SeuBJ-101u-3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;flowAnimation=1;fontSize=5;" edge="1" parent="1" source="-oYKiOpJ51SeuBJ-101u-5" target="-oYKiOpJ51SeuBJ-101u-9">
           <mxGeometry relative="1" as="geometry" />
@@ -19,15 +19,16 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="-oYKiOpJ51SeuBJ-101u-5" value="Input email" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;fillColor=#647687;strokeColor=none;fontColor=#ffffff;rounded=1;fontSize=5;" vertex="1" parent="1">
-          <mxGeometry x="-1207.08" y="271" width="125" height="60" as="geometry" />
+          <mxGeometry x="-1075.0199999999998" y="271" width="125" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="-oYKiOpJ51SeuBJ-101u-6" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.037;entryY=0.664;entryDx=0;entryDy=0;entryPerimeter=0;flowAnimation=1;fontSize=5;" edge="1" parent="1" target="-oYKiOpJ51SeuBJ-101u-5">
+        <mxCell id="-oYKiOpJ51SeuBJ-101u-6" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.064;entryY=0.613;entryDx=0;entryDy=0;entryPerimeter=0;flowAnimation=1;fontSize=5;" edge="1" parent="1" target="-oYKiOpJ51SeuBJ-101u-5">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="-1190.33" y="311.20000000000005" as="targetPoint" />
-            <mxPoint x="-1175.08" y="480.9999999999999" as="sourcePoint" />
+            <mxPoint x="-1058.2699999999998" y="311.20000000000005" as="targetPoint" />
+            <mxPoint x="-1043.0199999999998" y="480.9999999999999" as="sourcePoint" />
             <Array as="points">
-              <mxPoint x="-1270" y="481" />
-              <mxPoint x="-1270" y="311" />
+              <mxPoint x="-1137.9399999999998" y="481" />
+              <mxPoint x="-1137.9399999999998" y="307" />
+              <mxPoint x="-1066.9399999999998" y="307" />
             </Array>
           </mxGeometry>
         </mxCell>
@@ -40,84 +41,85 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="-oYKiOpJ51SeuBJ-101u-9" value="Is the username valid?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#76608a;fontColor=#ffffff;strokeColor=none;rounded=1;fontSize=5;" vertex="1" parent="1">
-          <mxGeometry x="-1185.08" y="441" width="80" height="80" as="geometry" />
+          <mxGeometry x="-1053.0199999999998" y="441" width="80" height="80" as="geometry" />
         </mxCell>
         <mxCell id="-oYKiOpJ51SeuBJ-101u-10" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;flowAnimation=1;fontSize=5;" edge="1" parent="1" source="-oYKiOpJ51SeuBJ-101u-11" target="-oYKiOpJ51SeuBJ-101u-15">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="-oYKiOpJ51SeuBJ-101u-11" value="(Mongo) Querying the email" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#76608a;fontColor=#ffffff;strokeColor=none;rounded=1;fontSize=5;" vertex="1" parent="1">
-          <mxGeometry x="-1194.58" y="617.96" width="100" height="80" as="geometry" />
+          <mxGeometry x="-1062.5199999999998" y="617.96" width="100" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="-oYKiOpJ51SeuBJ-101u-12" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;flowAnimation=1;fontSize=5;" edge="1" parent="1" source="-oYKiOpJ51SeuBJ-101u-15" target="-oYKiOpJ51SeuBJ-101u-5">
+        <mxCell id="-oYKiOpJ51SeuBJ-101u-12" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.75;entryDx=0;entryDy=0;flowAnimation=1;fontSize=5;exitX=0.952;exitY=0.497;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="-oYKiOpJ51SeuBJ-101u-15" target="-oYKiOpJ51SeuBJ-101u-5">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="-1350.08" y="482.42857142857144" as="targetPoint" />
+            <mxPoint x="-1218.0199999999998" y="482.42857142857144" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="-1300" y="831" />
-              <mxPoint x="-1300" y="301" />
+              <mxPoint x="-895.94" y="831" />
+              <mxPoint x="-895.94" y="313" />
             </Array>
+            <mxPoint x="-972.9399999999999" y="832" as="sourcePoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="-oYKiOpJ51SeuBJ-101u-13" value="(Response) email is already used" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];rotation=0;rounded=1;fontSize=5;" vertex="1" connectable="0" parent="-oYKiOpJ51SeuBJ-101u-12">
           <mxGeometry x="-0.2331" y="-1" relative="1" as="geometry">
-            <mxPoint x="78" y="164" as="offset" />
+            <mxPoint x="-44" y="167" as="offset" />
           </mxGeometry>
         </mxCell>
         <mxCell id="-oYKiOpJ51SeuBJ-101u-14" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;flowAnimation=1;fontSize=5;" edge="1" parent="1" source="-oYKiOpJ51SeuBJ-101u-15" target="-oYKiOpJ51SeuBJ-101u-19">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="-oYKiOpJ51SeuBJ-101u-15" value="Is the email not used?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#76608a;fontColor=#ffffff;strokeColor=none;rounded=1;fontSize=5;" vertex="1" parent="1">
-          <mxGeometry x="-1185.33" y="791" width="80" height="80" as="geometry" />
+          <mxGeometry x="-1053.2699999999998" y="791" width="80" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="-oYKiOpJ51SeuBJ-101u-16" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.25;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;flowAnimation=1;fontSize=5;" edge="1" parent="1" source="-oYKiOpJ51SeuBJ-101u-21" target="-oYKiOpJ51SeuBJ-101u-5">
+        <mxCell id="-oYKiOpJ51SeuBJ-101u-16" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.099;entryY=0.399;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;flowAnimation=1;fontSize=5;entryPerimeter=0;" edge="1" parent="1" source="-oYKiOpJ51SeuBJ-101u-21" target="-oYKiOpJ51SeuBJ-101u-5">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="-1290.08" y="801" as="sourcePoint" />
+            <mxPoint x="-1158.0199999999998" y="801" as="sourcePoint" />
             <Array as="points">
-              <mxPoint x="-1330" y="1068" />
-              <mxPoint x="-1330" y="289" />
+              <mxPoint x="-1159.9399999999998" y="1068" />
+              <mxPoint x="-1159.9399999999998" y="295" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="-oYKiOpJ51SeuBJ-101u-17" value="(Response) email is still in locked" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];rounded=1;fontSize=5;" vertex="1" connectable="0" parent="-oYKiOpJ51SeuBJ-101u-16">
           <mxGeometry x="-0.3226" y="2" relative="1" as="geometry">
-            <mxPoint x="112" y="208" as="offset" />
+            <mxPoint x="73" y="217" as="offset" />
           </mxGeometry>
         </mxCell>
         <mxCell id="-oYKiOpJ51SeuBJ-101u-18" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=5;flowAnimation=1;" edge="1" parent="1" source="-oYKiOpJ51SeuBJ-101u-19" target="-oYKiOpJ51SeuBJ-101u-21">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="-oYKiOpJ51SeuBJ-101u-19" value="(Redis) Querying the data of the email." style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#76608a;fontColor=#ffffff;strokeColor=none;rounded=1;fontSize=5;" vertex="1" parent="1">
-          <mxGeometry x="-1194.83" y="901" width="100" height="80" as="geometry" />
+          <mxGeometry x="-1062.7699999999998" y="901" width="100" height="80" as="geometry" />
         </mxCell>
         <mxCell id="-oYKiOpJ51SeuBJ-101u-20" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=12;startSize=8;endSize=8;flowAnimation=1;" edge="1" parent="1" source="-oYKiOpJ51SeuBJ-101u-21" target="-oYKiOpJ51SeuBJ-101u-76">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="-oYKiOpJ51SeuBJ-101u-21" value="Is the email locked? or the code already existing?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#76608a;fontColor=#ffffff;strokeColor=none;rounded=1;fontSize=5;" vertex="1" parent="1">
-          <mxGeometry x="-1185.33" y="1027.96" width="80" height="80" as="geometry" />
+          <mxGeometry x="-1053.2699999999998" y="1027.96" width="80" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="-oYKiOpJ51SeuBJ-101u-22" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.937;entryY=0.5;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryPerimeter=0;flowAnimation=1;fontSize=5;" edge="1" parent="1" source="-oYKiOpJ51SeuBJ-101u-27">
+        <mxCell id="-oYKiOpJ51SeuBJ-101u-22" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;flowAnimation=1;fontSize=5;" edge="1" parent="1" source="-oYKiOpJ51SeuBJ-101u-27" target="-oYKiOpJ51SeuBJ-101u-5">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="-1095.085" y="311" as="targetPoint" />
-            <mxPoint x="-968.1300000000001" y="881" as="sourcePoint" />
+            <mxPoint x="-1024.165" y="311" as="targetPoint" />
+            <mxPoint x="-897.2100000000002" y="881" as="sourcePoint" />
             <Array as="points">
-              <mxPoint x="-1018" y="871" />
-              <mxPoint x="-1018" y="311" />
+              <mxPoint x="-947.08" y="871" />
+              <mxPoint x="-947.08" y="301" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="-oYKiOpJ51SeuBJ-101u-23" value="(Response) Internal server error" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];rotation=0;rounded=1;fontSize=5;" vertex="1" connectable="0" parent="-oYKiOpJ51SeuBJ-101u-22">
           <mxGeometry x="-0.2372" relative="1" as="geometry">
-            <mxPoint x="204" y="90" as="offset" />
+            <mxPoint x="206" y="83" as="offset" />
           </mxGeometry>
         </mxCell>
         <mxCell id="-oYKiOpJ51SeuBJ-101u-24" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.499;entryY=0.973;entryDx=0;entryDy=0;flowAnimation=1;fontSize=5;entryPerimeter=0;" edge="1" parent="1" source="-oYKiOpJ51SeuBJ-101u-25" target="-oYKiOpJ51SeuBJ-101u-27">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="-740" y="961" />
+              <mxPoint x="-669.08" y="961" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="-oYKiOpJ51SeuBJ-101u-25" value="Sending code in email" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#76608a;fontColor=#ffffff;strokeColor=none;fontSize=5;" vertex="1" parent="1">
-          <mxGeometry x="-990" y="937.96" width="120" height="60" as="geometry" />
+          <mxGeometry x="-857.94" y="937.96" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="-oYKiOpJ51SeuBJ-101u-26" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;entryPerimeter=0;flowAnimation=1;fontSize=5;" edge="1" parent="1" source="-oYKiOpJ51SeuBJ-101u-27" target="-oYKiOpJ51SeuBJ-101u-38">
           <mxGeometry relative="1" as="geometry">
@@ -129,7 +131,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="-oYKiOpJ51SeuBJ-101u-27" value="Did it success&amp;nbsp;&lt;div&gt;mailing the code?&lt;/div&gt;" style="rhombus;whiteSpace=wrap;html=1;fillColor=#76608a;fontColor=#ffffff;strokeColor=none;rounded=1;fontSize=5;" vertex="1" parent="1">
-          <mxGeometry x="-780" y="831" width="80" height="80" as="geometry" />
+          <mxGeometry x="-709.08" y="831" width="80" height="80" as="geometry" />
         </mxCell>
         <mxCell id="-oYKiOpJ51SeuBJ-101u-28" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;flowAnimation=1;fontSize=5;" edge="1" parent="1" source="-oYKiOpJ51SeuBJ-101u-38" target="-oYKiOpJ51SeuBJ-101u-33">
           <mxGeometry relative="1" as="geometry">
@@ -164,13 +166,13 @@
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="-490" y="281" />
-              <mxPoint x="-720" y="281" />
+              <mxPoint x="-649" y="281" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="-oYKiOpJ51SeuBJ-101u-35" value="(Post) Increment fail count" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];rounded=1;fontSize=5;" vertex="1" connectable="0" parent="-oYKiOpJ51SeuBJ-101u-34">
           <mxGeometry x="-0.141" relative="1" as="geometry">
-            <mxPoint x="76" y="90" as="offset" />
+            <mxPoint x="50" y="82" as="offset" />
           </mxGeometry>
         </mxCell>
         <mxCell id="-oYKiOpJ51SeuBJ-101u-36" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.095;entryY=0.361;entryDx=0;entryDy=0;fontSize=12;startSize=8;endSize=8;flowAnimation=1;entryPerimeter=0;" edge="1" parent="1" source="-oYKiOpJ51SeuBJ-101u-37" target="-oYKiOpJ51SeuBJ-101u-50">
@@ -186,44 +188,44 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="-oYKiOpJ51SeuBJ-101u-40" value="(Redis) Storing fail count in redis" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#76608a;fontColor=#ffffff;strokeColor=none;rounded=1;fontSize=5;" vertex="1" parent="1">
-          <mxGeometry x="-770" y="361" width="100" height="80" as="geometry" />
+          <mxGeometry x="-699.08" y="361" width="100" height="80" as="geometry" />
         </mxCell>
         <mxCell id="-oYKiOpJ51SeuBJ-101u-41" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;flowAnimation=1;fontSize=5;" edge="1" parent="1" source="-oYKiOpJ51SeuBJ-101u-43" target="-oYKiOpJ51SeuBJ-101u-33">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="-oYKiOpJ51SeuBJ-101u-42" value="(Response) attempt left" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];rounded=1;fontSize=5;" vertex="1" connectable="0" parent="-oYKiOpJ51SeuBJ-101u-41">
           <mxGeometry x="-0.2758" y="2" relative="1" as="geometry">
-            <mxPoint x="-23" y="-5" as="offset" />
+            <mxPoint x="1" y="-6" as="offset" />
           </mxGeometry>
         </mxCell>
         <mxCell id="-oYKiOpJ51SeuBJ-101u-43" value="Did the fail count exceeded 3 times?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#76608a;fontColor=#ffffff;strokeColor=none;rounded=1;fontSize=5;" vertex="1" parent="1">
-          <mxGeometry x="-760" y="531" width="80" height="80" as="geometry" />
+          <mxGeometry x="-689.08" y="531" width="80" height="80" as="geometry" />
         </mxCell>
         <mxCell id="-oYKiOpJ51SeuBJ-101u-44" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;flowAnimation=1;fontSize=5;" edge="1" parent="1" source="-oYKiOpJ51SeuBJ-101u-47" target="-oYKiOpJ51SeuBJ-101u-5">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="-812.49" y="738" as="sourcePoint" />
-            <mxPoint x="-1070.0047826086957" y="287.30434782608694" as="targetPoint" />
+            <mxPoint x="-680.4300000000001" y="738" as="sourcePoint" />
+            <mxPoint x="-937.9447826086957" y="287.30434782608694" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="-922" y="301" />
+              <mxPoint x="-789.94" y="291" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="-oYKiOpJ51SeuBJ-101u-45" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;flowAnimation=1;fontSize=5;" edge="1" parent="1" source="-oYKiOpJ51SeuBJ-101u-43" target="-oYKiOpJ51SeuBJ-101u-47">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="-812.49" y="738" as="sourcePoint" />
-            <mxPoint x="-1092" y="301" as="targetPoint" />
+            <mxPoint x="-741.57" y="738" as="sourcePoint" />
+            <mxPoint x="-1021.08" y="301" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="-720" y="738" />
+              <mxPoint x="-649.08" y="738" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="-oYKiOpJ51SeuBJ-101u-46" value="(Response) The lock of email" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];rotation=0;rounded=1;fontSize=5;" vertex="1" connectable="0" parent="-oYKiOpJ51SeuBJ-101u-45">
           <mxGeometry x="-0.4145" y="1" relative="1" as="geometry">
-            <mxPoint x="-1" y="-77" as="offset" />
+            <mxPoint x="-1" y="-54" as="offset" />
           </mxGeometry>
         </mxCell>
         <mxCell id="-oYKiOpJ51SeuBJ-101u-47" value="Email is temporarily locked" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;fillColor=#647687;fontColor=#ffffff;strokeColor=none;rounded=1;fontSize=5;" vertex="1" parent="1">
-          <mxGeometry x="-980" y="697.96" width="120" height="60" as="geometry" />
+          <mxGeometry x="-847.94" y="697.96" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="-oYKiOpJ51SeuBJ-101u-48" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;flowAnimation=1;fontSize=5;" edge="1" parent="1" source="-oYKiOpJ51SeuBJ-101u-50" target="-oYKiOpJ51SeuBJ-101u-54">
           <mxGeometry relative="1" as="geometry" />
@@ -351,13 +353,13 @@
         <mxCell id="-oYKiOpJ51SeuBJ-101u-75" style="edgeStyle=none;curved=0;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;fontSize=12;startSize=8;endSize=8;flowAnimation=1;entryX=1.005;entryY=0.694;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="-oYKiOpJ51SeuBJ-101u-76" target="-oYKiOpJ51SeuBJ-101u-25">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="-740" y="981" />
-              <mxPoint x="-800" y="981" />
+              <mxPoint x="-669.08" y="981" />
+              <mxPoint x="-729.08" y="981" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="-oYKiOpJ51SeuBJ-101u-76" value="Generate Code" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#76608a;fontColor=#ffffff;strokeColor=none;fontSize=5;" vertex="1" parent="1">
-          <mxGeometry x="-800" y="1047.96" width="120" height="60" as="geometry" />
+          <mxGeometry x="-729.08" y="1047.96" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="-oYKiOpJ51SeuBJ-101u-77" style="edgeStyle=none;curved=0;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;fontSize=12;startSize=8;endSize=8;flowAnimation=1;" edge="1" parent="1" source="-oYKiOpJ51SeuBJ-101u-78" target="-oYKiOpJ51SeuBJ-101u-64">
           <mxGeometry relative="1" as="geometry">

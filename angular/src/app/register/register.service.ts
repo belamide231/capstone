@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { RegisterModels } from './register.models';
-import { api } from '../api';
-import { DeferBlockFixture } from '@angular/core/testing';
+import { RegisterDTO } from './register.dto';
+import { api } from '../../helpers/api.helper';
+import { Router } from '@angular/router';
 
 
 @Injectable({
@@ -14,24 +14,32 @@ export class RegisterService {
 	private code: string = "";
 
 
-	private setLoad = new BehaviorSubject<boolean>(false);
-	private setPhase = new BehaviorSubject<number>(1);
 	private setMessage = new BehaviorSubject<string>("");
+	private setPhase = new BehaviorSubject<number>(1);
+	private setLoad = new BehaviorSubject<boolean>(false);
+	private setCode = new BehaviorSubject<string>("");
 
 
-	public updatedLoad = this.setLoad.asObservable();
-	public updatedPhase = this.setPhase.asObservable();
 	public updatedMessage = this.setMessage.asObservable();
+	public updatedPhase = this.setPhase.asObservable();
+	public updatedLoad = this.setLoad.asObservable();
+	public updatedCode = this.setCode.asObservable();
+
+
+	constructor(private readonly router: Router) {}
+
+
+	redirectToLogin() {
+
+		this.router.navigate(["/login"]);
+	}
 	
 	
 	async VerifyEmailAsync(email: string) {
 
 
-		this.setLoad.next(true);
-
-		
 		const endpoint = "api/user/register/verifyEmail";
-		const body = new RegisterModels.VerifyEmailModel(email);
+		const body = new RegisterDTO.VerifyEmailModel(email);
 
 
 		try {
@@ -45,7 +53,6 @@ export class RegisterService {
 
 		} catch (error: any) {
 
-			console.log(error.response.data.message);
 
 			if(error.response.status === 400)
 				this.setMessage.next(error.response.data.errors.Email[0]);
@@ -62,11 +69,8 @@ export class RegisterService {
 	async UpdateEmailAsync(email: string, code: string) {
 
 
-		this.setLoad.next(true);
-		
-		
 		const endpoint = "api/user/register/updateCode";
-		const body = new RegisterModels.UpdateCodeModel(email, code === this.code);
+		const body = new RegisterDTO.UpdateCodeModel(email, code === this.code);
 
 		try {
 
@@ -77,14 +81,29 @@ export class RegisterService {
 		} catch (error: any) {
 
 
-			if(error.response.data.status === 409) {
-				this.setMessage.next("Incorrect code");
-			} else if(error.response.data.status === 403) {
-				this.setMessage.next("Email is temporarily locked");
-			} else if(error.response.data.status === 410) {
-				this.setPhase.next(1);
-				this.setMessage.next("Verification code expire");
+			switch(error.response.data.status) {
+
+				case 409:
+
+					this.setMessage.next("Incorrect code");
+					this.setCode.next("");
+
+					break;
+
+				case 403:
+
+					this.setMessage.next("Email is temporarily locked");
+
+					break;
+
+				case 410:
+
+					this.setPhase.next(1);
+					this.setMessage.next("Verification code expire");
+
+					break;
 			}
+
 
 		} finally {
 
@@ -97,11 +116,8 @@ export class RegisterService {
 	async CreateAccountAsync(email: string, password: string, trust: boolean) {
 
 
-		this.setLoad.next(true);
-
-
 		const endpoint = "api/user/register/createAccount";
-		const body = new RegisterModels.CreateAccountModel(email, password, trust);
+		const body = new RegisterDTO.CreateAccountModel(email, password, trust);
 
 
 		if(trust && (document.cookie.split("deviceId=")[1] !== undefined || document.cookie.split("deviceIdIdentifier")[1] !== undefined)) {
@@ -129,7 +145,6 @@ export class RegisterService {
 
 		} catch (error: any) {
 
-			console.log(error.response.data);
 			this.setMessage.next(error.response.data.message);
 
 		} finally {

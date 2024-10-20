@@ -6,6 +6,8 @@ public class VerificationObject {
     public static string VerifyingEmailCode = "Verifying email code";
     public static string RegisteringAccount = "Registering an account";
     public static string VerifyingCredential = "Verifying the credential";
+    public static string RecoveryOfAccount = "Verying to recover account";
+    public static string AccountNewPassword = "Account new password";
 
 
     public string Code { get; set; }
