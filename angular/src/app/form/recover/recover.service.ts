@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { RecoverDTO } from './recover.dto';
-import { api } from '../../helpers/api.helper';
-import { Cookie } from '../../helpers/cookie.helper';
+import { api } from '../../../helpers/api.helper';
+import { Cookie } from '../../../helpers/cookie.helper';
 
 
 @Injectable({

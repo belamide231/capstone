@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { RegisterDTO } from './register.dto';
-import { api } from '../../helpers/api.helper';
+import { api } from '../../../helpers/api.helper';
 import { Router } from '@angular/router';
 
 
