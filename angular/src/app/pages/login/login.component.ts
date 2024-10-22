@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from './login.service';
 import { Cookie } from '../../../helpers/cookie.helper';
-import { ChangeDetectorRef } from '@angular/core';
 
 
 @Component({

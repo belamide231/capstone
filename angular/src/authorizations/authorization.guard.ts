@@ -10,22 +10,18 @@ export const authorizationGuard: CanActivateFn = (route, state) => {
 
     if(token) {
 
-
         if(path === "login" || path === "register" || path === "recover") {
-
 
             router.navigate(["/"]);
             return false;
         }
 
-        
         return true;
     }
 
 
     if(path !== "login" && path !== "register" && path !== "recover") {
-        
-
+    
         router.navigate(["/login"]);
         return false;
     }

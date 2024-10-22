@@ -45,4 +45,16 @@ export class CustomHeaderComponent {
 		Cookie.deleteCookie("token", "/");
 		this.router.navigate(["/login"]);
 	}
+
+
+	public onRedirectDashboard() {
+		if(this.router.url !== "/dashboard")
+			this.router.navigate(["/dashboard"]);
+	}
+
+
+	public onRedirectHome() {
+		if(this.router.url !== "/")
+			this.router.navigate(["/"]);
+	}
 }
