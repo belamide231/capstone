@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { Cookie } from '../../helpers/cookie.helper';
 import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 
 @Component({
@@ -10,51 +11,63 @@ import { Router } from '@angular/router';
 	templateUrl: './custom-header.component.html',
 	styleUrl: './custom-header.component.sass',
 	imports: [
-		CommonModule
+		CommonModule,
+		FormsModule
 	]
 })
 export class CustomHeaderComponent {
+	@Input() position: string = "";
+	search: string = "";
+
 	menu: boolean = false;
 	notification: boolean = false;
-
-
-	@Input() position: string = "";
-
 
 	constructor(private readonly router: Router) {}
 
 
-	onFocusMenu() {
-		this.menu = true;
-		setTimeout(() => document.getElementById("main-menu")?.focus(), 100);
+	onClearSearch() {
+		this.search = "";
+	}
 
+	onFocusMenu() {
+		if(!this.menu) {
+			this.menu = true;
+			setTimeout(() => document.getElementById("main-menu")?.focus(), 100);
+		}
 	}
 	onBlurMenu() {
 		setTimeout(() => this.menu = false, 100);
 	}
 	onFocusNotification() {
-		this.notification = true;
-		setTimeout(() => document.getElementById("main-notification")?.focus(), 100);
+		if(!this.notification) {
+			this.notification = true;
+			setTimeout(() => document.getElementById("main-notification")?.focus(), 100);
+			console.log(this.notification);
+		}
 	}
 	onBlurNotification() {
-		this.notification = false;
+		setTimeout(() => this.notification = false, 100);
 	}
 
 
-	public onLogout(): void {
+	onRedirectToUsers() {
+		this.router.navigate(["/users"]);
+	}
+
+
+	onLogout(): void {
 		Cookie.deleteCookie("token", "/");
 		this.router.navigate(["/login"]);
 	}
 
 
-	public onRedirectDashboard() {
+	onRedirectDashboard() {
 		if(this.router.url !== "/dashboard")
 			this.router.navigate(["/dashboard"]);
 	}
 
 
-	public onRedirectHome() {
-		if(this.router.url !== "/")
-			this.router.navigate(["/"]);
+	onRedirectHome() {
+		window.location.href = "/";
 	}
 }

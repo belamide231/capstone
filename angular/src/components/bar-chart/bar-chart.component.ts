@@ -4,7 +4,7 @@
 
 
 
-import { Component, AfterViewInit, Input } from '@angular/core';
+import { Component, AfterViewInit, Input, numberAttribute } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Chart, registerables } from 'chart.js';
 
@@ -18,20 +18,54 @@ Chart.register(...registerables);
     styleUrls: ['./bar-chart.component.sass']
 })
 export class BarChartComponent implements AfterViewInit {
-    @Input() january: number = 10;
-    @Input() february: number = 3;
-    @Input() march: number = 15;
-    @Input() april: number = 25;
-    @Input() may: number = 30;
-    @Input() june: number = 5;
+    color1 = "#E38A2B";
+    color2 = "#384C6A";
+
+    @Input() months: any = [
+        {
+            month: 'January',
+            users: 238 
+        },
+        { 
+            month: 'Febuary',
+            users: 182 
+        },
+        { 
+            month: 'March',
+            users: 632
+        },
+        { 
+            month: 'April',
+            users: 742 
+        },
+        { 
+            month:'May',
+            users: 231 
+        },
+        { 
+            month: 'June',
+            users: 68 
+        },
+        {
+            month: 'July',
+            users: 1923
+        }
+    ]
+
 
     chart!: Chart<'bar', number[], string>;
+    
 
     ngAfterViewInit(): void {
         this.createChart();
     }
 
     createChart() {
+
+        const months = this.months.map((object: any) => object.month);
+        const users = this.months.map((object: any) => object.users);
+        const colors = this.months.map((_: any, index: number) => (index + 1) % 2 === 0 ? this.color1 : this.color2);
+
         const ctx = document.getElementById('usersGrowth-monthlyChart') as HTMLCanvasElement;
 
         if (!ctx) {
@@ -42,18 +76,10 @@ export class BarChartComponent implements AfterViewInit {
         this.chart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+                labels: months,
                 datasets: [{
-                    label: 'Monthly Data',
-                    data: [this.january, this.february, this.march, this.april, this.may, this.june],
-                    backgroundColor: [
-                        '#E38A2B',
-                        '#384C6A',
-                        '#879BBB',
-                        '#E38A2B',
-                        '#384C6A',
-                        '#879BBB',
-                    ],
+                    data: users,
+                    backgroundColor: colors,
                     borderWidth: 0
                 }]
             },
@@ -61,26 +87,21 @@ export class BarChartComponent implements AfterViewInit {
                 responsive: true,
                 plugins: {
                     legend: {
-                        position: 'bottom',
-                        labels: {
-                            color: '#B4B4B4',
-                            font: {
-                                size: 16,
-                                family: 'Arial, sans-serif',
-                                weight: 'lighter'
-                            },
-                            padding: 10
-                        },
+                        display: false
                     },
                     title: {
                         display: true,
-                        text: 'Monthly system growth',
+                        text: 'Users quantity monthly comparison',
                         color: '#B4B4B4',
                         font: {
                             size: 20,
                             family: 'sans-serif',
                             weight: 'lighter'
-                        }
+                        },
+                        padding: {
+							top: 20,
+							bottom: 50
+						}
                     }
                 },
                 scales: {

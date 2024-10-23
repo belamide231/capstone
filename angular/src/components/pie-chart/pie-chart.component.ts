@@ -45,9 +45,9 @@ export class PieChartComponent {
 				datasets: [{
 					data: [this.admin, this.moderators, this.users],
 					backgroundColor: [
-						'#879BBB',
-						'#E38A2B',
+						'#2a304b',
 						'#384C6A',
+						'#E38A2B',
 					],
 					borderWidth: 0
 				}]

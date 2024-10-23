@@ -8,6 +8,7 @@ import { LoginModule } from './pages/login/login.module';
 import { RecoverModule } from './pages/recover/recover.module';
 import { HomeModule } from './pages/home/home.module';
 import { DashboardModule } from './pages/dashboard/dashboard.module';
+import { UsersComponent } from './pages/users/users.component';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { DashboardModule } from './pages/dashboard/dashboard.module';
         LoginModule,
         RecoverModule,
         HomeModule,
+        UsersComponent,
         DashboardModule
     ],
     bootstrap: [

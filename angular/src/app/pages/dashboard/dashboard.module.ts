@@ -6,6 +6,7 @@ import { PieChartComponent } from '../../../components/pie-chart/pie-chart.compo
 import { ZigzagChartComponent } from '../../../components/zigzag-chart/zigzag-chart.component';
 import { BarChartComponent } from "../../../components/bar-chart/bar-chart.component";
 import { CircularChartComponent } from "../../../components/circular-chart/circular-chart.component";
+import { CustomAsideComponent } from "../../../components/custom-aside/custom-aside.component";
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { CircularChartComponent } from "../../../components/circular-chart/circu
     PieChartComponent,
     ZigzagChartComponent,
     BarChartComponent,
-    CircularChartComponent
+    CircularChartComponent,
+    CustomAsideComponent
 ],
 	exports: [
 		DashboardComponent
