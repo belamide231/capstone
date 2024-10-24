@@ -1,9 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { PostLoggedService } from './post-logged.service';
 
 @Component({
     templateUrl: './post-logged.component.html',
-    styleUrl: './post-logged.component.sass'
+    styleUrls: ['./post-logged.component.sass']
 })
-export class PostLoggedComponent {
+export class PostLoggedComponent implements OnInit {
+    role: string = '';
+    constructor(private readonly service: PostLoggedService) {}
 
+    ngOnInit(): void {
+        this.role = this.service.getRole();
+    }
 }

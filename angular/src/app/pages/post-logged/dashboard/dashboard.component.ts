@@ -10,6 +10,6 @@ import { CircularChartComponent } from '../../../../components/circular-chart/ci
     templateUrl: './dashboard.component.html',
     styleUrl: './dashboard.component.sass'
 })
-export class Dashboard1Component {
+export class DashboardComponent {
 
 }

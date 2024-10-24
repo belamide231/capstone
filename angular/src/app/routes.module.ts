@@ -6,7 +6,7 @@ import { RecoverComponent } from './pages/pre-logged/recover/recover.component';
 import { AuthorizationGuard } from '../authorizations/authorization.guard';
 import { PostLoggedComponent } from './pages/post-logged/post-logged.component';
 import { CustomTableComponent } from '../components/custom-table/custom-table.component';
-import { Dashboard1Component } from './pages/post-logged/dashboard/dashboard.component';
+import { DashboardComponent } from './pages/post-logged/dashboard/dashboard.component';
 
 const routes: Routes = [
     { 
@@ -15,7 +15,7 @@ const routes: Routes = [
         canActivate: [AuthorizationGuard],
         children: [
             { path: 'users', component: CustomTableComponent },
-            { path: 'dashboard', component: Dashboard1Component }
+            { path: 'dashboard', component: DashboardComponent }
         ]
     },
     { path: 'register', component: RegisterComponent, canActivate: [AuthorizationGuard] },

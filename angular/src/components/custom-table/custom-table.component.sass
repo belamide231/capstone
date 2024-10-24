@@ -6,6 +6,15 @@ $text-color: #B4B4B4
 :host
     display: block
     width: 70%
+
+@keyframes fade-in
+    from
+        opacity: 0
+    to
+        opacity: 1
+
+*
+    animation: .3s ease forwards
     
 div
     display: flex
@@ -52,6 +61,7 @@ div
             font-weight: 100
             border-radius: 20px
             cursor: pointer
+            transition: all .3s ease
             &:hover
                 background-color: $tertiary-color
 
@@ -82,6 +92,7 @@ div
         tbody
             tr
                 background-color: $secondary-color
+                transition: all .3s ease 
                 &:hover
                     background-color: $tertiary-color
 
