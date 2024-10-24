@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { LoginDTO } from './login.dto';
-import { api } from '../../../helpers/api.helper';
-
+import { api } from '../../../../helpers/api.helper';
 
 @Injectable({
   providedIn: 'root'

@@ -8,7 +8,12 @@
 // dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer
 
 
+using System.Text;
 using AspNetCore.Identity.Mongo;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
 using MongoDB.Bson;
 
 
@@ -23,6 +28,7 @@ builder.WebHost.UseUrls(EnvHelper._ServerUrl!);
 builder.Services.AddSingleton<Mongo>();
 builder.Services.AddSingleton<Redis>();
 builder.Services.AddTransient<UserServices>();
+builder.Services.AddTransient<IAuthorizationHandler, UserPolicy>();
 builder.Services.AddCors(option => {
     option.AddPolicy("*", policy => {
         policy.AllowAnyHeader();
@@ -37,7 +43,24 @@ builder.Services.AddIdentityCore<ApplicationUser>()
                     option.ConnectionString = EnvHelper._MongoUrl;
                     option.UsersCollection = Mongo._applicationUsers;
                     option.RolesCollection = Mongo._applicationRoles;
-                });
+                })
+                .AddApiEndpoints()
+                .AddDefaultTokenProviders();
+builder.Services.AddAuthentication(option => {
+    option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(option => {
+    option.TokenValidationParameters = new TokenValidationParameters {
+        ValidateAudience = false,
+        ValidateIssuer = false,
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(EnvHelper._JwtKey!)),
+        ClockSkew = TimeSpan.Zero
+    };
+}).AddBearerToken(IdentityConstants.BearerScheme);
+builder.Services.AddAuthorization(option => {
+    option.AddPolicy(PolicyController._UserPolicy, policy => policy.AddRequirements(new TokenHandler()));
+});
 builder.Services.AddControllersWithViews();
 
 

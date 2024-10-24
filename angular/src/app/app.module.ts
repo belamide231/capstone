@@ -3,17 +3,15 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { RoutesModule } from './routes.module';
-import { RegisterModule } from './pages/register/register.module';
-import { LoginModule } from './pages/login/login.module';
-import { RecoverModule } from './pages/recover/recover.module';
-import { HomeModule } from './pages/home/home.module';
-import { DashboardModule } from './pages/dashboard/dashboard.module';
-import { UsersComponent } from './pages/users/users.component';
+import { RegisterModule } from './pages/pre-logged/register/register.module';
+import { LoginModule } from './pages/pre-logged/login/login.module';
+import { RecoverModule } from './pages/pre-logged/recover/recover.module';
+import { PostLoggedModule } from './pages/post-logged/post-logged.module';
 
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
     ],
     imports: [
         BrowserModule,
@@ -22,9 +20,7 @@ import { UsersComponent } from './pages/users/users.component';
         RegisterModule,
         LoginModule,
         RecoverModule,
-        HomeModule,
-        UsersComponent,
-        DashboardModule
+        PostLoggedModule
     ],
     bootstrap: [
         AppComponent

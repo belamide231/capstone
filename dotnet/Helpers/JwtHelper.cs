@@ -5,27 +5,14 @@ using Microsoft.IdentityModel.Tokens;
 
 public class JwtHelper {
 
-    public static string _User = "User";
-    public static string _Moderator = "Moderator";
-    public static string _Admin = "Admin";
-
-
     public static string? _token;
-    public JwtHelper(List<string> roles) {
-
-
-        var user = string.IsNullOrEmpty(roles.FirstOrDefault(f => f == _User)) ? "" : _User;
-        var moderator = string.IsNullOrEmpty(roles.FirstOrDefault(f => f == _Moderator)) ? "" : _Moderator;
-        var admin = string.IsNullOrEmpty(roles.FirstOrDefault(f => f == _Admin)) ? "" : _Admin;
-
+    public JwtHelper(string id) {
 
         var tokenHandler = new JwtSecurityTokenHandler();
         var tokenString = tokenHandler.CreateToken(
             new SecurityTokenDescriptor {
                 Subject = new ClaimsIdentity(new Claim[] {
-                    new Claim(_User, user!),
-                    new Claim(_Moderator, moderator!),
-                    new Claim(_Admin, admin!)
+                    new Claim(ClaimTypes.NameIdentifier, id)
                 }),
                 Expires = DateTime.UtcNow.AddYears(int.Parse(EnvHelper._JwtDuration!)),
                 SigningCredentials = new SigningCredentials(

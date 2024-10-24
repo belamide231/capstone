@@ -1,0 +1,42 @@
+$text-color: #B4B4B4
+$primary-color: #212121
+$secondary-color: #171717
+$tertiary-color: #b4b4b41a
+$main-width: 70%
+    
+:host
+    width: block
+    width: 100%
+    display: flex
+    align-items: flex-end
+    justify-content: flex-end
+
+main
+    display: flex
+    width: 100%
+    flex-direction: column
+    justify-content: center
+    align-items: center
+
+
+    section
+        width: $main-width
+        $chart-size: 550px
+        display: grid
+        grid-template-columns: repeat(2, $chart-size)
+        justify-content: center
+        align-items: flex-start
+        position: relative
+        gap: 50px
+        padding: 50px 0 50px 0
+
+        section
+            height: $chart-size
+            width: $chart-size
+            border-radius: 20px
+            background-color: $secondary-color
+            display: flex
+            align-items: center
+            justify-content: center
+
+

@@ -1,23 +1,29 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent } from './pages/home/home.component';
-import { RegisterComponent } from './pages/register/register.component';
-import { LoginComponent } from './pages/login/login.component';
-import { RecoverComponent } from './pages/recover/recover.component';
-import { authorizationGuard } from '../authorizations/authorization.guard';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import { UsersComponent } from './pages/users/users.component';
-
+import { RegisterComponent } from './pages/pre-logged/register/register.component';
+import { LoginComponent } from './pages/pre-logged/login/login.component';
+import { RecoverComponent } from './pages/pre-logged/recover/recover.component';
+import { AuthorizationGuard } from '../authorizations/authorization.guard';
+import { PostLoggedComponent } from './pages/post-logged/post-logged.component';
+import { CustomTableComponent } from '../components/custom-table/custom-table.component';
+import { Dashboard1Component } from './pages/post-logged/dashboard/dashboard.component';
 
 const routes: Routes = [
-    { path: '', component: HomeComponent, pathMatch: 'full', canActivate: [authorizationGuard] },
-    { path: 'users', component: UsersComponent, canActivate: [authorizationGuard]},
-    { path: 'dashboard', component: DashboardComponent, canActivate: [authorizationGuard] },
-    { path: 'register', component: RegisterComponent, canActivate: [authorizationGuard] },
-    { path: 'login', component: LoginComponent, canActivate: [authorizationGuard] },
-    { path: 'recover', component: RecoverComponent, canActivate: [authorizationGuard] },
+    { 
+        path: '',
+        component: PostLoggedComponent,
+        canActivate: [AuthorizationGuard],
+        children: [
+            { path: 'users', component: CustomTableComponent },
+            { path: 'dashboard', component: Dashboard1Component }
+        ]
+    },
+    { path: 'register', component: RegisterComponent, canActivate: [AuthorizationGuard] },
+    { path: 'login', component: LoginComponent, canActivate: [AuthorizationGuard] },
+    { path: 'recover', component: RecoverComponent, canActivate: [AuthorizationGuard] },
     { path: '**', redirectTo: '/login' },
 ];
+
 
 @NgModule({
     imports: [RouterModule.forRoot(routes)],

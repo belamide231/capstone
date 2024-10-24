@@ -188,7 +188,7 @@ public class UserServices {
 
 
                 if((!string.IsNullOrEmpty(DTO.DeviceId) || !string.IsNullOrEmpty(DTO.DeviceIdIdentifier)) && BCryptHelper.Verify(DTO.DeviceId, deviceInfo.DeviceId)) {
-                    var token = new JwtHelper(user.Roles);
+                    var token = new JwtHelper(user.Id.ToString());
                     return new CredentialVerificationResults.CredentialVerification(token.ToString(), StatusCodes.Status200OK);                                 
                 }
             }
@@ -246,7 +246,7 @@ public class UserServices {
         }
 
 
-        var token = new JwtHelper(user.Roles);
+        var token = new JwtHelper(user.Id.ToString());
 
 
         if(DTO.Trust) {

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UsersComponent } from './users.component';
+import { PreLoggedComponent } from './pre-logged.component';
 
-describe('UsersComponent', () => {
-  let component: UsersComponent;
-  let fixture: ComponentFixture<UsersComponent>;
+describe('PreLoggedComponent', () => {
+  let component: PreLoggedComponent;
+  let fixture: ComponentFixture<PreLoggedComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [UsersComponent]
+      imports: [PreLoggedComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(UsersComponent);
+    fixture = TestBed.createComponent(PreLoggedComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

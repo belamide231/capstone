@@ -1,11 +1,16 @@
 import { CanActivateFn, Router } from '@angular/router';
 import { inject } from '@angular/core';
 import { Cookie } from '../helpers/cookie.helper';
+import { api } from '../helpers/api.helper';
 
-export const authorizationGuard: CanActivateFn = (route, state) => {
+export const AuthorizationGuard: CanActivateFn = async (route, state) => {
     const router = inject(Router);
     const token = Cookie.getCookie("token");
     const path = route.routeConfig?.path?.toString();
+
+    const endpoint = 'api/policy/user';
+    const result = await api.post(endpoint, null, { headers: { 'Authorization': `Bearer ${Cookie.getCookie('token')}` }});
+    console.log(result.status);
 
 
     if(token) {

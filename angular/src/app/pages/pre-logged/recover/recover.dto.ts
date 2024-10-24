@@ -1,5 +1,4 @@
-import { Cookie } from "../../../helpers/cookie.helper";
-
+import { Cookie } from "../../../../helpers/cookie.helper";
 
 export class RecoverDTO {
 
