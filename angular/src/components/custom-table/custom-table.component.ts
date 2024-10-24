@@ -10,7 +10,7 @@ import { FormsModule } from '@angular/forms';
         CommonModule
     ],
     templateUrl: './custom-table.component.html',
-    styleUrl: './custom-table.component.sass'
+    styleUrls: ['./custom-table.component.sass']
 })
 export class CustomTableComponent {
 

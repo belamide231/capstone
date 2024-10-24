@@ -3,33 +3,86 @@ $secondary-color: #171717
 $tertiary-color: #b4b4b444
 $text-color: #B4B4B4
 
-
-*
-    font-family: sans-serif
-    font-weight: 100
-    font-size: 25px
-    color: $text-color
     
-table
-    margin-top: 50px
-    width: 100%
-    border-collapse: collapse
+div
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: center
 
-    thead
+    section
+        margin-top: 40px
+        height: 40px
+        width: 100%
+        background-color: $secondary-color
+        border-radius: 20px
+        display: flex   
+        flex-direction: row
+        align-items: center
+        justify-content: flex-start
+        font-weight: 100
 
-        tr
-            th
-                text-align: left
-                border: 1px solid #ddd
-                color: $text-color
+        input
+            height: 100%
+            width: calc( 50% - 45px )
+            outline: none
+            border: none
+            background: none
+            font-size: 17px
+            font-family: sans-serif
+            color: $text-color
 
+        svg
+            height: 30px
+            width: 30px
+            margin: 0 10px 0 5px
+            cursor: pointer
 
-    tbody
-        tr
+        span
+            width: 25%
+            height: 100%
+            display: flex
+            align-items: center
+            justify-content: center
+            color: $text-color
+            font-family: sans-serif
+            font-weight: 100
+            border-radius: 20px
+            cursor: pointer
             &:hover
                 background-color: $tertiary-color
 
-            td
-                padding: 8px
-                font-size: 14px 
-                height: 20px
+    table
+        margin-top: 20px
+        width: 100%
+        //border-collapse: collapse
+        outline: 1px solid $tertiary-color
+        border-radius: 10px
+        *
+            font-family: sans-serif
+            font-weight: 100
+            color: $text-color
+
+        thead
+            tr
+                background-color: $secondary-color
+                th
+                    display: block
+                    text-align: left
+                    border: 1px solid #ddd
+                    color: $text-color
+                    height: 300px
+                    font-size: 17px
+                    font-family: sans-serif
+                    font-weight: 100
+
+        tbody
+            tr
+                background-color: $secondary-color
+                &:hover
+                    background-color: $tertiary-color
+
+                td
+                    padding: 8px
+                    font-size: 15px
+                    height: 20px

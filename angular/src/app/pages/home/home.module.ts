@@ -10,10 +10,10 @@ import { CustomAsideComponent } from "../../../components/custom-aside/custom-as
 		HomeComponent
 	],
 	imports: [
-    CommonModule,
-    CustomHeaderComponent,
-    CustomAsideComponent
-],
+		CommonModule,
+		CustomHeaderComponent,
+		CustomAsideComponent,
+	],
 	exports: [
 		HomeComponent
 	]
