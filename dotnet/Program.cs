@@ -91,7 +91,7 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.UseWebSockets();
-app.UseMiddleware<Websocket>();
+app.UseMiddleware<Messenger>();
 
 
 
