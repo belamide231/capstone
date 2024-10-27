@@ -1,0 +1,40 @@
+:host
+    display: contents
+    height: 100%
+    width: 100%
+    position: absolute
+
+
+div
+    height: calc( 100vh - 60px )
+    width: 100%
+    position: absolute
+    display: flex
+    align-items: flex-end
+    justify-content: flex-end
+    pointer-events: none
+
+    main
+        height: 100%
+        width: 500px
+        position: absolute
+        pointer-events: none
+        // background-color: red
+        opacity: .5
+
+        section.chatbox
+            height: 100%
+            width: 85%
+            background-color: blue
+
+        section.heads
+            height: 100%
+            width: 15%
+            background-color: green
+
+            span
+                height: 30px
+                width: 30px
+                display: flex
+                flex-direction: column-reverse
+                background-color: white

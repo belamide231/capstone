@@ -6,6 +6,7 @@ import { CustomAsideComponent } from '../../../components/custom-aside/custom-as
 import { PieChartComponent } from '../../../components/pie-chart/pie-chart.component';
 import { RoutesModule } from '../../routes.module';
 import { CustomTableComponent } from '../../../components/custom-table/custom-table.component';
+import { MessengerComponent } from "../../../components/messenger/messenger.component";
 
 
 
@@ -14,13 +15,14 @@ import { CustomTableComponent } from '../../../components/custom-table/custom-ta
 		PostLoggedComponent
 	],
 	imports: [
-		CommonModule,
-		CustomHeaderComponent,
-		CustomAsideComponent,
-		PieChartComponent,
-		RoutesModule,
-		CustomTableComponent
-	],
+    CommonModule,
+    CustomHeaderComponent,
+    CustomAsideComponent,
+    PieChartComponent,
+    RoutesModule,
+    CustomTableComponent,
+    MessengerComponent
+],
 	exports: [
 		PostLoggedComponent
 	]
