@@ -10,10 +10,10 @@ import { api } from '../../../../helpers/api.helper';
 export class LoginService {
 
 
-	private setMessage = new BehaviorSubject<string>("");
-	private setPhase = new BehaviorSubject<number>(1);
-	private setLoad = new BehaviorSubject<boolean>(false);
-	private setLock = new BehaviorSubject<boolean>(false);
+	public setMessage = new BehaviorSubject<string>("");
+	public setPhase = new BehaviorSubject<number>(1);
+	public setLoad = new BehaviorSubject<boolean>(false);
+	public setLock = new BehaviorSubject<boolean>(false);
 
 
 	public updateMessage = this.setMessage.asObservable();
@@ -23,6 +23,14 @@ export class LoginService {
 
 
 	constructor(private router: Router) {}
+
+
+	public resetData() {
+		this.setMessage.next('');
+		this.setPhase.next(1);
+		this.setLoad.next(false);
+		this.setLoad.next(false);
+	}
 
 
 	public redirectToRegister() {
@@ -36,6 +44,8 @@ export class LoginService {
 
 	
 	public async VerifyCredentialAsync(username: string, password: string, remember: boolean) {
+
+		const date = new Date((new Date()).setFullYear(3000));
 
 
 		const endpoint: string = "api/user/login/verifyCredential";
@@ -55,16 +65,15 @@ export class LoginService {
 
 
 					this.setMessage.next("");
-					document.cookie = `token=${result.data.token}; path=/;`;
+					document.cookie = `token=${result.data.token}; expires=${date.toUTCString()}; path=/;`;
 					this.router.navigate(["/"]);
 
 
 					if(remember) {
 
-
-						document.cookie = `username=${username}; path=/login;`;
-						document.cookie = `password=${password}; path=/login;`;
-						document.cookie = "remember=1; path=/login;";
+						document.cookie = `username=${username}; expires=${date.toUTCString()}; path=/login;`;
+						document.cookie = `password=${password}; expires=${date.toUTCString()}; path=/login;`;
+						document.cookie = `remember=1; expires=${date.toUTCString()}; path=/login;`;
 		
 		
 					} else {
@@ -130,6 +139,9 @@ export class LoginService {
 
 	public async VerifyLoginCodeAsync(username: string, password: string, code: string, trust: boolean, remember: boolean) {
 
+
+		const date = new Date((new Date()).setFullYear(3000));
+
 		
 		const endpoint = "api/user/login/verifyLoginCode";
 		const body = new LoginDTO.VerifyLoginCodeDTO(username, code, trust);
@@ -144,17 +156,17 @@ export class LoginService {
 			if(response.data.status === 202) {
 
 
-				document.cookie = `deviceIdIdentifier=${response.data.deviceIdIdentifier}; path=/;`;
-				document.cookie = `deviceId=${response.data.deviceId}; path=/;`;
+				document.cookie = `deviceIdIdentifier=${response.data.deviceIdIdentifier}; expires=${date.toUTCString()}; path=/;`;
+				document.cookie = `deviceId=${response.data.deviceId}; expires=${date.toUTCString()}; path=/;`;
 			}
 
 
 			if(remember) {
 
 
-				document.cookie = `username=${username}; path=/login;`;
-				document.cookie = `password=${password}; path=/login;`;
-				document.cookie = "remember=1; path=/login;";
+				document.cookie = `username=${username}; expires=${date.toUTCString()}; path=/login;`;
+				document.cookie = `password=${password}; expires=${date.toUTCString()}; path=/login;`;
+				document.cookie = `remember=1; expires=${date.toUTCString()}; path=/login;`;
 
 
 			} else {
@@ -166,7 +178,7 @@ export class LoginService {
 			}
 
 
-			document.cookie = `token=${response.data.token}; path=/;`;
+			document.cookie = `token=${response.data.token}; expires=${date.toUTCString()}; path=/;`;
 			this.router.navigate(["/"]);
 
 

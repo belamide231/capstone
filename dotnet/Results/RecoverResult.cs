@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 
 
-public class RecoverResult: StatusObject {
+public class RecoverResult: StatusModel {
 
     [JsonPropertyName("deviceIdIdentifier")]
     public string deviceIdIdentifier { get; set; } 

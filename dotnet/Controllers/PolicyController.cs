@@ -1,16 +1,26 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using MimeKit;
+using StackExchange.Redis;
 
 [Route("api/[controller]")]
 [ApiController]
 public class PolicyController : ControllerBase {
 
-    public const string _UserPolicy = "user";
+    private UserManager<ApplicationUser>? _userManager;
+    public PolicyController(UserManager<ApplicationUser> userManager) => _userManager = userManager;
 
 
-    [Authorize(_UserPolicy)]
+    [Authorize(UserPolicy._policy)]
     [HttpPost("user")]
-    public IActionResult UserPolicy() {
-        return Ok();
+    public async Task<IActionResult> UserPolicyControl() {
+        
+        var id = User.Claims.FirstOrDefault(f => f.Type == ClaimTypes.NameIdentifier)!.Value;
+        var user = await _userManager!.FindByIdAsync(id);
+        var role = user!.Roles.FirstOrDefault();
+
+        return Ok(new { role });
     }
 }

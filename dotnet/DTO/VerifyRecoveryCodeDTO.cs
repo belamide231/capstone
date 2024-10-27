@@ -4,9 +4,9 @@ public class VerifyRecoveryCodeDTO {
     
 
     [JsonPropertyName("email")]
-    public string Email { get; set; }
+    public string? Email { get; set; }
 
 
     [JsonPropertyName("code")]
-    public string Code { get; set; }
+    public string? Code { get; set; }
 }

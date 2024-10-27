@@ -25,6 +25,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.WebHost.UseUrls(EnvHelper._ServerUrl!);
 
 
+builder.Services.AddScoped<CreateAdmin>();
 builder.Services.AddSingleton<Mongo>();
 builder.Services.AddSingleton<Redis>();
 builder.Services.AddTransient<UserServices>();
@@ -59,12 +60,18 @@ builder.Services.AddAuthentication(option => {
     };
 }).AddBearerToken(IdentityConstants.BearerScheme);
 builder.Services.AddAuthorization(option => {
-    option.AddPolicy(PolicyController._UserPolicy, policy => policy.AddRequirements(new TokenHandler()));
+    option.AddPolicy(UserPolicy._policy, policy => policy.AddRequirements(new TokenHandler()));
 });
 builder.Services.AddControllersWithViews();
 
 
 var app = builder.Build();
+
+
+using (var scope = app.Services.CreateScope()) {
+    var admin = scope.ServiceProvider.GetRequiredService<CreateAdmin>();
+    await admin.Create();
+}
 
 
 if (!app.Environment.IsDevelopment()) {
@@ -83,6 +90,9 @@ app.MapControllers();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+app.UseWebSockets();
+app.UseMiddleware<Websocket>();
+
 
 
 app.Run();

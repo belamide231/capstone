@@ -15,7 +15,7 @@ public class UserServices {
     }
 
 
-    public async Task<StatusObject> VerifyEmailAsync(VerifyEmailDTO DTO) {
+    public async Task<StatusModel> VerifyEmailAsync(VerifyEmailDTO DTO) {
 
 
         var user = await _userManager.FindByEmailAsync(DTO.Email);
@@ -26,16 +26,16 @@ public class UserServices {
         var codeObjectString = await _redis.VerificationCodes().StringGetAsync(DTO.Email);
         if(!string.IsNullOrEmpty(codeObjectString)) {
 
-            var codeObject = Newtonsoft.Json.JsonConvert.DeserializeObject<VerificationObject>(codeObjectString!);
+            var codeObject = Newtonsoft.Json.JsonConvert.DeserializeObject<VerificationCodeModel>(codeObjectString!);
             if(codeObject!.FailCount >= 3)
                 return new VerifyResults.EmailIsLocked();
 
-            if(codeObject.Event == VerificationObject.VerifyingEmailCode)
+            if(codeObject.Event == VerificationCodeModel.VerifyingEmailCode)
                 return new VerifyResults.VerificationCodeSentAlready(codeObject.Code);
         }
 
 
-        var verificationCode = new VerificationObject(VerificationObject.VerifyingEmailCode);
+        var verificationCode = new VerificationCodeModel(VerificationCodeModel.VerifyingEmailCode);
         var mailingResult = await MailHelper.MailRecepientAsync(DTO.Email, verificationCode.Code, "Your verification code for verifying your email");
 
 
@@ -49,27 +49,27 @@ public class UserServices {
     }
 
 
-    public async Task<StatusObject> UpdateCodeAsync(UpdateCodeDTO DTO) {
+    public async Task<StatusModel> UpdateCodeAsync(UpdateCodeDTO DTO) {
 
 
         var verificationCodeString = await _redis.VerificationCodes().StringGetAsync(DTO.Email);
 
 
         if(string.IsNullOrEmpty(verificationCodeString))
-            return new StatusObject(StatusCodes.Status410Gone);
+            return new StatusModel(StatusCodes.Status410Gone);
 
 
-        var verificationCode = Newtonsoft.Json.JsonConvert.DeserializeObject<VerificationObject>(verificationCodeString!);
+        var verificationCode = Newtonsoft.Json.JsonConvert.DeserializeObject<VerificationCodeModel>(verificationCodeString!);
 
 
         if(DTO.Match) {
 
 
-            verificationCode!.Event = VerificationObject.RegisteringAccount;
+            verificationCode!.Event = VerificationCodeModel.RegisteringAccount;
             verificationCodeString = Newtonsoft.Json.JsonConvert.SerializeObject(verificationCode);
 
             await _redis.VerificationCodes().StringSetAsync(DTO.Email, verificationCodeString);
-            return new StatusObject(StatusCodes.Status202Accepted);
+            return new StatusModel(StatusCodes.Status202Accepted);
 
 
         } else {
@@ -85,26 +85,26 @@ public class UserServices {
                 await _redis.VerificationCodes().StringSetAsync(DTO.Email, verificationCodeString, timeRemaining);
             
             } else
-                return new StatusObject(StatusCodes.Status410Gone);
+                return new StatusModel(StatusCodes.Status410Gone);
 
         }
 
 
-        return new StatusObject(verificationCode!.FailCount >= 3 ? StatusCodes.Status403Forbidden : StatusCodes.Status409Conflict);
+        return new StatusModel(verificationCode!.FailCount >= 3 ? StatusCodes.Status403Forbidden : StatusCodes.Status409Conflict);
     }
 
 
-    public async Task<StatusObject> CreateAccountAsync(CreateAccountDTO DTO) {
+    public async Task<StatusModel> CreateAccountAsync(CreateAccountDTO DTO) {
 
 
         var verificationObjectString = await _redis.VerificationCodes().StringGetAsync(DTO.Email);
         if(string.IsNullOrEmpty(verificationObjectString))
-            return new StatusObject(StatusCodes.Status401Unauthorized);
+            return new StatusModel(StatusCodes.Status401Unauthorized);
 
 
-        var verificationObject = Newtonsoft.Json.JsonConvert.DeserializeObject<VerificationObject>(verificationObjectString!);
-        if(verificationObject!.Event != VerificationObject.RegisteringAccount)
-            return new StatusObject(StatusCodes.Status401Unauthorized); 
+        var verificationObject = Newtonsoft.Json.JsonConvert.DeserializeObject<VerificationCodeModel>(verificationObjectString!);
+        if(verificationObject!.Event != VerificationCodeModel.RegisteringAccount)
+            return new StatusModel(StatusCodes.Status401Unauthorized); 
 
 
         var user = new ApplicationUser(DTO.Email!);
@@ -146,32 +146,32 @@ public class UserServices {
     }
 
 
-    public async Task<StatusObject> VerifyCredentialAsync(VerifyCredentialDTO DTO) {
+    public async Task<StatusModel> VerifyCredentialAsync(VerifyCredentialDTO DTO) {
 
 
         var user = await _userManager.FindByNameAsync(DTO.Username);
         if(user == null) 
-            return new StatusObject(StatusCodes.Status401Unauthorized);
+            return new StatusModel(StatusCodes.Status401Unauthorized);
 
 
         var existingVerificationString = await _redis.VerificationCodes().StringGetAsync(user.Email);
         if(!string.IsNullOrEmpty(existingVerificationString)) {
 
-            var existingVerificationObject = Newtonsoft.Json.JsonConvert.DeserializeObject<VerificationObject>(existingVerificationString!);
+            var existingVerificationObject = Newtonsoft.Json.JsonConvert.DeserializeObject<VerificationCodeModel>(existingVerificationString!);
             if(existingVerificationObject!.FailCount >= 3) 
-                return new StatusObject(StatusCodes.Status202Accepted);
+                return new StatusModel(StatusCodes.Status202Accepted);
         }
 
 
         var locked = await _userManager.IsLockedOutAsync(user);
         if(locked) 
-            return new StatusObject(StatusCodes.Status423Locked);
+            return new StatusModel(StatusCodes.Status423Locked);
 
 
         var match = await _userManager.CheckPasswordAsync(user, DTO.Password);
         if(!match) {
             await _userManager.AccessFailedAsync(user);
-            return new StatusObject(StatusCodes.Status409Conflict);
+            return new StatusModel(StatusCodes.Status409Conflict);
         }
 
 
@@ -195,42 +195,42 @@ public class UserServices {
         }
 
 
-        var verificationObject = new VerificationObject(VerificationObject.VerifyingCredential);
+        var verificationObject = new VerificationCodeModel(VerificationCodeModel.VerifyingCredential);
         var verificationObjectSerialize = Newtonsoft.Json.JsonConvert.SerializeObject(verificationObject);
 
 
         var emailResult = await MailHelper.MailRecepientAsync(user.Email!, verificationObject.Code, "Your verification code for login");
         if(!emailResult) 
-            return new StatusObject(StatusCodes.Status500InternalServerError);
+            return new StatusModel(StatusCodes.Status500InternalServerError);
     
 
 
         var storingResult = await _redis.VerificationCodes().StringSetAsync(user.Email, verificationObjectSerialize, TimeSpan.FromMinutes(5));
         if(!storingResult) 
-            return new StatusObject(StatusCodes.Status500InternalServerError);
+            return new StatusModel(StatusCodes.Status500InternalServerError);
         
 
 
-        return new StatusObject(StatusCodes.Status202Accepted);
+        return new StatusModel(StatusCodes.Status202Accepted);
     }
 
 
-    public async Task<StatusObject> VerifyLoginCodeAsync(VerifyLoginCodeDTO DTO) {
+    public async Task<StatusModel> VerifyLoginCodeAsync(VerifyLoginCodeDTO DTO) {
 
         
         var user = await _userManager.FindByNameAsync(DTO.Username);
         if(user == null) 
-            return new StatusObject(StatusCodes.Status401Unauthorized);
+            return new StatusModel(StatusCodes.Status401Unauthorized);
 
 
         var verificationObjectSerialize = await _redis.VerificationCodes().StringGetAsync(user!.Email);
         if(string.IsNullOrEmpty(verificationObjectSerialize))
-            return new StatusObject(StatusCodes.Status419AuthenticationTimeout);
+            return new StatusModel(StatusCodes.Status419AuthenticationTimeout);
 
 
-        var verificationObject = Newtonsoft.Json.JsonConvert.DeserializeObject<VerificationObject>(verificationObjectSerialize!);
+        var verificationObject = Newtonsoft.Json.JsonConvert.DeserializeObject<VerificationCodeModel>(verificationObjectSerialize!);
         if(verificationObject!.FailCount >= 3) 
-            return new StatusObject(StatusCodes.Status423Locked);
+            return new StatusModel(StatusCodes.Status423Locked);
 
 
         if(verificationObject.Code != DTO.Code) {
@@ -242,7 +242,7 @@ public class UserServices {
             var serializedVerificationObject = Newtonsoft.Json.JsonConvert.SerializeObject(verificationObject); 
             await _redis.VerificationCodes().StringSetAsync(user.Email, serializedVerificationObject, timeRemaining);
 
-            return new StatusObject(StatusCodes.Status409Conflict);
+            return new StatusModel(StatusCodes.Status409Conflict);
         }
 
 
@@ -276,32 +276,32 @@ public class UserServices {
     }
 
 
-    public async Task<StatusObject> VerifyEmailForRecoveryAsync(VerifyEmailRecoveryDTO DTO) {
+    public async Task<StatusModel> VerifyEmailForRecoveryAsync(VerifyEmailRecoveryDTO DTO) {
 
 
-        var user = await _userManager.FindByEmailAsync(DTO.Email);
+        var user = await _userManager.FindByEmailAsync(DTO.Email!);
         if(user == null) 
-            return new StatusObject(StatusCodes.Status404NotFound);
+            return new StatusModel(StatusCodes.Status404NotFound);
 
 
         var serializedVerificationObject = await _redis.VerificationCodes().StringGetAsync(DTO.Email);
         if(!string.IsNullOrEmpty(serializedVerificationObject)) {
 
 
-            var existingVerificationObject = Newtonsoft.Json.JsonConvert.DeserializeObject<VerificationObject>(serializedVerificationObject!);
+            var existingVerificationObject = Newtonsoft.Json.JsonConvert.DeserializeObject<VerificationCodeModel>(serializedVerificationObject!);
             if(existingVerificationObject!.FailCount >= 3)
-                return new StatusObject(StatusCodes.Status423Locked);
+                return new StatusModel(StatusCodes.Status423Locked);
 
 
-            if(existingVerificationObject.Event == VerificationObject.RecoveryOfAccount)
-                return new StatusObject(StatusCodes.Status200OK);
+            if(existingVerificationObject.Event == VerificationCodeModel.RecoveryOfAccount)
+                return new StatusModel(StatusCodes.Status200OK);
         }
 
 
-        var verificationObject = new VerificationObject(VerificationObject.RecoveryOfAccount);
-        var mailed = await MailHelper.MailRecepientAsync(DTO.Email, verificationObject.Code, "Your verification code for your recovery");
+        var verificationObject = new VerificationCodeModel(VerificationCodeModel.RecoveryOfAccount);
+        var mailed = await MailHelper.MailRecepientAsync(DTO.Email!, verificationObject.Code, "Your verification code for your recovery");
         if(!mailed)
-            return new StatusObject(StatusCodes.Status500InternalServerError);
+            return new StatusModel(StatusCodes.Status500InternalServerError);
 
 
         serializedVerificationObject = Newtonsoft.Json.JsonConvert.SerializeObject(verificationObject);
@@ -310,24 +310,24 @@ public class UserServices {
 
 
         if(!stored)
-            return new StatusObject(StatusCodes.Status500InternalServerError);
+            return new StatusModel(StatusCodes.Status500InternalServerError);
 
 
-        return new StatusObject(StatusCodes.Status202Accepted);
+        return new StatusModel(StatusCodes.Status202Accepted);
     }
 
 
-    public async Task<StatusObject> VerifyRecoveryCodeAsync(VerifyRecoveryCodeDTO DTO) {
+    public async Task<StatusModel> VerifyRecoveryCodeAsync(VerifyRecoveryCodeDTO DTO) {
 
 
         var serializedVerificationObject = await _redis.VerificationCodes().StringGetAsync(DTO.Email);
         if(string.IsNullOrEmpty(serializedVerificationObject))
-            return new StatusObject(StatusCodes.Status419AuthenticationTimeout);
+            return new StatusModel(StatusCodes.Status419AuthenticationTimeout);
 
 
-        var verificationObject = Newtonsoft.Json.JsonConvert.DeserializeObject<VerificationObject>(serializedVerificationObject!);
+        var verificationObject = Newtonsoft.Json.JsonConvert.DeserializeObject<VerificationCodeModel>(serializedVerificationObject!);
         if(verificationObject?.FailCount >= 3)
-            return new StatusObject(StatusCodes.Status423Locked);
+            return new StatusModel(StatusCodes.Status423Locked);
 
 
         if(verificationObject!.Code != DTO.Code!) {
@@ -340,53 +340,56 @@ public class UserServices {
             var duration = await _redis.VerificationCodes().KeyTimeToLiveAsync(DTO.Email);
             var stored = await _redis.VerificationCodes().StringSetAsync(DTO.Email, serializedVerificationObject, duration);
             if(!stored)
-                return new StatusObject(StatusCodes.Status419AuthenticationTimeout);
+                return new StatusModel(StatusCodes.Status419AuthenticationTimeout);
 
 
-            return new StatusObject(StatusCodes.Status409Conflict);
+            return new StatusModel(StatusCodes.Status409Conflict);
         }
 
 
-        verificationObject.Event = VerificationObject.AccountNewPassword;
+        verificationObject.Event = VerificationCodeModel.AccountNewPassword;
         serializedVerificationObject = Newtonsoft.Json.JsonConvert.SerializeObject(verificationObject);
         var storingSuccess = await _redis.VerificationCodes().StringSetAsync(DTO.Email, serializedVerificationObject);
         if(!storingSuccess)
-            return new StatusObject(StatusCodes.Status500InternalServerError);
+            return new StatusModel(StatusCodes.Status500InternalServerError);
 
 
-        return new StatusObject(StatusCodes.Status202Accepted);
+        return new StatusModel(StatusCodes.Status202Accepted);
     }
 
 
-    public async Task<StatusObject> NewPasswordRecoveryAsync(NewPasswordRecoveryDTO DTO) {
+    public async Task<StatusModel> NewPasswordRecoveryAsync(NewPasswordRecoveryDTO DTO) {
 
 
         var user = await _userManager.FindByEmailAsync(DTO.Email!);
         if(user == null)
-            return new StatusObject(StatusCodes.Status401Unauthorized);
+            return new StatusModel(StatusCodes.Status401Unauthorized);
 
 
         var same = await _userManager.CheckPasswordAsync(user, DTO.Password!);
         if(same)
-            return new StatusObject(StatusCodes.Status302Found);
+            return new StatusModel(StatusCodes.Status302Found);
 
         var serializedVerificationObject = await _redis.VerificationCodes().StringGetAsync(DTO.Email);
         if(string.IsNullOrEmpty(serializedVerificationObject))
-            return new StatusObject(StatusCodes.Status401Unauthorized); 
+            return new StatusModel(StatusCodes.Status401Unauthorized); 
 
 
-        var verificationObject = Newtonsoft.Json.JsonConvert.DeserializeObject<VerificationObject>(serializedVerificationObject!);
-        if(verificationObject!.Event != VerificationObject.AccountNewPassword) 
-            return new StatusObject(StatusCodes.Status401Unauthorized);
+        var verificationObject = Newtonsoft.Json.JsonConvert.DeserializeObject<VerificationCodeModel>(serializedVerificationObject!);
+        if(verificationObject!.Event != VerificationCodeModel.AccountNewPassword) 
+            return new StatusModel(StatusCodes.Status401Unauthorized);
 
 
-        var newPassword = _userManager.PasswordHasher.HashPassword(user, DTO.Password!);
-        user.PasswordHash = newPassword;
+        var removed = await _userManager.RemovePasswordAsync(user);
+        if(!removed.Succeeded) {
+            return new StatusModel(StatusCodes.Status500InternalServerError);
+        }
 
-        
-        var updated = await _userManager.UpdateAsync(user);
-        if(!updated.Succeeded)
-            return new StatusObject(StatusCodes.Status500InternalServerError);
+
+        var added = await _userManager.AddPasswordAsync(user, DTO.Password!);
+        if(!added.Succeeded) {
+            return new StatusModel(StatusCodes.Status409Conflict);
+        }
 
 
         await _redis.VerificationCodes().KeyDeleteAsync(DTO.Email);
@@ -397,13 +400,12 @@ public class UserServices {
 
 
             if(user.DeviceIds.Any(f => f.DeviceIdIdentifier == DTO.DeviceIdIdentifier))
-                return new StatusObject(StatusCodes.Status200OK);
+                return new StatusModel(StatusCodes.Status200OK);
 
 
             var result = new RecoverResult();
             if(!string.IsNullOrEmpty(DTO.DeviceIdIdentifier) && !string.IsNullOrEmpty(DTO.DeviceId)) {
 
-                Console.WriteLine("SHIT");
                 result.deviceIdIdentifier = DTO.DeviceIdIdentifier;
                 result.deviceId = result.deviceId;
             }
@@ -414,15 +416,15 @@ public class UserServices {
             user.DeviceIds.Add(newDevice);
 
 
-            updated = await _userManager.UpdateAsync(user);
+            var updated = await _userManager.UpdateAsync(user);
             if(!updated.Succeeded)
-                return new StatusObject(StatusCodes.Status200OK);
+                return new StatusModel(StatusCodes.Status200OK);
 
 
             return result;
         }
 
         
-        return new StatusObject(StatusCodes.Status200OK);
+        return new StatusModel(StatusCodes.Status200OK);
     }
 }

@@ -16,7 +16,7 @@ import { FormsModule } from '@angular/forms';
 	]
 })
 export class CustomHeaderComponent {
-	@Input() position: string = "";
+	@Input() role: string = "";
 	search: string = "";
 
 	menu: boolean = false;

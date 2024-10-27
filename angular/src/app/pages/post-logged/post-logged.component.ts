@@ -10,6 +10,7 @@ export class PostLoggedComponent implements OnInit {
     constructor(private readonly service: PostLoggedService) {}
 
     ngOnInit(): void {
+        console.log(this.service.getRole());
         this.role = this.service.getRole();
     }
 }

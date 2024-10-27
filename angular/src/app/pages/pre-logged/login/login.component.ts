@@ -28,15 +28,17 @@ export class LoginComponent implements OnInit {
 
 
     public ngOnInit(): void {
-        this.lock = false;
+
+        this.service.resetData();
+
         this.username = Cookie.getCookie("username");
         this.password = Cookie.getCookie("password");
         this.remember = Cookie.getCookie("remember") === "" ? false : true;
+
         this.service.updateMessage.subscribe(value => this.message = value);
         this.service.updatePhase.subscribe(value => this.phase = value);
         this.service.updateLock.subscribe(value => this.lock = value);
         this.service.updateLoad.subscribe(value => this.load = value);
-        this.phase = 1
     }
 
 

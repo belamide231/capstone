@@ -1,14 +1,20 @@
-import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, Input } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
     selector: 'custom-aside',
     standalone: true,
-    imports: [],
+    imports: [
+        FormsModule,
+        CommonModule
+    ],
     templateUrl: './custom-aside.component.html',
     styleUrl: './custom-aside.component.sass'
 })
 export class CustomAsideComponent {
+    @Input() role: string = 'user';
 
     constructor(private readonly route: Router) {}
 

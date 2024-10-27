@@ -6,6 +6,7 @@ public class UserPolicy : AuthorizationHandler<TokenHandler> {
 
 
     private readonly UserManager<ApplicationUser>? _userManager;
+    public const string _policy = "user";
     public UserPolicy(UserManager<ApplicationUser> userManager) => _userManager = userManager;
 
 
@@ -18,7 +19,6 @@ public class UserPolicy : AuthorizationHandler<TokenHandler> {
         }        
     
         var user = await _userManager!.FindByIdAsync(id);
-        
         if(user == null) {
             context.Fail();
             return;

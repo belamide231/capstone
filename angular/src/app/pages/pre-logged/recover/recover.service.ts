@@ -134,10 +134,12 @@ export class RecoverService {
                 const deviceId = Cookie.getCookie("deviceId");
                 const deviceIdIdentifier = Cookie.getCookie("deviceIdIdentifier");
 
-                if(deviceIdIdentifier === "" || deviceId === "") {              
+                if(deviceIdIdentifier === "" || deviceId === "") {  
 
-                    document.cookie = `deviceIdIdentifier=${result.data.deviceIdIdentifier}; path=/;`;
-                    document.cookie = `deviceId=${result.data.deviceId}; path=/;`;
+                    const date = new Date((new Date()).setFullYear(3000));
+
+                    document.cookie = `deviceIdIdentifier=${result.data.deviceIdIdentifier}; expires=${date.toUTCString()}; path=/;`;
+                    document.cookie = `deviceId=${result.data.deviceId}; expires=${date.toUTCString()}; path=/;`;
                 }
             }
 

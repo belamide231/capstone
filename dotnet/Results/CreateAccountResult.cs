@@ -14,7 +14,7 @@ public class Credential {
 public class CreateAccountResult {
 
 
-    public class AccountSuccessfullyCreatedTrust : StatusObject {
+    public class AccountSuccessfullyCreatedTrust : StatusModel {
         public Credential Credential { get; set; }
         public string Message { get; set; } 
         public DeviceIdSchema DeviceInfo { get; set; }
@@ -26,7 +26,7 @@ public class CreateAccountResult {
     }
 
 
-    public class AccountSuccessfullyCreated : StatusObject {
+    public class AccountSuccessfullyCreated : StatusModel {
         public Credential Credential { get; set; }
         public string Message { get; set; } 
         public AccountSuccessfullyCreated(string email, string password) : base(StatusCodes.Status200OK) {
@@ -36,7 +36,7 @@ public class CreateAccountResult {
     }
 
 
-    public class PasswordConflict : StatusObject {
+    public class PasswordConflict : StatusModel {
         public string Message { get; set; }
         public PasswordConflict(string message) : base(StatusCodes.Status409Conflict) {
             Message = message;

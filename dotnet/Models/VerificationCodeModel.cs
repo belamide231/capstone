@@ -1,6 +1,6 @@
 using System;
 
-public class VerificationObject {
+public class VerificationCodeModel {
 
 
     public static string VerifyingEmailCode = "Verifying email code";
@@ -13,7 +13,7 @@ public class VerificationObject {
     public string Code { get; set; }
     public int FailCount { get; set; }
     public string Event { get; set; } 
-    public VerificationObject(string _event) {
+    public VerificationCodeModel(string _event) {
         Code = new Random().Next(100000, 1000000).ToString();
         FailCount = 0;                
         Event = _event;

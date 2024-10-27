@@ -5,7 +5,7 @@ using System.Security.Principal;
 
 public class CredentialVerificationResults {
 
-    public class CredentialVerification: StatusObject {
+    public class CredentialVerification: StatusModel {
 
         public string Token { get; set; }
 
@@ -15,7 +15,7 @@ public class CredentialVerificationResults {
     }
 
 
-    public class CredentialVerificationWithDeviceInfo : StatusObject {
+    public class CredentialVerificationWithDeviceInfo : StatusModel {
         public string Token { get; set; }
         public string DeviceIdIdentifier { get; set; }
         public string DeviceId { get; set; }

@@ -135,8 +135,10 @@ export class RegisterService {
 
 			if(trust && (document.cookie.split("deviceId=")[1] === undefined || document.cookie.split("deviceIdIdentifier")[1] === undefined)) {
 				
-				document.cookie = `deviceId=${result.data.deviceInfo.deviceId}`;
-				document.cookie = `deviceIdIdentifier=${result.data.deviceInfo.deviceIdIdentifier}`;
+				const date = new Date((new Date()).setFullYear(3000));
+
+				document.cookie = `deviceId=${result.data.deviceInfo.deviceId}; expires=${date.toUTCString()}; path=/;`;
+				document.cookie = `deviceIdIdentifier=${result.data.deviceInfo.deviceIdIdentifier}; expires=${date.toUTCString()}; path=/'`;
 			}
 
 

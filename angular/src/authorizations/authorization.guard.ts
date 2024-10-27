@@ -12,7 +12,7 @@ export const AuthorizationGuard: CanActivateFn = async (route, state) => {
     const path = route.routeConfig?.path?.toString();
     const endpoint = 'api/policy/user';
     let isAuthorized = true;
-    let role = 'b';
+
 
     if (token !== '') {
 
@@ -26,7 +26,7 @@ export const AuthorizationGuard: CanActivateFn = async (route, state) => {
 
             } else {
 
-                postLoggedService.setRole(role);
+                postLoggedService.setRole(result.data.role);
             }
 
         } catch (error) {

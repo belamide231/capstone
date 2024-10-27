@@ -10,7 +10,6 @@ public class EnvHelper {
     public static string? _CacheDuration;
     public static string? _GmailUsername;
     public static string? _GmailPassword;
-
     public EnvHelper() {
 
         DotEnv.Load();
