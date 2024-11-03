@@ -13,6 +13,7 @@ public class UserPolicy : AuthorizationHandler<TokenHandler> {
     protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, TokenHandler requirement) {
 
         var id = context.User.Claims.FirstOrDefault(f => f.Type == ClaimTypes.NameIdentifier)?.Value;
+
         if(string.IsNullOrEmpty(id)) {
             context.Fail();
             return;

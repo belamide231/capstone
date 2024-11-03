@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MessengerComponent } from './messenger.component';
+import { MessengerComponent } from '../messenger.component';
 
 describe('MessengerComponent', () => {
   let component: MessengerComponent;

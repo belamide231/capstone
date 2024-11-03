@@ -22,8 +22,25 @@ public class JwtHelper {
             }
         );
         _token = tokenHandler.WriteToken(tokenString);
-
     }
 
     public override string ToString() => _token!;
+    public static IDictionary<string, string> Decode(string token) {
+        if (string.IsNullOrEmpty(token)) {
+            return new Dictionary<string, string> {
+                { "Error", "No token available to decode." }
+            };
+        }
+
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var jwtToken = tokenHandler.ReadJwtToken(token);
+
+        var claimsDictionary = new Dictionary<string, string>();
+        foreach (var claim in jwtToken.Claims) {
+            claimsDictionary[claim.Type] = claim.Value;
+        }
+
+        return claimsDictionary;
+    }
+
 }

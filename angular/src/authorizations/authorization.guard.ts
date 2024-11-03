@@ -3,7 +3,7 @@ import { inject } from '@angular/core';
 import { Cookie } from '../helpers/cookie.helper';
 import { api } from '../helpers/api.helper';
 import { guardsDTO } from './guards.dto';
-import { PostLoggedService } from '../app/pages/post-logged/post-logged.service';
+import { PostLoggedService } from '../app/pages/post-logged/service/post-logged.service';
 
 export const AuthorizationGuard: CanActivateFn = async (route, state) => {
     const router = inject(Router);
@@ -26,7 +26,8 @@ export const AuthorizationGuard: CanActivateFn = async (route, state) => {
 
             } else {
 
-                postLoggedService.setRole(result.data.role);
+                console.log(result.data);
+                postLoggedService.setInfo(result.data.role, result.data.email, result.data.id);
             }
 
         } catch (error) {

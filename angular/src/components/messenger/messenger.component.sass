@@ -1,40 +1,276 @@
+$primary-color: #212121
+$secondary-color: #171717
+$tertiary-color: #b4b4b444
+$text-color: #B4B4B4
+
+
+@keyframes fade-in
+    from
+        height: 0px
+    to
+        height: auto
+
+@keyframes pop-in
+    from
+        transform: scale(0)
+    to
+        transform: scale(1)
+    
 :host
-    display: contents
-    height: 100%
-    width: 100%
-    position: absolute
-
-
-div
     height: calc( 100vh - 60px )
     width: 100%
     position: absolute
     display: flex
-    align-items: flex-end
-    justify-content: flex-end
+    justify-content: flex-start
     pointer-events: none
+
+@mixin unselectable()
+    -moz-user-select: none
+    -ms-touch-select: none
+    -webkit-user-select: none
+
+div
+    height: 100%
+    width: calc( 100% - 10px )
+    display: flex
+    justify-content: flex-end
 
     main
         height: 100%
-        width: 500px
-        position: absolute
-        pointer-events: none
-        // background-color: red
-        opacity: .5
+        width: 450px
+        display: flex
+        flex-direction: row
+        justify-content: flex-end
+        align-items: flex-end
+
+        section.heads-view
+            height: 100%
+            margin-right: 10px
+
+            section.heads
+                border-radius: 25px
+                width: 50px
+                display: flex
+                flex-direction: column
+                align-items: center
+                justify-content: flex-start
+                background-color: $secondary-color
+                padding-bottom: 10px
+                margin-top: 10px
+                transform: scale(0)
+                animation: pop-in .3s ease forwards
+
+                span
+                    margin-top: 10px
+                    height: 30px
+                    width: 30px
+                    border-radius: 50%
+                    background-color: $tertiary-color
+                    pointer-events: auto
+                    cursor: pointer
+                    display: flex
+                    align-items: center
+                    justify-content: center
+                    color: $text-color
+                    font-family: sans-serif
+                    position: relative
+                    @include unselectable()
+                    animation: pop-in .3s ease forwards
+                    transform: scale(0)
+                    animation-delay: .3s
+
+                    section.active-container
+                        height: 100%
+                        width: 100%
+                        position: absolute
+                        display: flex
+                        align-items: flex-end
+                        justify-content: flex-end
+
+                        section.active-ball
+                            height: 7.5px
+                            width: 7.5px
+                            border-radius: 50%
+                            background-color: lime
+                            margin-bottom: 2.5px
 
         section.chatbox
-            height: 100%
-            width: 85%
-            background-color: blue
+            height: 475px
+            width: 350px
+            border-radius: 10px 10px 0 0
+            border: 1px solid $tertiary-color
+            display: flex
+            flex-direction: column
+            margin-right: auto
 
-        section.heads
-            height: 100%
-            width: 15%
-            background-color: green
-
-            span
-                height: 30px
-                width: 30px
+            header
+                pointer-events: auto
+                border-radius: 10px 10px 0 0
+                height: 10%
+                width: 100%
+                background-color: $secondary-color
                 display: flex
-                flex-direction: column-reverse
-                background-color: white
+                flex-direction: row
+
+                section.info
+                    height: 100%
+                    width: 70%
+                    display: flex       
+                    flex-direction: row
+                    align-items: flex-end
+                    background: none
+                    // background-color: red
+
+                    section.image
+                        position: relative
+                        height: 35px
+                        width: 35px
+                        border-radius: 50%
+                        margin: 0 7px 5px 7px
+                        display: flex
+                        align-items: center
+                        justify-content: center
+                        font-family: sans-serif
+                        color: $text-color
+                        cursor: pointer
+                        @include unselectable()
+
+                        section.active-container
+                            background: none
+                            height: 100%
+                            width: 100%
+                            position: absolute
+                            display: flex
+                            align-items: flex-end
+                            justify-content: flex-end
+
+                            section.active-ball
+                                height: 7.5px
+                                width: 7.5px
+                                border-radius: 50%
+                                background-color: lime
+                                margin-bottom: 2.5px
+
+                    section.name
+                        width: fit-content
+                        font-family: sans-serif
+                        font-size: 15px
+                        display: flex
+                        flex-direction: column
+                        background: none
+                        @include unselectable()
+
+                        span.name
+                            font-size: 15px
+                            cursor: pointer
+                            color: $text-color
+                            &:hover
+                                text-decoration: underline
+                        span.active
+                            font-size: 12px
+                            color: $text-color
+
+                
+                section.icons
+                    width: 30%
+                    height: 100%
+                    background: none
+                    display: flex
+                    flex-direction: row
+                    justify-content: flex-end
+                    align-items: flex-end
+
+                    section.close
+                        background: transparent
+                        height: 30px
+                        width: 30px
+                        margin-bottom: 7.5px
+                        display: flex
+                        align-items: center
+                        justify-content: center
+                        margin-right: 10px
+                        border-radius: 50%
+                        cursor: pointer
+                        transition: .15s
+                        &:hover
+                            background-color: $tertiary-color
+
+                        svg
+                            height: 20px
+                            width: 20px
+                        
+
+            section
+                height: 78%
+                width: 100%
+                background-color: $primary-color
+
+            form
+                height: 12%
+                width: 100%
+                background-color: $secondary-color
+                display: flex
+                justify-content: space-evenly
+                align-items: flex-end
+
+                section.textarea
+                    height: calc(100% - 20px)
+                    margin-top: 10px
+                    margin-bottom: 10px
+                    width: 270px
+                    display: flex
+                    align-items: center
+                    justify-content: center
+                    background-color: $primary-color
+                    border-radius: 20px
+                    @include unselectable()
+
+                    textarea
+                        height: fit-content
+                        margin: 5px
+                        padding: 0
+                        width: 88%
+                        resize: none
+                        pointer-events: auto
+                        font-size: 15px
+                        font-family: sans-serif
+                        font-weight: 100
+                        color: $text-color
+                        background: none
+                        outline: none
+                        border: none
+                        display: flex
+                        align-items: center
+                        overflow-x: hidden
+                        overflow-y: hidden
+                        &::-webkit-scrollbar
+                            width: 10px
+                            background-color: $tertiary-color
+                            border-radius: 5px
+                            cursor: pointer
+                        &::-webkit-scrollbar-thumb
+                            background-color: $secondary-color
+                            width: 10px
+                            border-radius: 5px
+                            cursor: pointer
+
+                
+                section.send
+                    pointer-events: auto
+                    height: 38px
+                    width: 38px
+                    display: flex
+                    align-items: center
+                    justify-content: center
+                    background-color: $primary-color
+                    border-radius: 50%
+                    cursor: pointer
+                    transition: all .15s ease
+                    margin-bottom: 10px
+                    &:hover
+                        background-color: $tertiary-color
+                        
+                    svg
+                        height: 25px
+                        width: 25px
+                        margin-left: 3px

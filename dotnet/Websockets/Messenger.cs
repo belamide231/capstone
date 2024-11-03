@@ -3,19 +3,19 @@ using System.Net.WebSockets;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Org.BouncyCastle.Ocsp;
 
 public class Messenger {
     private readonly RequestDelegate _next;
-    private readonly IServiceScopeFactory _serviceScopeFactory;
     private readonly ConcurrentDictionary<string, ConcurrentDictionary<string, WebSocket>> _websockets = new();
+    private readonly ConcurrentDictionary<string, string> _users = new ConcurrentDictionary<string, string>();
     private readonly byte[] _buffer = new byte[1024 * 4];
     private readonly Redis _redis;
-    private readonly Mongo _mongo;
-    
+    private readonly Mongo _mongo;    
 
-    public Messenger(RequestDelegate next, IServiceScopeFactory serviceScopeFactory, Redis redis, Mongo mongo) {
+    public Messenger(RequestDelegate next, Redis redis, Mongo mongo) {
         _next = next;
-        _serviceScopeFactory = serviceScopeFactory;
         _redis = redis;
         _mongo = mongo;
     }
@@ -25,48 +25,33 @@ public class Messenger {
         var result = await ws.ReceiveAsync(new ArraySegment<byte>(_buffer), CancellationToken.None);
         while(!result.CloseStatus.HasValue) {
             var serializedObject = Encoding.UTF8.GetString(_buffer, 0, result.Count);
-            var eventType = serializedObject.Split("event=")[1].Split(";")[0];
-            serializedObject = serializedObject.Split(";")[1];
 
-            if(eventType == "message") {
-                var messageObject = Newtonsoft.Json.JsonConvert.DeserializeObject<MessageModel>(serializedObject);
-                var stored = await _redis.Messages().StringSetAsync(messageObject!.conversationId, serializedObject);
-                if(stored) {
-                    foreach(var receiver in messageObject.receiver!) {
-                        if(_websockets.TryGetValue(receiver.userId!, out var websockets)) {
-                            foreach(var websocket in websockets) {
-                                await websocket.Value.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes(serializedObject)), WebSocketMessageType.Text, result.EndOfMessage, CancellationToken.None);
-                            }
-                        }
-                    }
-                }
-            } else {
+            Console.WriteLine(serializedObject);
 
-                var statusObject = Newtonsoft.Json.JsonConvert.DeserializeObject<MessageStatusModel>(serializedObject);
-                serializedObject = await _redis.Messages().StringGetAsync(statusObject!.conversationId);
-                if(!string.IsNullOrEmpty(serializedObject)) {
-                    var messageObject = Newtonsoft.Json.JsonConvert.DeserializeObject<MessageModel>(serializedObject!);
-                    messageObject!.receiver!.FirstOrDefault(f => f.userId == statusObject.userId)!.status = eventType;
-                    serializedObject = Newtonsoft.Json.JsonConvert.SerializeObject(messageObject, Newtonsoft.Json.Formatting.Indented);
-                    var stored = await _redis.Messages().StringSetAsync(statusObject.conversationId, serializedObject);
-                    if(stored) {
-                        if(_websockets.TryGetValue(messageObject.sender!, out var websockets)) {
-                            foreach(var websocket in websockets) {
-                                await websocket.Value.SendAsync(new ArraySegment<byte>(Encoding.ASCII.GetBytes("event=" + eventType + "; { " + "conversationId: " + messageObject.conversationId + ", userId: " + statusObject.userId + " }")), WebSocketMessageType.Text, result.EndOfMessage, CancellationToken.None);
-                            }
-                        }
-                        foreach(var user in messageObject.receiver!) {
-                            if(_websockets.TryGetValue(user.userId!, out websockets)) {
-                                foreach(var websocket in websockets) {
-                                    await websocket.Value.SendAsync(new ArraySegment<byte>(Encoding.ASCII.GetBytes("event=" + eventType + "; { " + "conversationId: " + messageObject.conversationId + ", userId: " + statusObject.userId + " }")), WebSocketMessageType.Text, result.EndOfMessage, CancellationToken.None);
-                                }                            
-                            }
-                        }
-                    }
-                }
-            } 
+            // var eventType = serializedObject.Split(";")[0];
+            // serializedObject = serializedObject.Split(";")[1];
 
-            await ws.SendAsync(new ArraySegment<byte>(_buffer), WebSocketMessageType.Text, result.EndOfMessage, CancellationToken.None);
+            // if(eventType == "message") {
+
+            //     var messageObject = Newtonsoft.Json.JsonConvert.DeserializeObject<MessageSchema>(serializedObject);
+            //     var stored = await _redis.Messages().ListLeftPushAsync(messageObject!.conversationId, serializedObject);
+
+            //     foreach(var receiver in messageObject.receivers!) {
+
+            //         if(_websockets.TryGetValue(receiver, out var websockets)) {
+
+            //             foreach(var websocket in websockets) {
+
+            //                 await websocket.Value.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes(serializedObject)), WebSocketMessageType.Text, result.EndOfMessage, CancellationToken.None);
+            //             }
+            //         }
+            //     }
+
+            // } else {
+
+            // } 
+
+            // await ws.SendAsync(new ArraySegment<byte>(_buffer), WebSocketMessageType.Text, result.EndOfMessage, CancellationToken.None);
             result = await ws.ReceiveAsync(new ArraySegment<byte>(_buffer), CancellationToken.None);
         }
 
@@ -74,21 +59,35 @@ public class Messenger {
         value!.TryRemove(wsid, out _);
         if(value.Count == 0) {
             _websockets.TryRemove(userid, out _);
+            _users.Remove(userid, out _);
+
+            var totalSerializedUser = Newtonsoft.Json.JsonConvert.SerializeObject(_users, Newtonsoft.Json.Formatting.Indented);
+            foreach(var userids in _websockets) {
+                foreach(var websocketholder in userids.Value) {
+                    await websocketholder.Value.SendAsync(new ArraySegment<byte>(Encoding.ASCII.GetBytes("actives;" + totalSerializedUser)), WebSocketMessageType.Text, true, CancellationToken.None);                    
+                }
+            }
         }
 
         await ws.CloseAsync(result.CloseStatus.Value, result.CloseStatusDescription, CancellationToken.None);
-        Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(_websockets, Newtonsoft.Json.Formatting.Indented));
     }
 
     public async Task InvokeAsync(HttpContext context) {
 
         if (context.WebSockets.IsWebSocketRequest) {
 
-            using var scope = _serviceScopeFactory.CreateScope();
-            var authorizationService = scope.ServiceProvider.GetRequiredService<IAuthorizationService>();
+            // WE NEED TO TAKE THIS OUT
+            var UserManager = context.RequestServices.GetRequiredService<UserManager<ApplicationUser>>();
+            
+            if(string.IsNullOrEmpty(context.Request.Query["token"])) {
+                context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                return;
+            }
 
-            var authorization = await authorizationService.AuthorizeAsync(context.User, null, UserPolicy._policy);
-            if(!authorization.Succeeded) {
+            var authorization = context.Request.Query["token"];
+            var claims = JwtHelper.Decode(authorization!);
+
+            if(string.IsNullOrEmpty(claims["nameid"])) {
                 context.Response.StatusCode = StatusCodes.Status401Unauthorized;
                 return;
             }
@@ -101,8 +100,9 @@ public class Messenger {
                     return;
                 }
 
-                var userid = context.User.Claims.FirstOrDefault(f => f.Type == ClaimTypes.NameIdentifier)!.Value;
+                var userid = claims["nameid"];
                 var wsid = Guid.NewGuid() + "-" + DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+                
 
                 _websockets.AddOrUpdate(
                     userid,
@@ -113,7 +113,19 @@ public class Messenger {
                     }
                 );
 
-                Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(_websockets, Newtonsoft.Json.Formatting.Indented));
+                var user = await UserManager.FindByIdAsync(userid);
+                var userEmail = user!.Email;
+
+                if(!_users.TryGetValue(userid, out _)) {
+                    _users.TryAdd(userid, userEmail!);
+                    var totalSerializedUser = Newtonsoft.Json.JsonConvert.SerializeObject(_users, Newtonsoft.Json.Formatting.Indented);
+                    foreach(var userids in _websockets) {
+                        foreach(var websocketholder in userids.Value) {
+                            await websocketholder.Value.SendAsync(new ArraySegment<byte>(Encoding.ASCII.GetBytes("actives;" + totalSerializedUser)), WebSocketMessageType.Text, true, CancellationToken.None);                    
+                        }
+                    }
+                }
+
                 await StoreWebsocket(userid, wsid, ws);
             }
 

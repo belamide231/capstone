@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { PostLoggedService } from './post-logged.service';
+import { PostLoggedService } from './service/post-logged.service';
+import { WebsocketService } from './service/websocket.service';
 
 @Component({
     templateUrl: './post-logged.component.html',
@@ -7,10 +8,10 @@ import { PostLoggedService } from './post-logged.service';
 })
 export class PostLoggedComponent implements OnInit {
     role: string = '';
-    constructor(private readonly service: PostLoggedService) {}
+    constructor(private readonly service: PostLoggedService, private readonly socket: WebsocketService) {}
 
     ngOnInit(): void {
-        console.log(this.service.getRole());
         this.role = this.service.getRole();
+        this.socket.connect();
     }
 }

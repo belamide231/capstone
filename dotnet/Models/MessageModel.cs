@@ -20,8 +20,8 @@ public class MessageModel {
     [JsonPropertyName("sender")]
     public string? sender { get; set; }
 
-    [JsonPropertyName("receiver")]
-    public List<ReceiverModel>? receiver { get; set; }
+    [JsonPropertyName("receivers")]
+    public List<ReceiverModel>? receivers { get; set; }
 
     [JsonPropertyName("message")]
     public string? message { get; set; }

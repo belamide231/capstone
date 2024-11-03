@@ -47,6 +47,7 @@ builder.Services.AddIdentityCore<ApplicationUser>()
                 })
                 .AddApiEndpoints()
                 .AddDefaultTokenProviders();
+builder.Services.AddScoped<UserManager<ApplicationUser>>();
 builder.Services.AddAuthentication(option => {
     option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;

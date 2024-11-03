@@ -1,8 +1,44 @@
 <div>
     <main>
-        <section class="chatbox">
+        <section *ngIf="chatmate !== '' " class="chatbox">
+            <header>
+                <section class="info">
+                    <section class="image">
+                        {{chatmate[0].toLocaleUpperCase()}}
+                        <section class="active-container">
+                            <section class="active-ball"></section>
+                        </section>
+                    </section>
+                    <section class="name">
+                        <span class="name">{{chatmate}}</span>
+                        <span class="active">Active now</span>
+                    </section>
+                </section>
+                <section class="icons">
+                    <section class="close" (click)="onCloseChatmate()">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M20.7457 3.32851C20.3552 2.93798 19.722 2.93798 19.3315 3.32851L12.0371 10.6229L4.74275 3.32851C4.35223 2.93798 3.71906 2.93798 3.32854 3.32851C2.93801 3.71903 2.93801 4.3522 3.32854 4.74272L10.6229 12.0371L3.32856 19.3314C2.93803 19.722 2.93803 20.3551 3.32856 20.7457C3.71908 21.1362 4.35225 21.1362 4.74277 20.7457L12.0371 13.4513L19.3315 20.7457C19.722 21.1362 20.3552 21.1362 20.7457 20.7457C21.1362 20.3551 21.1362 19.722 20.7457 19.3315L13.4513 12.0371L20.7457 4.74272C21.1362 4.3522 21.1362 3.71903 20.7457 3.32851Z" fill="#B4B4B4"></path> </g></svg>
+                    </section>
+                </section>
+            </header>
+            <section #body></section>
+            <form #footer>
+                <section class="textarea">
+                    <textarea #textarea [(ngModel)]="message" (keydown.enter)="onKeyDownEvent($event)" placeholder="Message" wrap="soft" rows="1" name="message" autocomplete="off" autocapitalize="off"></textarea>
+                </section>
+                <section class="send" (click)="onMessage()">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M11.5003 12H5.41872M5.24634 12.7972L4.24158 15.7986C3.69128 17.4424 3.41613 18.2643 3.61359 18.7704C3.78506 19.21 4.15335 19.5432 4.6078 19.6701C5.13111 19.8161 5.92151 19.4604 7.50231 18.7491L17.6367 14.1886C19.1797 13.4942 19.9512 13.1471 20.1896 12.6648C20.3968 12.2458 20.3968 11.7541 20.1896 11.3351C19.9512 10.8529 19.1797 10.5057 17.6367 9.81135L7.48483 5.24303C5.90879 4.53382 5.12078 4.17921 4.59799 4.32468C4.14397 4.45101 3.77572 4.78336 3.60365 5.22209C3.40551 5.72728 3.67772 6.54741 4.22215 8.18767L5.24829 11.2793C5.34179 11.561 5.38855 11.7019 5.407 11.8459C5.42338 11.9738 5.42321 12.1032 5.40651 12.231C5.38768 12.375 5.34057 12.5157 5.24634 12.7972Z" stroke="#B4B4B4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>      
+                </section>
+            </form>
         </section>
-        <section class="heads">
+        <section class="heads-view">
+            <section *ngIf="actives.length !== 0" class="heads">
+                <span *ngFor="let active of actives" (click)="onSetChatmate(active)" title={{active}}>
+                    {{active[0].toLocaleUpperCase()}}
+                    <section class="active-container">
+                        <section class="active-ball"></section>
+                    </section>
+                </span>
+            </section>
         </section>
     </main>
 </div>
