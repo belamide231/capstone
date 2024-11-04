@@ -32,8 +32,8 @@
         </section>
         <section class="heads-view">
             <section *ngIf="actives.length !== 0" class="heads">
-                <span *ngFor="let active of actives" (click)="onSetChatmate(active)" title={{active}}>
-                    {{active[0].toLocaleUpperCase()}}
+                <span *ngFor="let active of actives" (click)="onSetChatmate(active.Email, active.Id)" title={{active.Email}}>
+                    {{active.Email[0].toLocaleUpperCase()}}
                     <section class="active-container">
                         <section class="active-ball"></section>
                     </section>

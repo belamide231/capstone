@@ -26,7 +26,6 @@ export const AuthorizationGuard: CanActivateFn = async (route, state) => {
 
             } else {
 
-                console.log(result.data);
                 postLoggedService.setInfo(result.data.role, result.data.email, result.data.id);
             }
 

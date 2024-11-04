@@ -8,10 +8,14 @@ import { WebsocketService } from './service/websocket.service';
 })
 export class PostLoggedComponent implements OnInit {
     role: string = '';
+    email: string = '';
+    id: string = '';
     constructor(private readonly service: PostLoggedService, private readonly socket: WebsocketService) {}
 
     ngOnInit(): void {
         this.role = this.service.getRole();
-        this.socket.connect();
+        this.email = this.service.getEmail();
+        this.id = this.service.getId();
+        this.socket.connect(this.email, this.id);
     }
 }

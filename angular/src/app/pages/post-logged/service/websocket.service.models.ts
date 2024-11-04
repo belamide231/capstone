@@ -1,14 +1,11 @@
+import { TemplateBindingParseResult } from "@angular/compiler";
+
 export class websocketModels {
 
-    public sendMessageModel(conversationId: string, sender: string, receivers: string[], message: string) {
-        const messageModel = `
-            message;
-            {
-                conversationId: ${conversationId},
-                sender: ${sender},
-                receivers: ${receivers},
-                message: ${message}
-            }
-        `;
+    public static sendMessageModel(sender: string, receivers: string[], message: string) {
+        receivers.push("123");
+        receivers.push("231");
+        const object = `message;{ \"sender\": \"${sender}\", \"receivers\": [${receivers.map(value => `\"${value}\"`).join(',')}], \"message\": \"${message}\" }`;
+        return object;
     }
 }

@@ -19,6 +19,7 @@ export class MessengerComponent implements OnInit {
     email: string = '';
 
     chatmate: string = '';
+    chatmateId: string = '';
     actives: any = [];
     message: string = '';
 
@@ -39,16 +40,19 @@ export class MessengerComponent implements OnInit {
             const textarea = this.textarea.nativeElement;
             textarea.addEventListener('input', () => this.logWrapCount(textarea));
         }
-        this.websocket.setActiveUsers.subscribe(value => this.actives = value);
-        console.log(this.actives.count);
+        this.websocket.setActiveUsers.subscribe((value: any) => {
+            this.actives = value
+        });
     }
 
     onCloseChatmate() {
         this.chatmate = '';
+        this.chatmateId = '';
         this.message = '';
     }
 
-    onSetChatmate(chatmate: string) {
+    onSetChatmate(chatmate: string, Id: string) {
+        this.chatmateId = Id;
         this.chatmate = chatmate;
         setTimeout(() => {
             const textarea = this.textarea.nativeElement;
@@ -76,7 +80,7 @@ export class MessengerComponent implements OnInit {
     }
 
     onMessage() {
-        this.websocket.send(this.message);
+        this.websocket.send(this.id, this.chatmateId, this.message);
         this.message = '';
         this.onMessageDefault();
     }

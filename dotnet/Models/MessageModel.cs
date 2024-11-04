@@ -1,28 +1,16 @@
+using System.Diagnostics.Contracts;
+using System.Text.Json;
 using System.Text.Json.Serialization;
-using Newtonsoft.Json;
+using MimeKit;
 
-public class ReceiverModel {
-
-    [JsonPropertyName("userId")]
-    public string? userId { get; set; }
-
-    [JsonPropertyName("status")]
-    public string? status { get; set; }
-} 
-
-public class MessageModel { 
-
-    [JsonPropertyName("conversationId")]
-    public string? conversationId { get; set; }
-    
-    public DateTime? time = DateTime.UtcNow;
+public class MessageModel {
 
     [JsonPropertyName("sender")]
-    public string? sender { get; set; }
+    public string? Sender { get; set; }
 
     [JsonPropertyName("receivers")]
-    public List<ReceiverModel>? receivers { get; set; }
+    public List<string>? Receivers { get; set; }
 
     [JsonPropertyName("message")]
-    public string? message { get; set; }
+    public string? Message { get; set; }
 }

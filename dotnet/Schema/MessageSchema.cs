@@ -1,22 +1,39 @@
-using System.Text.Json.Serialization;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 public class MessageSchema {
 
-    public DateTime Time { get; set; }
+    [BsonElement("created")]
+    public DateTime Created { get; set; }
 
-    [JsonPropertyName("conversationId")]
-    public string? conversationId { get; set; }
+    [BsonElement("conversationId")]
+    public string? ConversationId { get; set; }
 
-    [JsonPropertyName("sender")]
-    public string? userId { get; set; }
+    [BsonId]
+    public ObjectId? MessageId { get; set; }
 
-    [JsonPropertyName("status")]
+    [BsonElement("sender")]
+    public string? Sender { get; set; }
+
+    [BsonElement("seen")]
+    public List<string>? Seen { get; set; }
+
+    [BsonElement("status")]
     public string? Status { get; set; }
 
-    [JsonPropertyName("receivers")]
-    public List<string>? receivers { get; set; }
-
-    [JsonPropertyName("message")]
+    [BsonElement("message")]
     public string? Message { get; set; }
     
+    public MessageSchema(string conversationId, string sender, string message) {
+        TimeZoneInfo philippineTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Asia/Manila");
+        DateTime philippineTime = TimeZoneInfo.ConvertTime(DateTime.UtcNow, philippineTimeZone);
+
+        Created = philippineTime;
+        ConversationId = conversationId;
+        MessageId = ObjectId.GenerateNewId();
+        Sender = sender;
+        Seen = new List<string>();
+        Status = "Sent";
+        Message = message;
+    }
 }
