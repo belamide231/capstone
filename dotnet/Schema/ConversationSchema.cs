@@ -5,7 +5,7 @@ using MongoDB.Bson.Serialization.Attributes;
 public class ConversationSchema {
 
     [BsonId]
-    public ObjectId? ConversationId { get; set; }
+    public string ConversationId { get; set; }
 
     [JsonPropertyName("audience")]
     public List<string>? Audience { get; set; }
@@ -14,7 +14,7 @@ public class ConversationSchema {
     public List<MessageSchema>? Messages { get; set; }
 
     public ConversationSchema(List<string> audience) {
-        ConversationId = ObjectId.GenerateNewId();
+        ConversationId = ObjectId.GenerateNewId().ToString();
         Audience = audience;
         Messages = new List<MessageSchema>();
     }

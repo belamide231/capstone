@@ -10,7 +10,7 @@ public class MessageSchema {
     public string? ConversationId { get; set; }
 
     [BsonId]
-    public ObjectId? MessageId { get; set; }
+    public string? MessageId { get; set; }
 
     [BsonElement("sender")]
     public string? Sender { get; set; }
@@ -30,7 +30,7 @@ public class MessageSchema {
 
         Created = philippineTime;
         ConversationId = conversationId;
-        MessageId = ObjectId.GenerateNewId();
+        MessageId = ObjectId.GenerateNewId().ToString();
         Sender = sender;
         Seen = new List<string>();
         Status = "Sent";

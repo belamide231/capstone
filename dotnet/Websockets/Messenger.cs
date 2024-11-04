@@ -1,8 +1,12 @@
 using System.Collections.Concurrent;
 using System.Net.WebSockets;
 using System.Text;
+using System.Text.Json;
+using Microsoft.VisualBasic;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using Newtonsoft.Json;
+using Org.BouncyCastle.Crypto.Digests;
 
 public class IdAndEmailPair {
     public string Email { get; set; }
@@ -18,7 +22,9 @@ public class Messenger {
     private readonly RequestDelegate _next;
     private readonly ConcurrentDictionary<string, ConcurrentDictionary<string, WebSocket>> _websockets = new();
     private readonly ConcurrentDictionary<string, IdAndEmailPair> _users = new ConcurrentDictionary<string, IdAndEmailPair>();
+    private readonly ConcurrentDictionary<string, CancellationTokenSource> _conversations = new ConcurrentDictionary<string, CancellationTokenSource>();
     private readonly byte[] _buffer = new byte[1024 * 4];
+    private readonly TimeSpan _duration = TimeSpan.FromHours(1);
     private readonly Redis _redis;
     private readonly Mongo _mongo;    
 
@@ -51,21 +57,48 @@ public class Messenger {
                 );
                 
                 var conversationList = await conversation.ToListAsync();
-                dynamic conversationId = null!;
+                var conversationId = "";
 
                 if(conversationList.Count == 0) {
                     var newConversation = new ConversationSchema(audience);
                     await _mongo.ConversationCollection().InsertOneAsync(newConversation);
-                    conversationId = newConversation.ConversationId!;
-                } else {
-                    conversationId = conversationList[0].ConversationId!;
-                }
+                    conversationId = newConversation.ConversationId!.ToString();
+                } else 
+                    conversationId = conversationList[0].ConversationId!.ToString();
                 
                 // CREATING MESSAGE
+                var newMessage = new MessageSchema(conversationId!, userid, messageModel.Message!);
+                var serializedMessage = Newtonsoft.Json.JsonConvert.SerializeObject(newMessage, Newtonsoft.Json.Formatting.Indented);
 
                 // STORING MESSAGE IN REDIS
+                var stored = await _redis.Conversations().ListLeftPushAsync(conversationId, serializedMessage);
 
-                // SETTING TIMEOUT
+                // CANCELLING THE EXISTING DURATION THE TASK THAT IF THE DURATION ENDS IT STORES IN MONGO 
+                if(_conversations.TryGetValue(conversationId!, out var cancellationToken)) {
+                    cancellationToken.Cancel();
+                    _conversations!.Remove(conversationId, out _);
+                }
+
+                // CREATING A NEW DURATION FOR STORING CONVERSATION IN MONGO IF DURATION ENDS
+                var newCancellationTokenSource = new CancellationTokenSource();
+                _ = Task.Run(async() => {
+
+                    await Task.Delay(_duration, newCancellationTokenSource.Token);
+                    var listOfSerializedMessages = await _redis.Conversations().ListRangeAsync(conversationId);
+                    var listOfMessages = listOfSerializedMessages.Select(element => Newtonsoft.Json.JsonConvert.DeserializeObject<MessageSchema>(element!)).ToList();
+                    
+                    // STORING IN MONGO
+                    await _mongo.ConversationCollection().FindOneAndUpdateAsync(
+                        Builders<ConversationSchema>.Filter.Eq(f => f.ConversationId, conversationId),
+                        Builders<ConversationSchema>.Update.PushEach(f => f.Messages, listOfMessages)
+                    );
+
+                    // DELETING CONVERSATION IN REDIS
+                    await _redis.Conversations().KeyDeleteAsync(userid);
+
+                }, newCancellationTokenSource.Token);
+                _conversations.TryAdd(conversationId!, newCancellationTokenSource);
+
             }
 
             result = await ws.ReceiveAsync(new ArraySegment<byte>(_buffer), CancellationToken.None);
