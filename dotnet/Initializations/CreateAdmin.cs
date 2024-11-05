@@ -6,7 +6,7 @@ public class CreateAdmin {
     private readonly string _email;
     private readonly string _password;
 
-    public CreateAdmin(UserManager<ApplicationUser> userManager) {
+    public CreateAdmin(UserManager<ApplicationUser> userManager, Mongo mongo) {
 
         DotEnv.Load();
 

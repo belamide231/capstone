@@ -23,6 +23,8 @@ export class MessengerComponent implements OnInit {
     actives: any = [];
     message: string = '';
 
+    conversations: any = [];
+
     bodyInitialization: number = 371;
     footerInitialization: number = 57;
     textareaInitiation: number = 17;

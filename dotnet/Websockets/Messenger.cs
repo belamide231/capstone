@@ -24,7 +24,7 @@ public class Messenger {
     private readonly ConcurrentDictionary<string, IdAndEmailPair> _users = new ConcurrentDictionary<string, IdAndEmailPair>();
     private readonly ConcurrentDictionary<string, CancellationTokenSource> _conversations = new ConcurrentDictionary<string, CancellationTokenSource>();
     private readonly byte[] _buffer = new byte[1024 * 4];
-    private readonly TimeSpan _duration = TimeSpan.FromHours(1);
+    private readonly TimeSpan _duration = TimeSpan.FromSeconds(5);
     private readonly Redis _redis;
     private readonly Mongo _mongo;    
 
@@ -57,15 +57,54 @@ public class Messenger {
                 );
                 
                 var conversationList = await conversation.ToListAsync();
+                ConversationSchema myConversation; 
                 var conversationId = "";
 
                 if(conversationList.Count == 0) {
                     var newConversation = new ConversationSchema(audience);
                     await _mongo.ConversationCollection().InsertOneAsync(newConversation);
                     conversationId = newConversation.ConversationId!.ToString();
-                } else 
+                    myConversation = newConversation;
+                } else {
                     conversationId = conversationList[0].ConversationId!.ToString();
-                
+                    myConversation = conversationList[0];
+                }
+
+                // var userData = await _mongo.UserDataCollection().Find(
+                //     Builders<UsersDataSchema>.Filter.In(f => f.UserId, audience)
+                // ).ToListAsync();
+                // Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(userData, Formatting.Indented));
+
+                // QUEUEING THE CONVERSATION
+                var tasks = audience.Select(userDataId => Task.Run(async () => {
+                    var usersData = await _mongo.UserDataCollection().FindAsync(
+                        Builders<UsersDataSchema>.Filter.Eq(f => f.UserId, userDataId)
+                    );
+                    var usersDataList = usersData.ToList();
+
+                    Console.WriteLine(usersDataList.Count());
+
+                    // CREATING USER DATA FOR QUEUEING CONVERSATIONS IF DID NOT EXIST
+                    if(usersDataList!.Count == 0) {
+                        var newUserData = new UsersDataSchema(userDataId);
+                        await _mongo.UserDataCollection().InsertOneAsync(newUserData);
+
+                    // IF EXISTING PULLNG THE CONVERSATION
+                    } else {
+                        await _mongo.UserDataCollection().FindOneAndUpdateAsync(
+                            Builders<UsersDataSchema>.Filter.Eq(f => f.UserId, userDataId),
+                            Builders<UsersDataSchema>.Update.Pull(f => f.StacksOfConversations, conversationId)
+                        );
+                    }
+
+                    // PUSHING IT TO THE LATEST
+                    await _mongo.UserDataCollection().FindOneAndUpdateAsync(
+                        Builders<UsersDataSchema>.Filter.Eq(f => f.UserId, userDataId),
+                        Builders<UsersDataSchema>.Update.Push(f => f.StacksOfConversations, conversationId)
+                    );                
+                }));
+                await Task.WhenAll(tasks);
+
                 // CREATING MESSAGE
                 var newMessage = new MessageSchema(conversationId!, userid, messageModel.Message!);
                 var serializedMessage = Newtonsoft.Json.JsonConvert.SerializeObject(newMessage, Newtonsoft.Json.Formatting.Indented);
@@ -94,10 +133,21 @@ public class Messenger {
                     );
 
                     // DELETING CONVERSATION IN REDIS
-                    await _redis.Conversations().KeyDeleteAsync(userid);
+                    await _redis.Conversations().KeyDeleteAsync(conversationId);
 
                 }, newCancellationTokenSource.Token);
                 _conversations.TryAdd(conversationId!, newCancellationTokenSource);
+
+                // NOTIFYING SENDER THAT MESSAGE IS ALREADY BEING SENT
+                var sentModel = new SentModel(conversationId, newMessage.MessageId!);
+                var serializedSentModel = Newtonsoft.Json.JsonConvert.SerializeObject(sentModel, Formatting.Indented);
+                var byteSerializedSentModel = Encoding.ASCII.GetBytes("sent;" + serializedMessage);
+                await ws.SendAsync(new ArraySegment<byte>(byteSerializedSentModel), WebSocketMessageType.Text, true, CancellationToken.None);
+
+                // NOTIFYING RECEIVERS
+                // foreach(var receiver in myConversation.Audience!) {
+                //     Console.WriteLine(receiver);
+                // }
 
             }
 

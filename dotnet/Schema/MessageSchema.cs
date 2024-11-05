@@ -15,9 +15,6 @@ public class MessageSchema {
     [BsonElement("sender")]
     public string? Sender { get; set; }
 
-    [BsonElement("seen")]
-    public List<string>? Seen { get; set; }
-
     [BsonElement("status")]
     public string? Status { get; set; }
 
@@ -32,7 +29,6 @@ public class MessageSchema {
         ConversationId = conversationId;
         MessageId = ObjectId.GenerateNewId().ToString();
         Sender = sender;
-        Seen = new List<string>();
         Status = "Sent";
         Message = message;
     }
