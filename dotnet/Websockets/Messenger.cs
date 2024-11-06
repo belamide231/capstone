@@ -24,7 +24,8 @@ public class Messenger {
     private readonly ConcurrentDictionary<string, IdAndEmailPair> _users = new ConcurrentDictionary<string, IdAndEmailPair>();
     private readonly ConcurrentDictionary<string, CancellationTokenSource> _conversations = new ConcurrentDictionary<string, CancellationTokenSource>();
     private readonly byte[] _buffer = new byte[1024 * 4];
-    private readonly TimeSpan _duration = TimeSpan.FromSeconds(5);
+    private readonly TimeSpan _duration = TimeSpan.FromHours(1); // 1HOUR
+    // private readonly TimeSpan _duration = TimeSpan.FromSeconds(1); // 1HOUR
     private readonly Redis _redis;
     private readonly Mongo _mongo;    
 
@@ -44,7 +45,8 @@ public class Messenger {
 
             if(eventType == "message") {
                 
-                var messageModel = Newtonsoft.Json.JsonConvert.DeserializeObject<MessageModel>(serializedObject);
+                // CREATING A MODEL OF MESSAGE
+                var messageModel = JsonConvert.DeserializeObject<MessageModel>(serializedObject);
                 var audience = messageModel!.Receivers;
                 audience!.Add(messageModel!.Sender!);
 
@@ -70,44 +72,9 @@ public class Messenger {
                     myConversation = conversationList[0];
                 }
 
-                // var userData = await _mongo.UserDataCollection().Find(
-                //     Builders<UsersDataSchema>.Filter.In(f => f.UserId, audience)
-                // ).ToListAsync();
-                // Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(userData, Formatting.Indented));
-
-                // QUEUEING THE CONVERSATION
-                var tasks = audience.Select(userDataId => Task.Run(async () => {
-                    var usersData = await _mongo.UserDataCollection().FindAsync(
-                        Builders<UsersDataSchema>.Filter.Eq(f => f.UserId, userDataId)
-                    );
-                    var usersDataList = usersData.ToList();
-
-                    Console.WriteLine(usersDataList.Count());
-
-                    // CREATING USER DATA FOR QUEUEING CONVERSATIONS IF DID NOT EXIST
-                    if(usersDataList!.Count == 0) {
-                        var newUserData = new UsersDataSchema(userDataId);
-                        await _mongo.UserDataCollection().InsertOneAsync(newUserData);
-
-                    // IF EXISTING PULLNG THE CONVERSATION
-                    } else {
-                        await _mongo.UserDataCollection().FindOneAndUpdateAsync(
-                            Builders<UsersDataSchema>.Filter.Eq(f => f.UserId, userDataId),
-                            Builders<UsersDataSchema>.Update.Pull(f => f.StacksOfConversations, conversationId)
-                        );
-                    }
-
-                    // PUSHING IT TO THE LATEST
-                    await _mongo.UserDataCollection().FindOneAndUpdateAsync(
-                        Builders<UsersDataSchema>.Filter.Eq(f => f.UserId, userDataId),
-                        Builders<UsersDataSchema>.Update.Push(f => f.StacksOfConversations, conversationId)
-                    );                
-                }));
-                await Task.WhenAll(tasks);
-
                 // CREATING MESSAGE
                 var newMessage = new MessageSchema(conversationId!, userid, messageModel.Message!);
-                var serializedMessage = Newtonsoft.Json.JsonConvert.SerializeObject(newMessage, Newtonsoft.Json.Formatting.Indented);
+                var serializedMessage = JsonConvert.SerializeObject(newMessage, Formatting.Indented);
 
                 // STORING MESSAGE IN REDIS
                 var stored = await _redis.Conversations().ListLeftPushAsync(conversationId, serializedMessage);
@@ -124,7 +91,7 @@ public class Messenger {
 
                     await Task.Delay(_duration, newCancellationTokenSource.Token);
                     var listOfSerializedMessages = await _redis.Conversations().ListRangeAsync(conversationId);
-                    var listOfMessages = listOfSerializedMessages.Select(element => Newtonsoft.Json.JsonConvert.DeserializeObject<MessageSchema>(element!)).ToList();
+                    var listOfMessages = listOfSerializedMessages.Select(element => JsonConvert.DeserializeObject<MessageSchema>(element!)).ToList();
                     
                     // STORING IN MONGO
                     await _mongo.ConversationCollection().FindOneAndUpdateAsync(
@@ -139,16 +106,107 @@ public class Messenger {
                 _conversations.TryAdd(conversationId!, newCancellationTokenSource);
 
                 // NOTIFYING SENDER THAT MESSAGE IS ALREADY BEING SENT
-                var sentModel = new SentModel(conversationId, newMessage.MessageId!);
-                var serializedSentModel = Newtonsoft.Json.JsonConvert.SerializeObject(sentModel, Formatting.Indented);
-                var byteSerializedSentModel = Encoding.ASCII.GetBytes("sent;" + serializedMessage);
-                await ws.SendAsync(new ArraySegment<byte>(byteSerializedSentModel), WebSocketMessageType.Text, true, CancellationToken.None);
+                var sendersDataList = await _mongo.UsersDataCollection().Find(
+                    Builders<UsersDataSchema>.Filter.Eq(f => f.UserId, userid)
+                ).ToListAsync();
+                if(sendersDataList.Count == 0) {
+                    var newSendersData = new UsersDataSchema(userid);
+                    await _mongo.UsersDataCollection().InsertOneAsync(newSendersData);
+                }
+                await _mongo.UsersDataCollection().FindOneAndUpdateAsync(
+                    Builders<UsersDataSchema>.Filter.Eq(f => f.UserId, userid),
+                    Builders<UsersDataSchema>.Update.Pull(f => f.StacksOfConversations, conversationId)
+                );
+                await _mongo.UsersDataCollection().FindOneAndUpdateAsync(
+                    Builders<UsersDataSchema>.Filter.Eq(f => f.UserId, userid),
+                    Builders<UsersDataSchema>.Update.Push(f => f.StacksOfConversations, conversationId)
+                );
+                var test = await _mongo.UsersDataCollection().Find(
+                    Builders<UsersDataSchema>.Filter.Eq(f => f.UserId, userid)
+                ).Project<UsersDataSchema>(
+                    Builders<UsersDataSchema>.Projection
+                        .Include(f => f.UserId)
+                        .Slice(f => f.StacksOfConversations, -1)
+                ).ToListAsync();
+                myConversation.Messages = new List<MessageSchema>(new [] { newMessage });
+                await ws.SendAsync(new ArraySegment<byte>(Encoding.ASCII.GetBytes("sent;" + JsonConvert.SerializeObject(myConversation, Formatting.Indented))), WebSocketMessageType.Text, true, CancellationToken.None);
 
-                // NOTIFYING RECEIVERS
-                // foreach(var receiver in myConversation.Audience!) {
-                //     Console.WriteLine(receiver);
-                // }
+                // REMOVING THE SENDER SO THE RECEIVER WILL REMAIN
+                audience.Remove(userid);
 
+                // NOTIFYING RECEIVERS AND QUEUEING THE CONVERSATION
+                var tasks = audience.Select(userDataId => Task.Run(async () => {
+                    var usersData = await _mongo.UsersDataCollection().FindAsync(
+                        Builders<UsersDataSchema>.Filter.Eq(f => f.UserId, userDataId)
+                    );
+                    var usersDataList = usersData.ToList();
+
+                    // CREATING USER DATA FOR QUEUEING CONVERSATIONS IF DID NOT EXIST
+
+                    if(usersDataList!.Count == 0) {
+                        var newUserData = new UsersDataSchema(userDataId);
+                        await _mongo.UsersDataCollection().InsertOneAsync(newUserData);
+
+                    // IF EXISTING PULLNG THE CONVERSATION
+                    } else {
+
+                        var stacksList = await _mongo.UsersDataCollection().Find(
+                            Builders<UsersDataSchema>.Filter.Eq(f => f.UserId, userDataId)
+                        ).Project<UsersDataSchema>(
+                            Builders<UsersDataSchema>.Projection
+                                .Include(f => f.UserId)
+                                .Slice(f => f.StacksOfConversations, -30) // -30
+                        ).ToListAsync();
+                        var stacks = stacksList[0].StacksOfConversations;
+
+                        // IF CONVERSATION IS NOT IN THE STACKS
+                        if(string.IsNullOrEmpty(stacks.FirstOrDefault(f => f == conversationId))) {
+
+                            // QUERYING IN REDIS
+                            var serializedReceiversListOfMessagesInRedis = await _redis.Conversations().ListRangeAsync(conversationId, 0, 29);
+                            var receiversListOfMessageInRedis = serializedReceiversListOfMessagesInRedis.Select(f => JsonConvert.DeserializeObject<MessageSchema>(f!));
+
+                            if(serializedReceiversListOfMessagesInRedis.Count() < 30) {
+
+                                // QUERYING IN MONGO
+                                var receiversListOfMessagesInMongo = await _mongo.ConversationCollection().Find(
+                                    Builders<ConversationSchema>.Filter.Eq(f => f.ConversationId, conversationId)
+                                ).Project<ConversationSchema>(
+                                    Builders<ConversationSchema>.Projection
+                                        .Include(f => f.ConversationId)
+                                        .Include(f => f.Audience)
+                                        .Include(f => f.AudienceLatestSeenMessage)
+                                        .Slice(f => f.Messages, -30 + serializedReceiversListOfMessagesInRedis.Count()) // -30
+                                ).ToListAsync();
+
+                                var listOfMessages = receiversListOfMessageInRedis.ToList();
+                                foreach(var message in receiversListOfMessagesInMongo.FirstOrDefault()!.Messages!) {
+                                    listOfMessages.Add(message);
+                                }
+
+                                myConversation.Messages = listOfMessages!;
+                            }
+                        }
+
+                        _websockets.TryGetValue(userDataId, out var receiversWebsockets);
+                        var notifyingReceiversWebsockets = receiversWebsockets!.Select(async (f) => {
+                            await f.Value.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes("receive;" + JsonConvert.SerializeObject(myConversation, Formatting.Indented))), WebSocketMessageType.Text, true, CancellationToken.None);
+                        });
+                        await Task.WhenAll(notifyingReceiversWebsockets);
+
+                        await _mongo.UsersDataCollection().FindOneAndUpdateAsync(
+                            Builders<UsersDataSchema>.Filter.Eq(f => f.UserId, userDataId),
+                            Builders<UsersDataSchema>.Update.Pull(f => f.StacksOfConversations, conversationId)
+                        );
+                    }
+
+                    // PUSHING IT TO THE LATEST
+                    await _mongo.UsersDataCollection().FindOneAndUpdateAsync(
+                        Builders<UsersDataSchema>.Filter.Eq(f => f.UserId, userDataId),
+                        Builders<UsersDataSchema>.Update.Push(f => f.StacksOfConversations, conversationId)
+                    );                
+                }));
+                await Task.WhenAll(tasks);
             }
 
             result = await ws.ReceiveAsync(new ArraySegment<byte>(_buffer), CancellationToken.None);
@@ -160,7 +218,7 @@ public class Messenger {
             _websockets.TryRemove(userid, out _);
             _users.Remove(userid, out _);
 
-            var totalSerializedUser = Newtonsoft.Json.JsonConvert.SerializeObject(_users, Newtonsoft.Json.Formatting.Indented);
+            var totalSerializedUser = JsonConvert.SerializeObject(_users, Newtonsoft.Json.Formatting.Indented);
             foreach(var userids in _websockets) {
                 foreach(var websocketholder in userids.Value) {
                     await websocketholder.Value.SendAsync(new ArraySegment<byte>(Encoding.ASCII.GetBytes("actives;" + totalSerializedUser)), WebSocketMessageType.Text, true, CancellationToken.None);                    
