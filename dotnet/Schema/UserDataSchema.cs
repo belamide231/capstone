@@ -5,7 +5,7 @@ public class UsersDataSchema {
     [BsonId]
     public string? UserId { get; set; }
 
-    [BsonElement("stackOfConversations")]
+    [BsonElement("StacksOfConversations")]
     public List<string> StacksOfConversations { get; set; }
 
     public UsersDataSchema(string userId) {

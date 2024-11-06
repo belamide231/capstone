@@ -3,6 +3,7 @@ import { OnInit, Component, ViewChild, ElementRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { WebsocketService } from '../../app/pages/post-logged/service/websocket.service';
 import { PostLoggedService } from '../../app/pages/post-logged/service/post-logged.service';
+import { filter, findIndex } from 'rxjs';
 
 @Component({
     selector: 'messenger',
@@ -22,16 +23,20 @@ export class MessengerComponent implements OnInit {
     chatmateId: string = '';
     actives: any = [];
     message: string = '';
-
-    conversations: any = [];
+    arrayOfConversations: any = [];
+    arrayOfMessages: any = [];
 
     bodyInitialization: number = 371;
     footerInitialization: number = 57;
     textareaInitiation: number = 17;
     textareaWidthInitation: number = 238;
+
     @ViewChild('body') body!: ElementRef<HTMLDivElement>;
     @ViewChild('footer') footer!: ElementRef<HTMLDivElement>;
     @ViewChild('textarea') textarea!: ElementRef<HTMLTextAreaElement>;
+
+    @ViewChild('messageView') messageView!: ElementRef<HTMLDivElement>;
+    @ViewChild('messageContainer') messageContainer!: ElementRef<HTMLDivElement>;
 
     constructor(private readonly websocket: WebsocketService, private readonly service: PostLoggedService) {}
 
@@ -42,8 +47,15 @@ export class MessengerComponent implements OnInit {
             const textarea = this.textarea.nativeElement;
             textarea.addEventListener('input', () => this.logWrapCount(textarea));
         }
-        this.websocket.setActiveUsers.subscribe((value: any) => {
-            this.actives = value
+        this.websocket.setActiveUsers.subscribe((value: any) => this.actives = value);
+        this.websocket.setArrayOfConversations.subscribe((value: any) => this.arrayOfConversations = value);
+        this.websocket.setMessageNotification.subscribe((value: string[]) => {
+            value.splice(value.indexOf(this.id), 1);
+            this.actives.find((object: any) => {
+                if(object.Id === value[0]) {
+                    return this.onSetChatmate(object.Email, object.Id);
+                }
+            });
         });
     }
 
@@ -53,13 +65,31 @@ export class MessengerComponent implements OnInit {
         this.message = '';
     }
 
-    onSetChatmate(chatmate: string, Id: string) {
-        this.chatmateId = Id;
+    onSetChatmate(chatmate: string, id: string) {
+        this.chatmateId = id;
         this.chatmate = chatmate;
+
+        setTimeout(() => {
+            this.messageView.nativeElement.scrollTop = this.messageView.nativeElement.scrollHeight;
+        }, 10);
+
         setTimeout(() => {
             const textarea = this.textarea.nativeElement;
             textarea.addEventListener('input', () => this.logWrapCount(textarea));
         }, 100);
+
+        const arr = [this.id]
+        arr.push(id);
+
+        this.arrayOfConversations.find((object: any, index: number) => {
+            if(arr.length === object.Audience.length && arr.sort().join() === object.Audience.sort().join()) {
+                return this.arrayOfMessages = object.Messages;
+            }
+        });
+
+
+        
+        
     }
 
     onKeyDownEvent(event: any) {
@@ -85,6 +115,9 @@ export class MessengerComponent implements OnInit {
         this.websocket.send(this.id, this.chatmateId, this.message);
         this.message = '';
         this.onMessageDefault();
+        setTimeout(() => {
+            this.messageView.nativeElement.scrollTop = this.messageView.nativeElement.scrollHeight;
+        }, 10);
     }
 
     logWrapCount(textarea: HTMLTextAreaElement) {

@@ -204,6 +204,75 @@ div
                 height: 78%
                 width: 100%
                 background-color: $primary-color
+                overflow: hidden
+
+
+                section.message-view
+                    height: 100%
+                    width: 100%
+                    overflow-x: hidden
+                    overflow-y: auto
+                    pointer-events: auto
+                    &::-webkit-scrollbar
+                        width: 10px
+                    &::-webkit-scrollbar-thumb
+                        width: 10px
+                        background-color: $secondary-color
+                        border-radius: 10px
+
+                    section.message-container
+                        width: 100%
+                        height: auto
+                        display: flex
+                        flex-direction: column-reverse
+                        align-items: center
+
+                        section.user
+                            width: 95%
+                            display: flex 
+                            justify-content: flex-end
+                            
+                            section
+                                margin: 10px 0 10px 0px
+                                border-radius: 20px 5px 20px 20px
+                                height: fit-content
+                                word-wrap: break-word
+                                word-break: break-all
+                                overflow-wrap: break-word
+                                max-width: 60%
+                                width: fit-content
+                                padding: 10px 20px 10px 20px
+                                font-family: sans-serif
+                                font-size: 15px
+                                font-weight: 100
+                                color: $text-color
+                                background-color: $secondary-color
+                                @include unselectable()
+
+
+                        section.chatmate
+                            width: 95%
+                            display: flex 
+                            justify-content: flex-start
+                            
+                            section
+                                margin: 10px 0 10px 0px
+                                border-radius: 5px 20px 20px 20px
+                                height: fit-content
+                                word-wrap: break-word
+                                word-break: break-all
+                                overflow-wrap: break-word
+                                max-width: 60%
+                                width: fit-content
+                                padding: 10px 20px 10px 20px
+                                font-family: sans-serif
+                                font-size: 15px
+                                font-weight: 100
+                                color: $text-color
+                                background-color: $secondary-color
+                                @include unselectable()                            
+
+
 
             form
                 height: 12%

@@ -268,6 +268,47 @@ public class Messenger {
                         }
                     }
                 }
+
+                // GETTING THE INITIALIZATION MESSAGES OF THE ACCOUNT
+                var listOfstacksOfConversationsId = await _mongo.UsersDataCollection().Find(
+                    Builders<UsersDataSchema>.Filter.Eq(f => f.UserId, userid.ToString())
+                ).Project<UsersDataSchema>(
+                    Builders<UsersDataSchema>.Projection
+                        .Include(f => f.UserId)
+                        .Slice(f => f.StacksOfConversations, -30)
+                ).ToListAsync();
+
+                if(listOfstacksOfConversationsId.Count != 0) {
+                    var stackOfConversationsId = listOfstacksOfConversationsId.FirstOrDefault()!.StacksOfConversations;
+
+                    var listOfConversations = new List<ConversationSchema>();
+                    var stacksOfMessagesInTheStacksOfConversation = stackOfConversationsId.Select(async(conversationId) => {
+                        
+                        var stacksOfSerializedMessagesInRedis = await _redis.Conversations().ListRangeAsync(conversationId, 0, 29);
+                        var stackOfMessagesInRedis = stacksOfSerializedMessagesInRedis.Select(f => JsonConvert.DeserializeObject<MessageSchema>(f!)).ToList();
+
+                        var listOfConversationInMongo = await _mongo.ConversationCollection().Find(
+                            Builders<ConversationSchema>.Filter.Eq(f => f.ConversationId, conversationId)
+                        ).Project<ConversationSchema>(
+                            Builders<ConversationSchema>.Projection
+                                .Include(f => f.ConversationId)
+                                .Include(f => f.Audience)
+                                .Include(f => f.AudienceLatestSeenMessage)
+                                .Slice(f => f.Messages, -30 + stacksOfSerializedMessagesInRedis.Count())
+                        ).ToListAsync();
+                        
+                        var ConversationInMongo = listOfConversationInMongo.FirstOrDefault();
+                        foreach(var messageInMongo in ConversationInMongo!.Messages!) {
+                            stackOfMessagesInRedis.Add(messageInMongo);
+                        }
+
+                        ConversationInMongo!.Messages = stackOfMessagesInRedis!;
+                        listOfConversations.Add(ConversationInMongo);
+                    });
+                    await Task.WhenAll(stacksOfMessagesInTheStacksOfConversation);
+                    await ws.SendAsync(new ArraySegment<byte>(Encoding.ASCII.GetBytes("initialization;" + JsonConvert.SerializeObject(listOfConversations, Formatting.Indented))), WebSocketMessageType.Text, true, CancellationToken.None);
+                }
+
                 await StoreWebsocket(userid!, wsid!, ws);
             }
 

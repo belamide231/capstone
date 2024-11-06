@@ -20,7 +20,15 @@
                     </section>
                 </section>
             </header>
-            <section #body></section>
+            <section #body>
+                <section #messageView class="message-view">
+                    <section #messageContainer class="message-container">
+                        <section *ngFor="let object of arrayOfMessages" [ngClass]="object.Sender === id ? 'user' : 'chatmate' ">
+                            <section>{{object.Message}}</section>
+                        </section>
+                    </section>
+                </section>
+            </section>
             <form #footer>
                 <section class="textarea">
                     <textarea #textarea [(ngModel)]="message" (keydown.enter)="onKeyDownEvent($event)" placeholder="Message" wrap="soft" rows="1" name="message" autocomplete="off" autocapitalize="off"></textarea>

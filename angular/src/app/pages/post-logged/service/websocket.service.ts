@@ -6,9 +6,16 @@ import { websocketModels } from './websocket.service.models';
   providedIn: 'root'
 })
 export class WebsocketService {
+
     activeUsers = new BehaviorSubject<string[]>([]);
     setActiveUsers = this.activeUsers.asObservable();
- 
+
+    arrayOfConversations = new BehaviorSubject<any[]>([]);
+    setArrayOfConversations = this.arrayOfConversations.asObservable();
+
+    messageNotification = new BehaviorSubject<string[]>([]);
+    setMessageNotification = this.messageNotification.asObservable();
+    
     private socket: WebSocket | null = null;
     private readonly url = 'http://localhost:3000/chat';
 
@@ -19,6 +26,11 @@ export class WebsocketService {
             const event = socket.data.split(';')[0];
             const data = socket.data.split(';')[1];
 
+            if(event === 'initialization') {
+                const initializedConversations = JSON.parse(data);
+                this.arrayOfConversations.next(initializedConversations);
+            }
+
             if(event === 'actives') {
                 const updatedActiveUsers = JSON.parse(data);
                 delete updatedActiveUsers[id];
@@ -26,8 +38,18 @@ export class WebsocketService {
             }
 
             if(event === 'sent') {
-                const sentModel = JSON.parse(data);
-                console.log(sentModel);
+                const sentData = JSON.parse(data);
+                const index = this.arrayOfConversations.value.findIndex((object: any) => object.ConversationId === sentData.ConversationId);
+                this.arrayOfConversations.value[index].Messages.unshift(sentData.Messages[0]);
+                this.arrayOfConversations.next(this.arrayOfConversations.value);
+            }
+
+            if(event === 'receive') {
+                const receiveData = JSON.parse(data);
+                const index = this.arrayOfConversations.value.findIndex((object: any) => object.ConversationId === receiveData.ConversationId);
+                this.arrayOfConversations.value[index].Messages.unshift(receiveData.Messages[0]);
+                this.arrayOfConversations.next(this.arrayOfConversations.value);
+                this.messageNotification.next(receiveData.Audience);
             }
         }
     }
