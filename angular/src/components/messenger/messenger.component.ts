@@ -50,10 +50,19 @@ export class MessengerComponent implements OnInit {
         this.websocket.setActiveUsers.subscribe((value: any) => this.actives = value);
         this.websocket.setArrayOfConversations.subscribe((value: any) => this.arrayOfConversations = value);
         this.websocket.setMessageNotification.subscribe((value: string[]) => {
-            value.splice(value.indexOf(this.id), 1);
-            this.actives.find((object: any) => {
-                if(object.Id === value[0]) {
-                    return this.onSetChatmate(object.Email, object.Id);
+
+            this.arrayOfConversations.find((object: any) => {
+                if(object.Audience.sort().join() === value.sort().join()) {
+                    object.Audience.find((receiverId: string) => {
+                        if(receiverId !== this.id) {
+                            this.actives.find((objectActives: any) => {
+                                if(receiverId === objectActives.Id) {
+                                    this.onSetChatmate(objectActives.Email, objectActives.Id);
+                                    return;
+                                }
+                            });
+                        }
+                    });
                 }
             });
         });
@@ -66,6 +75,7 @@ export class MessengerComponent implements OnInit {
     }
 
     onSetChatmate(chatmate: string, id: string) {
+
         this.chatmateId = id;
         this.chatmate = chatmate;
 
@@ -83,13 +93,10 @@ export class MessengerComponent implements OnInit {
 
         this.arrayOfConversations.find((object: any, index: number) => {
             if(arr.length === object.Audience.length && arr.sort().join() === object.Audience.sort().join()) {
-                return this.arrayOfMessages = object.Messages;
+                this.arrayOfMessages = object.Messages;
+                return;
             }
         });
-
-
-        
-        
     }
 
     onKeyDownEvent(event: any) {

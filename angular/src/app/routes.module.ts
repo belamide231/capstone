@@ -7,6 +7,7 @@ import { AuthorizationGuard } from '../authorizations/authorization.guard';
 import { PostLoggedComponent } from './pages/post-logged/post-logged.component';
 import { CustomTableComponent } from '../components/custom-table/custom-table.component';
 import { DashboardComponent } from './pages/post-logged/dashboard/dashboard.component';
+import { HomeComponent } from './pages/post-logged/home/home.component';
 
 const routes: Routes = [
     { 
@@ -15,7 +16,8 @@ const routes: Routes = [
         canActivate: [AuthorizationGuard],
         children: [
             { path: 'users', component: CustomTableComponent },
-            { path: 'dashboard', component: DashboardComponent }
+            { path: 'dashboard', component: DashboardComponent }, 
+            { path: '', component: HomeComponent }
         ]
     },
     { path: 'register', component: RegisterComponent, canActivate: [AuthorizationGuard] },

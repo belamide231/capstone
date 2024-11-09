@@ -49,7 +49,7 @@ public class Messenger {
                 var messageModel = JsonConvert.DeserializeObject<MessageModel>(serializedObject);
                 var audience = messageModel!.Receivers;
                 audience!.Add(messageModel!.Sender!);
-
+                
                 // FINDING CONVERSATION BY AUDIENCE
                 var conversation = await _mongo.ConversationCollection().FindAsync(
                     Builders<ConversationSchema>.Filter.And(
@@ -62,12 +62,16 @@ public class Messenger {
                 ConversationSchema myConversation; 
                 var conversationId = "";
 
+                // IF CONVERSATION DIDNT EXIST WE CREATE  
                 if(conversationList.Count == 0) {
+                    
                     var newConversation = new ConversationSchema(audience);
                     await _mongo.ConversationCollection().InsertOneAsync(newConversation);
                     conversationId = newConversation.ConversationId!.ToString();
                     myConversation = newConversation;
+                    
                 } else {
+                    
                     conversationId = conversationList[0].ConversationId!.ToString();
                     myConversation = conversationList[0];
                 }
@@ -113,26 +117,26 @@ public class Messenger {
                     var newSendersData = new UsersDataSchema(userid);
                     await _mongo.UsersDataCollection().InsertOneAsync(newSendersData);
                 }
+
                 await _mongo.UsersDataCollection().FindOneAndUpdateAsync(
                     Builders<UsersDataSchema>.Filter.Eq(f => f.UserId, userid),
                     Builders<UsersDataSchema>.Update.Pull(f => f.StacksOfConversations, conversationId)
                 );
+
                 await _mongo.UsersDataCollection().FindOneAndUpdateAsync(
                     Builders<UsersDataSchema>.Filter.Eq(f => f.UserId, userid),
                     Builders<UsersDataSchema>.Update.Push(f => f.StacksOfConversations, conversationId)
                 );
-                var test = await _mongo.UsersDataCollection().Find(
-                    Builders<UsersDataSchema>.Filter.Eq(f => f.UserId, userid)
-                ).Project<UsersDataSchema>(
-                    Builders<UsersDataSchema>.Projection
-                        .Include(f => f.UserId)
-                        .Slice(f => f.StacksOfConversations, -1)
-                ).ToListAsync();
+
                 myConversation.Messages = new List<MessageSchema>(new [] { newMessage });
                 await ws.SendAsync(new ArraySegment<byte>(Encoding.ASCII.GetBytes("sent;" + JsonConvert.SerializeObject(myConversation, Formatting.Indented))), WebSocketMessageType.Text, true, CancellationToken.None);
 
                 // REMOVING THE SENDER SO THE RECEIVER WILL REMAIN
                 audience.Remove(userid);
+
+                if(string.IsNullOrEmpty(myConversation.Audience!.FirstOrDefault(f => f == userid))) {
+                    myConversation.Audience!.Add(userid);
+                }
 
                 // NOTIFYING RECEIVERS AND QUEUEING THE CONVERSATION
                 var tasks = audience.Select(userDataId => Task.Run(async () => {
@@ -142,13 +146,14 @@ public class Messenger {
                     var usersDataList = usersData.ToList();
 
                     // CREATING USER DATA FOR QUEUEING CONVERSATIONS IF DID NOT EXIST
-
                     if(usersDataList!.Count == 0) {
                         var newUserData = new UsersDataSchema(userDataId);
                         await _mongo.UsersDataCollection().InsertOneAsync(newUserData);
 
                     // IF EXISTING PULLNG THE CONVERSATION
                     } else {
+
+                        Console.WriteLine("SHIT");
 
                         var stacksList = await _mongo.UsersDataCollection().Find(
                             Builders<UsersDataSchema>.Filter.Eq(f => f.UserId, userDataId)
@@ -184,21 +189,25 @@ public class Messenger {
                                     listOfMessages.Add(message);
                                 }
 
+                                Console.WriteLine(listOfMessages);
+
                                 myConversation.Messages = listOfMessages!;
                             }
                         }
 
-                        _websockets.TryGetValue(userDataId, out var receiversWebsockets);
-                        var notifyingReceiversWebsockets = receiversWebsockets!.Select(async (f) => {
-                            await f.Value.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes("receive;" + JsonConvert.SerializeObject(myConversation, Formatting.Indented))), WebSocketMessageType.Text, true, CancellationToken.None);
-                        });
-                        await Task.WhenAll(notifyingReceiversWebsockets);
-
+                        // QUEUEING THE CONVERSATION
                         await _mongo.UsersDataCollection().FindOneAndUpdateAsync(
                             Builders<UsersDataSchema>.Filter.Eq(f => f.UserId, userDataId),
                             Builders<UsersDataSchema>.Update.Pull(f => f.StacksOfConversations, conversationId)
                         );
                     }
+
+                    // NOTIFYING EACH RECEIVERS WEBSOCKETS
+                    _websockets.TryGetValue(userDataId, out var receiversWebsockets);
+                    var notifyingReceiversWebsockets = receiversWebsockets!.Select(async (f) => {
+                        await f.Value.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes("receive;" + JsonConvert.SerializeObject(myConversation, Formatting.Indented))), WebSocketMessageType.Text, true, CancellationToken.None);
+                    });
+                    await Task.WhenAll(notifyingReceiversWebsockets);
 
                     // PUSHING IT TO THE LATEST
                     await _mongo.UsersDataCollection().FindOneAndUpdateAsync(

@@ -10,6 +10,7 @@ export class PostLoggedComponent implements OnInit {
     role: string = '';
     email: string = '';
     id: string = '';
+
     constructor(private readonly service: PostLoggedService, private readonly socket: WebsocketService) {}
 
     ngOnInit(): void {

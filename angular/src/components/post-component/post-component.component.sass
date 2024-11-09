@@ -1,0 +1,118 @@
+$primary-color: #212121
+$secondary-color: #171717
+$tertiary-color: #b4b4b444
+$text-color: #B4B4B4
+
+@mixin unselectable()
+    -ms-user-select: none
+    -moz-user-select: none
+    -webkit-user-select: none
+    
+:host
+    width: 100%
+    display: flex
+    align-items: center
+    justify-content: center
+
+main
+    height: fit-content
+    margin-top: 25px
+    width: calc( 100% - 50px )
+    background-color: $secondary-color
+    border-radius: 10px
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    transition: all .15s ease
+    outline: 1px solid $tertiary-color
+    @include unselectable()
+    
+
+    section.textarea
+        height: fit-content
+        display: flex
+        flex-direction: row
+        width: 100%
+
+        span
+            margin-top: 25px
+            margin-left: 25px
+            margin-right: 15px
+            height: 50px
+            width: 50px
+            border-radius: 50%
+            background-color: $tertiary-color
+
+        label.textarea-container
+            resize: none
+            min-height: 50px
+            height: fit-content
+            margin-top: 25px
+            width: calc( 100% - 115px )
+            background-color: $primary-color
+            display: flex
+            align-items: center
+            justify-content: center
+            border-radius: 25px
+            cursor: text
+            transition: all .15s ease
+
+            textarea
+                width: 90%
+                height: fit-content
+                font-size: 17px
+                font-family: sans-serif
+                font-weight: 100
+                color: $text-color
+                padding: 0
+                overflow-x: hidden
+                overflow-y: hidden
+                outline: none
+                border: none
+                background: none
+                resize: none
+                margin-top: 12.5px
+                margin-bottom: 12.5px
+                padding-right: 5px
+                &::-webkit-scrollbar
+                    width: 10px
+                &::-webkit-scrollbar-thumb
+                    width: 10px
+                    border-radius: 10px
+                    background-color: $secondary-color
+
+    input
+        height: 50px
+        width: calc( 100% - 50px )
+        margin-top: 15px
+        margin-bottom: 15px
+        outline: none
+        border: none
+        border-radius: 25px
+        background-color: $primary-color
+        font-size: 17px
+        font-weight: 100
+        color: $text-color
+        cursor: pointer
+
+    section.post-type
+        height: 40px
+        width: calc( 100% - 50px )
+        display: flex
+        justify-content: space-between
+        margin-bottom: 25px
+
+        section
+            width: calc( 33.4% - 15px )
+            display: flex
+            align-items: center
+            justify-content: center
+            border-radius: 20px
+            background-color: $primary-color
+            cursor: pointer
+
+            svg
+                height: 20px
+
+

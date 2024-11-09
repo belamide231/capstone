@@ -7,6 +7,7 @@ import { RegisterModule } from './pages/pre-logged/register/register.module';
 import { LoginModule } from './pages/pre-logged/login/login.module';
 import { RecoverModule } from './pages/pre-logged/recover/recover.module';
 import { PostLoggedModule } from './pages/post-logged/post-logged.module';
+import { HomeComponent } from './pages/post-logged/home/home.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { PostLoggedModule } from './pages/post-logged/post-logged.module';
         RegisterModule,
         LoginModule,
         RecoverModule,
-        PostLoggedModule
+        PostLoggedModule,
+        HomeComponent
     ],
     bootstrap: [
         AppComponent

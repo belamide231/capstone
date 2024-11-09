@@ -1,0 +1,9 @@
+<main class="feed">
+    <post-component></post-component>
+    <feeds-component></feeds-component>
+</main>
+<activities-feeds *ngIf="role === 'student'" [role]="role"></activities-feeds>
+<main>
+    <h1>POST REQUEST</h1>
+    <section class="none">NO REQUEST</section>
+</main>

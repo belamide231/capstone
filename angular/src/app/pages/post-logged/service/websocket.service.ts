@@ -38,7 +38,8 @@ export class WebsocketService {
             }
 
             if(event === 'sent') {
-                const sentData = JSON.parse(data);
+                const sentData = JSON.parse(data);       
+                console.log(sentData);         
                 const index = this.arrayOfConversations.value.findIndex((object: any) => object.ConversationId === sentData.ConversationId);
                 this.arrayOfConversations.value[index].Messages.unshift(sentData.Messages[0]);
                 this.arrayOfConversations.next(this.arrayOfConversations.value);
@@ -46,8 +47,15 @@ export class WebsocketService {
 
             if(event === 'receive') {
                 const receiveData = JSON.parse(data);
-                const index = this.arrayOfConversations.value.findIndex((object: any) => object.ConversationId === receiveData.ConversationId);
-                this.arrayOfConversations.value[index].Messages.unshift(receiveData.Messages[0]);
+                console.log(receiveData);
+                const index = this.arrayOfConversations.value.findIndex((object: any) => object.Audience.sort().join() === receiveData.Audience.sort().join());
+                if(index === -1) {
+                    this.arrayOfConversations.value.unshift(receiveData);
+                } else {
+                    console.log(this.arrayOfConversations.value);
+                    this.arrayOfConversations.value[index].Messages.unshift(receiveData.Messages[0]);
+                    console.log(this.arrayOfConversations.value);
+                }
                 this.arrayOfConversations.next(this.arrayOfConversations.value);
                 this.messageNotification.next(receiveData.Audience);
             }

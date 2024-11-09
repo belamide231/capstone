@@ -29,6 +29,7 @@ builder.Services.AddScoped<CreateAdmin>();
 builder.Services.AddSingleton<Mongo>();
 builder.Services.AddSingleton<Redis>();
 builder.Services.AddTransient<UserServices>();
+builder.Services.AddTransient<UsersServices>();
 builder.Services.AddTransient<IAuthorizationHandler, UserPolicy>();
 builder.Services.AddCors(option => {
     option.AddPolicy("*", policy => {

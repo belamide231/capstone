@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { CustomTableService } from './custom-table.service';
 
 @Component({
     selector: 'custom-table',
@@ -14,6 +15,13 @@ import { FormsModule } from '@angular/forms';
 })
 export class CustomTableComponent {
 
+    usersList: any[] = [];
+
+    constructor(private readonly service: CustomTableService) {}
+
+    ngOnInit(): void {
+        this.service.queryUsers();
+    }
 
     @Input() users = [
         {
