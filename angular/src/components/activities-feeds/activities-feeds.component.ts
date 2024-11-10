@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
     selector: 'activities-feeds',
@@ -8,11 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
     templateUrl: './activities-feeds.component.html',
     styleUrl: './activities-feeds.component.sass'
 })
-export class ActivitiesFeedsComponent implements OnInit {
+export class ActivitiesFeedsComponent  {
     tasks: any = [];
     @Input() role: string = '';
-
-    ngOnInit() {
-        console.log(this.role);
-    }
 }

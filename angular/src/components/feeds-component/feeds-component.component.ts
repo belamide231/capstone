@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
     selector: 'feeds-component',
@@ -9,5 +9,6 @@ import { Component } from '@angular/core';
     styleUrls: ['./feeds-component.component.sass']
 })
 export class FeedsComponentComponent {
+    @Input() empty: string = '';
     posts: any[] = [];
 }

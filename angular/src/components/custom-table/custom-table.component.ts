@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CustomTableService } from './custom-table.service';
+import { PostLoggedService } from '../../app/pages/post-logged/service/post-logged.service';
 
 @Component({
     selector: 'custom-table',
@@ -15,32 +16,23 @@ import { CustomTableService } from './custom-table.service';
 })
 export class CustomTableComponent {
 
-    usersList: any[] = [];
+    @Input() arrayOfUsers: any[] = [];
+    Highlighted: number = -1;
+    newRole: string = '';
 
-    constructor(private readonly service: CustomTableService) {}
+    constructor(private readonly service: CustomTableService, private readonly postLoggedService: PostLoggedService) {}
 
     ngOnInit(): void {
-        this.service.queryUsers();
+        this.service.queryUsers(this.postLoggedService.getRole());
+        this.service.setListOfUsersData.subscribe(value => this.arrayOfUsers = value);
     }
 
-    @Input() users = [
-        {
-            'id': '20210090',
-            'username': 'Timoy231@',
-            'email': 'timoy@gmail.com',
-            'role': 'A',
-        },
-        {
-            'id': '20210091',
-            'username': 'Helsi231@',
-            'email': 'helsi@gmail.com',
-            'role': 'B',
-        },        
-        {
-            'id': '20210092',
-            'username': 'Bensoy231@',
-            'email': 'bensoy@gmail.com',
-            'role': 'B',
-        }
-    ]
+    onHighLight(index: number) {
+        this.Highlighted = index;
+        this.newRole = this.arrayOfUsers[index].Roles;
+    }
+
+    onSaveChange(email: string, role: string) {
+        this.service.saveChange(email, role);
+    }
 }

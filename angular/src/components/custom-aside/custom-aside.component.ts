@@ -18,7 +18,7 @@ export class CustomAsideComponent {
 
     constructor(private readonly route: Router) {}
 
-    onRedirectToHome() {
-        this.route.navigate(["/"]);
+    onRedirections(redirection: string) {
+        this.route.navigate([`/${redirection}`]);
     }
 }

@@ -8,6 +8,10 @@ import { PostLoggedComponent } from './pages/post-logged/post-logged.component';
 import { CustomTableComponent } from '../components/custom-table/custom-table.component';
 import { DashboardComponent } from './pages/post-logged/dashboard/dashboard.component';
 import { HomeComponent } from './pages/post-logged/home/home.component';
+import { PopularComponent } from './pages/post-logged/popular/popular.component';
+import { QuestionsComponent } from './pages/post-logged/questions/questions.component';
+import { ExploreComponent } from './pages/post-logged/explore/explore.component';
+import { DepartmentComponent } from './pages/post-logged/department/department.component';
 
 const routes: Routes = [
     { 
@@ -17,6 +21,10 @@ const routes: Routes = [
         children: [
             { path: 'users', component: CustomTableComponent },
             { path: 'dashboard', component: DashboardComponent }, 
+            { path: 'popular', component: PopularComponent },
+            { path: 'questions', component: QuestionsComponent},
+            { path: 'explore', component: ExploreComponent },
+            { path: 'department', component: DepartmentComponent },
             { path: '', component: HomeComponent }
         ]
     },

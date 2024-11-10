@@ -117,7 +117,6 @@ C:\Users\Mills\Desktop\capstone\dotnet\obj\Debug\net8.0\dotnet.csproj.CoreCompil
 C:\Users\Mills\Desktop\capstone\dotnet\obj\Debug\net8.0\dotnet.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\Mills\Desktop\capstone\dotnet\obj\Debug\net8.0\dotnet.RazorAssemblyInfo.cache
 C:\Users\Mills\Desktop\capstone\dotnet\obj\Debug\net8.0\dotnet.RazorAssemblyInfo.cs
-C:\Users\Mills\Desktop\capstone\dotnet\obj\Debug\net8.0\dotnet.sourcelink.json
 C:\Users\Mills\Desktop\capstone\dotnet\obj\Debug\net8.0\staticwebassets.build.json
 C:\Users\Mills\Desktop\capstone\dotnet\obj\Debug\net8.0\staticwebassets.development.json
 C:\Users\Mills\Desktop\capstone\dotnet\obj\Debug\net8.0\staticwebassets\msbuild.dotnet.Microsoft.AspNetCore.StaticWebAssets.props

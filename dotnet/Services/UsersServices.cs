@@ -1,5 +1,6 @@
 using System.Security.Cryptography.X509Certificates;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson.IO;
 using MongoDB.Driver;
 
@@ -13,17 +14,43 @@ public class UsersServices {
         _userManager = userManager;
     }
 
-    public async Task GetAllUsers() {
-        var users = await _mongo!.ApplicationUsers().Find(
-            Builders<ApplicationUser>.Filter.Empty
-        ).Project<UsersResult>(
-            Builders<ApplicationUser>.Projection
-                .Include(u => u.Id)
-                .Include(u => u.Email)
-                .Include(u => u.Roles)
-        ).Limit(30).ToListAsync();
+    public async Task<List<UsersResult>> GetAllUsers(string role) {
 
-        Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(users, Newtonsoft.Json.Formatting.Indented));
+        var result = new List<UsersResult>();
+
+        if(role == "admin") {
+
+            result = await _mongo!.ApplicationUsers().Find(
+                Builders<ApplicationUser>.Filter.Ne(u => u.Roles, ["admin"])
+            ).Project<UsersResult>(
+                Builders<ApplicationUser>.Projection
+                    .Exclude(f => f.Id)
+                    .Include(f => f.Email)
+                    .Include(f => f.Roles)
+            ).Limit(30).ToListAsync();
+        
+        } else if(role == "dean") {
+
+            result = await _mongo!.ApplicationUsers().Find(
+                Builders<ApplicationUser>.Filter.And(
+                    Builders<ApplicationUser>.Filter.Ne(f => f.Roles, ["admin"]),
+                    Builders<ApplicationUser>.Filter.Ne(f => f.Roles, ["dean"])
+                )
+            ).Project<UsersResult>(
+                Builders<ApplicationUser>.Projection
+                    .Exclude(f => f.Id)
+                    .Include(f => f.Email)
+                    .Include(f => f.Roles)
+            ).Limit(30)
+            .ToListAsync();
+        }
+
+        return result;
     }
 
+    public async Task ChangeRole(string email, string role) {
+        var user = await _userManager.FindByEmailAsync(email);
+        user!.Roles = [role];
+        await _userManager.UpdateAsync(user); 
+    } 
 }

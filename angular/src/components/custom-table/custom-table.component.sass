@@ -5,7 +5,7 @@ $text-color: #B4B4B4
 
 :host
     display: block
-    width: 70%
+    width: 100%
 
 @keyframes fade-in
     from
@@ -25,12 +25,69 @@ div
     align-items: center
     justify-content: center
 
-    section
+    section.highlight
+        width: 70%
+        height: 40px
+        background-color: $secondary-color
+        margin-top: 20px
+        outline: 1px solid $tertiary-color
+        border-radius: 10px
+        display: flex
+        flex-direction: row
+        display: flex
+        align-items: center
+
+        span.email
+            height: 100%
+            width: 50%
+            display: flex
+            align-items: center
+            justify-content: center
+            font-family: sans-serif
+            font-size: 17px
+            color: $text-color
+            border-right: 1px solid $tertiary-color
+
+        section
+            height: 100%
+            width: 25%
+            display: flex
+            align-items: center
+            justify-content: center
+            background-color: $secondary-color
+
+            select
+                width: 90%
+                height: 25px
+                text-align: center
+                font-family: sans-serif
+                font-size: 17px
+                cursor: pointer
+                background-color: $primary-color
+                color: $text-color
+                border-radius: 3px
+                border: none
+                outline: 1px solid $tertiary-color
+
+            input
+                width: 90%
+                height: 25px
+                font-family: sans-serif
+                font-size: 17px
+                cursor: pointer
+                background-color: $primary-color
+                border: none
+                color: $text-color
+                border-radius: 3px
+                outline: 1px solid $tertiary-color
+
+    section.search
+        outline: 1px solid $tertiary-color
         margin-top: 40px
         height: 40px
-        width: 100%
+        width: 70%
         background-color: $secondary-color
-        border-radius: 20px
+        border-radius: 10px
         display: flex   
         flex-direction: row
         align-items: center
@@ -62,7 +119,7 @@ div
             color: $text-color
             font-family: sans-serif
             font-weight: 100
-            border-radius: 20px
+            border-radius: 10px
             cursor: pointer
             transition: all .3s ease
             &:hover
@@ -70,7 +127,7 @@ div
 
     table
         margin-top: 20px
-        width: 100%
+        width: 70%
         //border-collapse: collapse
         outline: 1px solid $tertiary-color
         border-radius: 10px
