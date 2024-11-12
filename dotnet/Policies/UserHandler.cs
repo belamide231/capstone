@@ -2,15 +2,17 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 
-public class UserPolicy : AuthorizationHandler<TokenHandler> {
+public class UserRequirement : IAuthorizationRequirement {}
+
+public class UserHandler : AuthorizationHandler<UserRequirement> {
 
 
     private readonly UserManager<ApplicationUser>? _userManager;
-    public const string _policy = "user";
-    public UserPolicy(UserManager<ApplicationUser> userManager) => _userManager = userManager;
+    public const string _Policy = "user";
+    public UserHandler(UserManager<ApplicationUser> userManager) => _userManager = userManager;
 
 
-    protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, TokenHandler requirement) {
+    protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, UserRequirement requirement) {
 
         var id = context.User.Claims.FirstOrDefault(f => f.Type == ClaimTypes.NameIdentifier)?.Value;
 

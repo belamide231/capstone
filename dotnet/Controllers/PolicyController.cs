@@ -13,7 +13,7 @@ public class PolicyController : ControllerBase {
     public PolicyController(UserManager<ApplicationUser> userManager) => _userManager = userManager;
 
 
-    [Authorize(UserPolicy._policy)]
+    [Authorize(UserHandler._Policy)]
     [HttpPost("user")]
     public async Task<IActionResult> UserPolicyControl() {
         

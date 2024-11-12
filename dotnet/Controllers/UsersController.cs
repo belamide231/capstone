@@ -23,8 +23,6 @@ public class UsersController : ControllerBase {
 
     [HttpPost("saveChange")]
     public async Task<IActionResult> Save() {
-        Console.WriteLine(Request.Query["email"]);
-        Console.WriteLine(Request.Query["role"]);
         await _service.ChangeRole(Request.Query["email"]!, Request.Query["role"]!);
         return Ok();
     }

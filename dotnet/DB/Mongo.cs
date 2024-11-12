@@ -5,20 +5,26 @@ using MongoDB.Driver;
 public class Mongo {
 
 
-    private readonly IMongoDatabase _mongo;
-    public static string _applicationUsers = "Users";
-    public static string _applicationRoles = "Roles";
-    public static string _usersData = "UsersData";
-    public static string _applicationConversations = "Conversations";
+    private readonly IMongoDatabase _Mongo;
+    public static string _ApplicationUsers = "Users";
+    public static string _ApplicationRoles = "Roles";
+    public static string _UsersData = "UsersData";
+    public static string _ApplicationConversations = "Conversations";
+    public static string _ApplicationDepartments = "Departments";
+
+
+    public static string _ApplicationPendingDepartments = "PendingDepartments";
     public Mongo() {
 
-        var connectionString = MongoUrl.Create(EnvHelper._MongoUrl);
-        _mongo = new MongoClient(connectionString).GetDatabase(connectionString.DatabaseName);
+        var ConnectionString = MongoUrl.Create(EnvHelper._MongoUrl);
+        _Mongo = new MongoClient(ConnectionString).GetDatabase(ConnectionString.DatabaseName);
     }
     
 
-    public IMongoCollection<ApplicationUser> ApplicationUsers() => _mongo.GetCollection<ApplicationUser>(_applicationUsers);
-    public IMongoCollection<ApplicationRole> ApplicationRoles() => _mongo.GetCollection<ApplicationRole>(_applicationRoles);
-    public IMongoCollection<UsersDataSchema> UsersDataCollection() => _mongo.GetCollection<UsersDataSchema>(_usersData);
-    public IMongoCollection<ConversationSchema> ConversationCollection() => _mongo.GetCollection<ConversationSchema>(_applicationConversations);
+    public IMongoCollection<ApplicationUser> ApplicationUsers() => _Mongo.GetCollection<ApplicationUser>(_ApplicationUsers);
+    public IMongoCollection<ApplicationRole> ApplicationRoles() => _Mongo.GetCollection<ApplicationRole>(_ApplicationRoles);
+    public IMongoCollection<UsersDataSchema> UsersDataCollection() => _Mongo.GetCollection<UsersDataSchema>(_UsersData);
+    public IMongoCollection<ConversationSchema> ConversationCollection() => _Mongo.GetCollection<ConversationSchema>(_ApplicationConversations);
+    public IMongoCollection<DepartmentSchema> DepartmentCollection() => _Mongo.GetCollection<DepartmentSchema>(_ApplicationDepartments);
+    public IMongoCollection<PendingDepartmentSchema> PendingDepartmentsCollection() => _Mongo.GetCollection<PendingDepartmentSchema>(_ApplicationPendingDepartments);
 }

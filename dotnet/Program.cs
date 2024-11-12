@@ -30,7 +30,13 @@ builder.Services.AddSingleton<Mongo>();
 builder.Services.AddSingleton<Redis>();
 builder.Services.AddTransient<UserServices>();
 builder.Services.AddTransient<UsersServices>();
-builder.Services.AddTransient<IAuthorizationHandler, UserPolicy>();
+builder.Services.AddTransient<DepartmentServices>();
+builder.Services.AddTransient<IAuthorizationHandler, AdminHandler>();
+builder.Services.AddTransient<IAuthorizationHandler, AdminOrDeanHandler>();
+builder.Services.AddTransient<IAuthorizationHandler, DeanHandler>();
+builder.Services.AddTransient<IAuthorizationHandler, TeacherHandler>();
+builder.Services.AddTransient<IAuthorizationHandler, StudentHandler>();
+builder.Services.AddTransient<IAuthorizationHandler, UserHandler>();
 builder.Services.AddCors(option => {
     option.AddPolicy("*", policy => {
         policy.AllowAnyHeader();
@@ -43,8 +49,8 @@ builder.Services.AddIdentityCore<ApplicationUser>()
                 .AddRoles<ApplicationRole>()
                 .AddMongoDbStores<ApplicationUser, ApplicationRole, ObjectId>(option => {
                     option.ConnectionString = EnvHelper._MongoUrl;
-                    option.UsersCollection = Mongo._applicationUsers;
-                    option.RolesCollection = Mongo._applicationRoles;
+                    option.UsersCollection = Mongo._ApplicationUsers;
+                    option.RolesCollection = Mongo._ApplicationRoles;
                 })
                 .AddApiEndpoints()
                 .AddDefaultTokenProviders();
@@ -62,7 +68,12 @@ builder.Services.AddAuthentication(option => {
     };
 }).AddBearerToken(IdentityConstants.BearerScheme);
 builder.Services.AddAuthorization(option => {
-    option.AddPolicy(UserPolicy._policy, policy => policy.AddRequirements(new TokenHandler()));
+    option.AddPolicy(AdminHandler._Policy, policy => policy.AddRequirements(new AdminRequirement()));
+    option.AddPolicy(AdminOrDeanHandler._Policy, policy => policy.AddRequirements(new AdminOrDeanRequirement()));
+    option.AddPolicy(DeanHandler._Policy, policy => policy.AddRequirements(new DeanRequirement()));
+    option.AddPolicy(TeacherHandler._Policy, policy => policy.AddRequirements(new TeacherRequirement()));
+    option.AddPolicy(StudentHandler._Policy, policy => policy.AddRequirements(new StudentRequirement()));
+    option.AddPolicy(UserHandler._Policy, policy => policy.AddRequirements(new UserRequirement()));
 });
 builder.Services.AddControllersWithViews();
 
@@ -94,7 +105,6 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.UseWebSockets();
 app.UseMiddleware<Messenger>();
-
 
 
 app.Run();

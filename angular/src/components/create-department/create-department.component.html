@@ -1,0 +1,5 @@
+<input (click)="onCreatingSwitch()" type="button" value="Create">
+<main *ngIf="creating">
+    <input [(ngModel)]="departmentName" name="departmentName" type="text" autocomplete="off" autocapitalize="off" placeholder="Department name">
+    <input (click)="onCreatingDepartment()" type="button" value="Create">
+</main>

@@ -1,1 +1,2 @@
-<department-list [listedDepartment]="listedDepartment"></department-list>
+<create-department></create-department>
+<department-list *ngIf="role === 'dean' || 'admin' " [listedDepartment]="listedDepartment"></department-list>

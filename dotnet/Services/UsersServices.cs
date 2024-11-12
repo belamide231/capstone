@@ -14,15 +14,15 @@ public class UsersServices {
         _userManager = userManager;
     }
 
-    public async Task<List<UsersResult>> GetAllUsers(string role) {
+    public async Task<List<UsersEntity>> GetAllUsers(string role) {
 
-        var result = new List<UsersResult>();
+        var result = new List<UsersEntity>();
 
         if(role == "admin") {
 
             result = await _mongo!.ApplicationUsers().Find(
                 Builders<ApplicationUser>.Filter.Ne(u => u.Roles, ["admin"])
-            ).Project<UsersResult>(
+            ).Project<UsersEntity>(
                 Builders<ApplicationUser>.Projection
                     .Exclude(f => f.Id)
                     .Include(f => f.Email)
@@ -36,7 +36,7 @@ public class UsersServices {
                     Builders<ApplicationUser>.Filter.Ne(f => f.Roles, ["admin"]),
                     Builders<ApplicationUser>.Filter.Ne(f => f.Roles, ["dean"])
                 )
-            ).Project<UsersResult>(
+            ).Project<UsersEntity>(
                 Builders<ApplicationUser>.Projection
                     .Exclude(f => f.Id)
                     .Include(f => f.Email)

@@ -3,7 +3,7 @@ using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
 using MongoDB.Bson;
 
-public class UsersResult {    
+public class UsersEntity {    
 
     [JsonPropertyName("_id")]
     public ObjectId Id { get; set; }
