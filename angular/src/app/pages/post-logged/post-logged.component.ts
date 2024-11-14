@@ -14,7 +14,7 @@ export class PostLoggedComponent implements OnInit {
     constructor(private readonly service: PostLoggedService, private readonly socket: WebsocketService) {}
 
     ngOnInit(): void {
-        this.role = this.service.getRole();
+        this.role = this.service.getRole(); 
         this.email = this.service.getEmail();
         this.id = this.service.getId();
         this.socket.connect(this.email, this.id);

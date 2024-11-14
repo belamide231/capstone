@@ -11,6 +11,8 @@ import { HomeComponent } from './pages/post-logged/home/home.component';
 import { PopularComponent } from './pages/post-logged/popular/popular.component';
 import { QuestionsComponent } from './pages/post-logged/questions/questions.component';
 import { ExploreComponent } from './pages/post-logged/explore/explore.component';
+import { DepartmentsComponent } from './pages/post-logged/departments/departments.component';
+import { RequestComponent } from './pages/post-logged/request/request.component';
 import { DepartmentComponent } from './pages/post-logged/department/department.component';
 
 const routes: Routes = [
@@ -24,7 +26,9 @@ const routes: Routes = [
             { path: 'popular', component: PopularComponent },
             { path: 'questions', component: QuestionsComponent},
             { path: 'explore', component: ExploreComponent },
-            { path: 'department', component: DepartmentComponent },
+            { path: 'departments', component: DepartmentsComponent },
+            { path: 'department/:departmentName', component: DepartmentComponent },
+            { path: 'request', component: RequestComponent },
             { path: '', component: HomeComponent }
         ]
     },

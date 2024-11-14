@@ -19,9 +19,6 @@ export class PostComponentComponent implements AfterViewInit {
         this.textarea.nativeElement.addEventListener('input', () => {
             this.textarea.nativeElement.style.height = 'fit-content';
 
-            console.log(this.textarea.nativeElement.scrollHeight);
-
-
             if(this.textarea.nativeElement.scrollHeight > 160) {
                 this.textarea.nativeElement.style.overflowY = 'scroll';
                 this.textarea.nativeElement.style.height = 160 + 'px';

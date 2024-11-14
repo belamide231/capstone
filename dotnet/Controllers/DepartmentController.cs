@@ -24,4 +24,35 @@ public class DepartmentController : ControllerBase {
         await _Services!.CreateDepartment(DTO, UserId);
         return Ok();
     }
+
+    [Authorize]
+    [Authorize(Policy = AdminHandler._Policy)]
+    [HttpPost("request")]
+    public async Task<IActionResult> GetRequest() {
+
+        var claims = User.Claims;
+        var claim = claims.FirstOrDefault();
+        var userId = claim?.Value;
+
+        dynamic result = await _Services!.GetDepartmentRequestService(userId!);
+        return StatusCode(result.Status, result.Result);
+    }
+
+    [Authorize]
+    [Authorize(Policy = UserHandler._Policy)]
+    [HttpPost("getAllDepartments")]
+    public async Task<IActionResult> GetDepartments() {
+
+        dynamic result = await _Services!.GetDepartmentsService();
+        return StatusCode(result.Status, result.Result);
+    }
+
+    [Authorize]
+    [Authorize(Policy = UserHandler._Policy)]
+    [HttpPost("getDepartment")]
+    public async Task<IActionResult> GetDepartment() {
+
+        dynamic result = await _Services!.GetDepartmentService(Request.Query["departmentName"]!, User.Claims.FirstOrDefault(f => f.Type == ClaimTypes.NameIdentifier)!.Value);
+        return StatusCode(result.Status, result.Result);
+    }
 }

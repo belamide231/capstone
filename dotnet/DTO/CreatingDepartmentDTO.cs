@@ -6,4 +6,7 @@ public class CreatingDepartmentDTO {
 
     [JsonPropertyName("departmentName")]
     public string? DepartmentName { get; set; }
+
+    [JsonPropertyName("departmentDescription")]
+    public string? DepartmentDescription { get; set; }
 }

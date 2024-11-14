@@ -1,5 +1,10 @@
-<input (click)="onCreatingSwitch()" type="button" value="Create">
-<main *ngIf="creating">
-    <input [(ngModel)]="departmentName" name="departmentName" type="text" autocomplete="off" autocapitalize="off" placeholder="Department name">
-    <input (click)="onCreatingDepartment()" type="button" value="Create">
+<input class="button" (click)="onCreatingSwitch(true)" type="button" value="Create">
+<main *ngIf="creating" (click)="onCreatingSwitch(false)">
+    <section (click)="$event.stopPropagation()">
+        <input [(ngModel)]="departmentName" name="departmentName" type="text" autocomplete="off" autocapitalize="off" placeholder="Department name">
+        <section>
+            <textarea [(ngModel)]="departmentDescription" cols="1" rows="1" placeholder="Description"></textarea>
+        </section>
+        <input (click)="onCreatingDepartment()" type="button" value="Create">
+    </section>
 </main>

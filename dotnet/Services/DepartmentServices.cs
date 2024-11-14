@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
 
 public class DepartmentServices {
@@ -13,36 +15,156 @@ public class DepartmentServices {
         _UserManager = __UserManager;
     }
 
-    public async Task CreateDepartment(CreatingDepartmentDTO DTO, string UserId) {
+    public async Task<Object> CreateDepartment(CreatingDepartmentDTO DTO, string UserId) {
 
-        // GETTING THE USERS ROLE
         var User = await _UserManager.FindByIdAsync(UserId);
         var Roles = User!.Roles;
         var UserRole = Roles.FirstOrDefault();
         var UserEmail = User.Email;
 
-        // CREATING THE NEW DEPARTMENT
-        var NewDepartment = new DepartmentSchema(DTO.DepartmentName!, UserId);
+        var NewDepartment = new DepartmentSchema(DTO.DepartmentName!, DTO.DepartmentDescription!, UserId);
         
-        // CHECKING IF THE ROLE IS ADMIN
         if(UserRole == "admin") {
 
-            Console.WriteLine("STORING");
+            try {
 
-            // STORING IT IN THE DEPARTMENT COLLECTION
-            await _Mongo.DepartmentCollection().InsertOneAsync(NewDepartment);
-            Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(NewDepartment, Newtonsoft.Json.Formatting.Indented));
+                await _Mongo.DepartmentCollection().InsertOneAsync(NewDepartment);
+                return new {
+                    Status = StatusCodes.Status201Created
+                };
+
+            } catch {
+
+                return new {
+                    Status = StatusCodes.Status500InternalServerError
+                };
+            }
 
         } else {
-        // OR DEAN
 
-            Console.WriteLine("REQUESTING");
-
-            // STORING IT FOR REQUESTING DEPARTMENT CREATION
             var PendingNewDepartment = new PendingDepartmentSchema(NewDepartment, UserEmail!);
-            await _Mongo.PendingDepartmentsCollection().InsertOneAsync(PendingNewDepartment);
+            
+            try {
 
-            Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(PendingNewDepartment, Newtonsoft.Json.Formatting.Indented));
+                await _Mongo.PendingDepartmentsCollection().InsertOneAsync(PendingNewDepartment);
+                return StatusCodes.Status202Accepted;
+
+            } catch {
+
+                return StatusCodes.Status500InternalServerError;
+            }
+        }
+    }
+
+    public async Task<Object> GetDepartmentRequestService(string UserId) {
+        
+        try {
+
+            var result = await _Mongo.PendingDepartmentsCollection().Find(
+                Builders<PendingDepartmentSchema>.Filter.Empty
+            ).ToListAsync();
+
+            return new {
+                Status = StatusCodes.Status200OK,
+                Result = result
+            };
+
+        } catch {
+
+            return new {
+                Status = StatusCodes.Status500InternalServerError,
+                Result = (Object?)null
+            };
+        }
+    }
+
+    public async Task<Object> GetDepartmentsService() {
+
+        try {
+
+            var result = await _Mongo.DepartmentCollection().Find(
+                Builders<DepartmentSchema>.Filter.Empty
+            ).ToListAsync();
+
+            return new {
+                Status = StatusCodes.Status200OK,
+                Result = result
+            };
+
+        } catch {
+
+            return new {
+                Status = StatusCodes.Status500InternalServerError,
+                Result = (Object?)null
+            };
+        }
+    }
+
+    public async Task<Object> GetDepartmentService(string DepartmentName, string UserId) {
+
+        var role = (await _UserManager.FindByIdAsync(UserId))!.Roles.FirstOrDefault();
+
+        if(role == "admin") {
+
+            try {
+
+                var result = await _Mongo.DepartmentCollection().Find(
+                    Builders<DepartmentSchema>.Filter.Eq(f => f.DepartmentName, DepartmentName)
+                ).ToListAsync();
+
+                return new {
+                    Status = StatusCodes.Status200OK,
+                    Result = result
+                };
+
+            } catch {
+
+                return new {
+                    Status = StatusCodes.Status500InternalServerError,
+                    Result = (Object?)null
+                };
+            }
+
+        } else {
+
+            try {
+
+                var result = await _Mongo.DepartmentCollection().Find(
+                    Builders<DepartmentSchema>.Filter.Or(
+                        Builders<DepartmentSchema>.Filter.And(
+                            Builders<DepartmentSchema>.Filter.Eq(f => f.DepartmentName, DepartmentName),
+                            Builders<DepartmentSchema>.Filter.In("MembersId", new [] { UserId })
+                        ),
+                        Builders<DepartmentSchema>.Filter.And(
+                            Builders<DepartmentSchema>.Filter.Eq(f => f.DepartmentName, DepartmentName),
+                            Builders<DepartmentSchema>.Filter.In("TeachersId", new [] { UserId })
+                        ),
+                        Builders<DepartmentSchema>.Filter.And(
+                            Builders<DepartmentSchema>.Filter.Eq(f => f.DepartmentName, DepartmentName),
+                            Builders<DepartmentSchema>.Filter.In("CreatorId", new [] { UserId })
+                        )
+                    )
+                ).ToListAsync();
+
+                if(result.Count == 0) { 
+                    return new {
+                        Status = StatusCodes.Status204NoContent,
+                        Result = (Object)null!  
+                    };
+                }
+
+                return new {
+                    Status = StatusCodes.Status200OK,
+                    Result = result
+                };
+
+            } catch {
+
+                return new {
+                    Status = StatusCodes.Status500InternalServerError,
+                    Result = (Object?)null
+                };
+            }
         }
     }
 }

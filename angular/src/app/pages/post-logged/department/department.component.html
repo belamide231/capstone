@@ -1,2 +1,11 @@
-<create-department></create-department>
-<department-list *ngIf="role === 'dean' || 'admin' " [listedDepartment]="listedDepartment"></department-list>
+<header>
+    <h1>{{departmentName}} </h1>
+    <p *ngIf="departmentData !== null">({{departmentMembersQuantity}}) Members</p>
+</header>
+<main>
+    <section class="feed">
+    </section>
+    <section class="request">
+        <request-post></request-post>
+    </section>
+</main>

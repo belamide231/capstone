@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { CreateDepartmentService } from './create-department.service';
 import { PostLoggedService } from '../../app/pages/post-logged/service/post-logged.service';
+import { DepartmentsService } from '../../app/pages/post-logged/departments/departments.service';
 
 @Component({
     selector: 'create-department',
@@ -17,14 +17,15 @@ import { PostLoggedService } from '../../app/pages/post-logged/service/post-logg
 export class CreateDepartmentComponent {
     creating: boolean = false;
     departmentName: string = '';
+    departmentDescription: string = '';
 
-    constructor(private readonly service: CreateDepartmentService, private readonly postLoggedServices: PostLoggedService) {}
+    constructor(private readonly service: DepartmentsService, private readonly postLoggedServices: PostLoggedService) {}
 
-    onCreatingSwitch() {
-        this.creating = !this.creating;
+    onCreatingSwitch(value: boolean) {
+        this.creating = value;
     }
 
     onCreatingDepartment() {
-        this.service.createDepartment(this.departmentName);
+        this.service.createDepartment(this.departmentName, this.departmentDescription);
     }
 }

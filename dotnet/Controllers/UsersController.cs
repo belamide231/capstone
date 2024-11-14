@@ -1,8 +1,5 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MongoDB.Bson;
-using MongoDB.Bson.IO;
-using Org.BouncyCastle.Ocsp;
-
 
 [Route("api/[controller]")]
 [ApiController]
@@ -14,7 +11,7 @@ public class UsersController : ControllerBase {
         _service = service;
     }
 
-    // THIS API WILL REQUIRE ROLE IDENTITY AS AN ADMIN IN THE FUTURE
+    [Authorize(Policy = AdminHandler._Policy)]
     [HttpPost("allUsers")]
     public async Task<IActionResult> Users() {
         var result = await _service.GetAllUsers(Request.Query["role"]!);
