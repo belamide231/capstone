@@ -13,6 +13,7 @@ using AspNetCore.Identity.Mongo;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using MongoDB.Bson;
 
@@ -93,16 +94,20 @@ if (!app.Environment.IsDevelopment()) {
 }
 
 
+Console.WriteLine(UserInterfaceController._WebDirectory);
 app.UseCors("*");
 app.UseHttpsRedirection();
-app.UseStaticFiles();
+app.UseStaticFiles(new StaticFileOptions {
+    FileProvider = new PhysicalFileProvider(UserInterfaceController._WebDirectory),
+    RequestPath = ""
+});
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=UserInterface}/{action=Render}/{WebPath?}");
 app.UseWebSockets();
 app.UseMiddleware<Messenger>();
 
