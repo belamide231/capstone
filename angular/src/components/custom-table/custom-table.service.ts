@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { api } from '../../helpers/api.helper';
 import { BehaviorSubject } from 'rxjs';
+import { Authorization } from '../../helpers/authorization.helper';
 
 @Injectable({
     providedIn: 'root'
@@ -14,7 +15,7 @@ export class CustomTableService {
 
         try {
 
-            const result = await api.post('api/users/allUsers?role=' + role);
+            const result = await api.post('api/users/allUsers', null, Authorization());
             this.listOfUsersData.next(result.data);
 
        } catch (error: any) {
@@ -28,13 +29,17 @@ export class CustomTableService {
 
         try {
 
-            const result = await api.post(`api/users/saveChange?email=${email}&role=${role}`);
+            const result = await api.post('api/users/saveChange', {
+                'email': email,
+                'role': role
+            }, Authorization());
+
             if(result.status === 200) {
-                this.listOfUsersData.value.find(f => {
-                    if(f.Email === email) {
-                        f.Roles = [role];
-                    }
-                });
+
+                var index = this.listOfUsersData.value.findIndex((obj: any) => obj.email === email);
+                var updated = this.listOfUsersData.value;
+                updated[index].roles = [role];
+                this.listOfUsersData.next(updated);
             }
 
         } catch (error: any) {

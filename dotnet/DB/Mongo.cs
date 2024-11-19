@@ -11,9 +11,10 @@ public class Mongo {
     public static string _UsersData = "UsersData";
     public static string _ApplicationConversations = "Conversations";
     public static string _ApplicationDepartments = "Departments";
-
-
     public static string _ApplicationPendingDepartments = "PendingDepartments";
+    public static string _ApplicationPendingClass = "PendingClass";
+    public static string _ApplicationPendingPost = "PendingPost";
+    public static string _ApplicationPost = "Posts";
     public Mongo() {
 
         var ConnectionString = MongoUrl.Create(EnvHelper._MongoUrl);
@@ -27,4 +28,7 @@ public class Mongo {
     public IMongoCollection<ConversationSchema> ConversationCollection() => _Mongo.GetCollection<ConversationSchema>(_ApplicationConversations);
     public IMongoCollection<DepartmentSchema> DepartmentCollection() => _Mongo.GetCollection<DepartmentSchema>(_ApplicationDepartments);
     public IMongoCollection<PendingDepartmentSchema> PendingDepartmentsCollection() => _Mongo.GetCollection<PendingDepartmentSchema>(_ApplicationPendingDepartments);
+    public IMongoCollection<PendingClassSchema> PendingClassCollection() => _Mongo.GetCollection<PendingClassSchema>(_ApplicationPendingClass);
+    public IMongoCollection<PendingPostSchema> PendingPostCollection() => _Mongo.GetCollection<PendingPostSchema>(_ApplicationPendingPost);
+    public IMongoCollection<PostSchema> PostCollection() => _Mongo.GetCollection<PostSchema>(_ApplicationPost);
 }

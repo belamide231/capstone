@@ -4,7 +4,7 @@
         <input type="text" placeholder="Search email">
     </section>
     <section *ngIf="Highlighted !== -1" class="highlight">
-        <span class="email">{{arrayOfUsers[Highlighted].Email}}</span>
+        <span class="email">{{arrayOfUsers[Highlighted].email}}</span>
         <section>
             <select [(ngModel)]="newRole">
                 <option value="dean">Dean</option>
@@ -13,7 +13,7 @@
             </select>
         </section>
         <section>
-            <input (click)="onSaveChange(arrayOfUsers[Highlighted].Email, newRole)" type="button" value="Save">
+            <input (click)="onSaveChange(arrayOfUsers[Highlighted].email, newRole)" type="button" value="Save">
         </section>
     </section>
     <table>
@@ -24,8 +24,8 @@
             </tr>
         <tbody>
             <tr *ngFor="let userData of arrayOfUsers, let i = index">
-                <td style="text-align: center;">{{ userData.Email }}</td>
-                <td style="text-align: center;">{{ userData.Roles[0] }}</td>
+                <td style="text-align: center;">{{ userData.email }}</td>
+                <td style="text-align: center;">{{ userData.roles[0] }}</td>
                 <td style="display: flex; align-items: center; justify-content: center; background-color: #212121;">
                     <input (click)="onHighLight(i)" type="button" value="Edit" style="width: 100%; height: 25px ; color: #B4B4B4; background-color: #171717; border-radius: 3px; outline: 1px solid #b4b4b444; border: none; cursor: pointer;">
                 </td>

@@ -2,6 +2,6 @@
     <feeds-component [empty]="'NO QUESTION POSTED'"></feeds-component>
 </main>
 <section class="activitiesOrRequest">
-    <request-post></request-post>
-    <activities-feeds></activities-feeds>
-</section>  
+    <request-post *ngIf="role != 'student' "></request-post>
+    <activities-feeds *ngIf="role === 'student' "></activities-feeds>
+</section>

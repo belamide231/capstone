@@ -14,8 +14,9 @@ public class UsersServices {
         _userManager = userManager;
     }
 
-    public async Task<List<UsersEntity>> GetAllUsers(string role) {
+    public async Task<List<UsersEntity>> GetAllUsers(string UserId) {
 
+        var role = (await _userManager.FindByIdAsync(UserId))!.Roles.FirstOrDefault();
         var result = new List<UsersEntity>();
 
         if(role == "admin") {
@@ -48,9 +49,20 @@ public class UsersServices {
         return result;
     }
 
-    public async Task ChangeRole(string email, string role) {
-        var user = await _userManager.FindByEmailAsync(email);
-        user!.Roles = [role];
-        await _userManager.UpdateAsync(user); 
-    } 
+    public async Task<int> ChangeRole(UpdateRoleDTO DTO) {
+
+        var user = await _userManager.FindByEmailAsync(DTO.Email!);
+
+        try {
+
+            user!.Roles = [DTO.Role];
+            await _userManager.UpdateAsync(user); 
+
+            return StatusCodes.Status200OK;
+
+        } catch {
+
+            return StatusCodes.Status500InternalServerError;
+        }
+    }
 }

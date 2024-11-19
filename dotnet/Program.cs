@@ -32,6 +32,7 @@ builder.Services.AddSingleton<Redis>();
 builder.Services.AddTransient<UserServices>();
 builder.Services.AddTransient<UsersServices>();
 builder.Services.AddTransient<DepartmentServices>();
+builder.Services.AddTransient<PostServices>();
 builder.Services.AddTransient<IAuthorizationHandler, AdminHandler>();
 builder.Services.AddTransient<IAuthorizationHandler, AdminOrDeanHandler>();
 builder.Services.AddTransient<IAuthorizationHandler, DeanHandler>();
@@ -71,6 +72,7 @@ builder.Services.AddAuthentication(option => {
 builder.Services.AddAuthorization(option => {
     option.AddPolicy(AdminHandler._Policy, policy => policy.AddRequirements(new AdminRequirement()));
     option.AddPolicy(AdminOrDeanHandler._Policy, policy => policy.AddRequirements(new AdminOrDeanRequirement()));
+    option.AddPolicy(AdminOrDeanOrTeacherHandler._Policy, policy => policy.AddRequirements(new AdminOrDeanOrTeacherRequirement()));
     option.AddPolicy(DeanHandler._Policy, policy => policy.AddRequirements(new DeanRequirement()));
     option.AddPolicy(TeacherHandler._Policy, policy => policy.AddRequirements(new TeacherRequirement()));
     option.AddPolicy(StudentHandler._Policy, policy => policy.AddRequirements(new StudentRequirement()));

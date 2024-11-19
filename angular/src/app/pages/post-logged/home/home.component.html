@@ -1,6 +1,6 @@
 <main class="feed">
     <section class="post">
-        <post-component></post-component>
+        <post-component [description]="description" (descriptionEmitter)="onUpdateDescription($event)" (postEmitter)="onPost()"></post-component>
     </section>
     <section class="feed">
         <feeds-component [empty]="'NO POST'"></feeds-component>
@@ -8,5 +8,5 @@
 </main>
 <section class="activitiesOrRequest">
     <activities-feeds *ngIf="role === 'student'" [role]="role"></activities-feeds>
-    <request-post *ngIf="role === 'admin' || 'dean' || 'teacher' "></request-post>
+    <request-post *ngIf="role !== 'student' "></request-post>
 </section>

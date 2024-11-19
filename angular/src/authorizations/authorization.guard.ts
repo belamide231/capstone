@@ -2,8 +2,8 @@ import { CanActivateFn, Router } from '@angular/router';
 import { inject } from '@angular/core';
 import { Cookie } from '../helpers/cookie.helper';
 import { api } from '../helpers/api.helper';
-import { guardsDTO } from './guards.dto';
 import { PostLoggedService } from '../app/pages/post-logged/service/post-logged.service';
+import { Authorization } from '../helpers/authorization.helper';
 
 export const AuthorizationGuard: CanActivateFn = async (route, state) => {
     const router = inject(Router);
@@ -18,13 +18,15 @@ export const AuthorizationGuard: CanActivateFn = async (route, state) => {
 
         try {
 
-            const result = await api.post(endpoint, null, guardsDTO.authorization(token));
+            const result = await api.post(endpoint, null, Authorization());
 
             if (result.status !== 200) {
 
                 isAuthorized = false;
 
             } else {
+
+                console.log(result.data);
 
                 postLoggedService.setInfo(result.data.role, result.data.email, result.data.id);
             }

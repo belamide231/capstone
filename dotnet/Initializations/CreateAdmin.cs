@@ -11,8 +11,8 @@ public class CreateAdmin {
         DotEnv.Load();
 
         _userManager = userManager;
-        _email = Environment.GetEnvironmentVariable("EMAIL")!;
-        _password = Environment.GetEnvironmentVariable("PASSWORD")!;
+        _email = "belamidemills29@gmail.com";
+        _password = "Belamide231@";
     }
 
     public async Task Create() {

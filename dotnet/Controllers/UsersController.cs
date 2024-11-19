@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,14 +15,16 @@ public class UsersController : ControllerBase {
     [Authorize(Policy = AdminHandler._Policy)]
     [HttpPost("allUsers")]
     public async Task<IActionResult> Users() {
-        var result = await _service.GetAllUsers(Request.Query["role"]!);
+
+        var result = await _service.GetAllUsers(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
         return Ok(result);
     }
 
     [HttpPost("saveChange")]
-    public async Task<IActionResult> Save() {
-        await _service.ChangeRole(Request.Query["email"]!, Request.Query["role"]!);
-        return Ok();
+    public async Task<IActionResult> Save([FromBody] UpdateRoleDTO DTO) {
+
+        dynamic result = await _service.ChangeRole(DTO);
+        return StatusCode(result);
     }
 }
 
