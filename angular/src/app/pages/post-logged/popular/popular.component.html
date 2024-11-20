@@ -2,6 +2,6 @@
     <feeds-component [empty]="'NO POPULAR POSTED'"></feeds-component>
 </main>
 <section class="activitiesOrRequest">
-    <request-post *ngIf="role === 'admin' || 'dean' || 'student' "></request-post>
+    <request-post *ngIf="role !== 'student' "></request-post>
     <activities-feeds *ngIf="role === 'student' "></activities-feeds>
 </section>

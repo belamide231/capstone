@@ -1,1 +1,11 @@
-<h1>REQUEST</h1>
+<main>
+    <section>
+        <pending-departments *ngIf="role === 'admin'"></pending-departments>
+    </section>
+    <section>
+        <pending-class *ngIf="role === 'dean'"></pending-class>
+    </section>
+    <section>
+        <pending-post *ngIf="role !== 'student'"></pending-post>
+    </section>
+</main> 

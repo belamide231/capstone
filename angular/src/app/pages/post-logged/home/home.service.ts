@@ -13,7 +13,7 @@ export class HomeService {
         try {
 
             const result = await api.post('api/post/getHomePosts', null, Authorization());
-            console.log(result.data);
+            console.log("HOME POSTS " + result.data);
 
         } catch (error: any) {
 
@@ -26,7 +26,7 @@ export class HomeService {
         try {
 
             const result = await api.post('api/post/getHomePendingPosts', null, Authorization());
-            console.log(result.data);
+            console.log("PENDING POSTS " + result.data);
 
         } catch (error: any) {
 
@@ -42,7 +42,7 @@ export class HomeService {
                 'Description': description,
                 'In': 'Home'
             }, Authorization());
-            console.log(result.data);
+            console.log("POSTING IN HOME " + result.data);
 
         } catch (error: any) {
 

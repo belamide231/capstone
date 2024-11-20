@@ -26,7 +26,8 @@ export class HomeComponent implements OnInit {
     
     description: string = '';
 
-    arrayOfPost: any [] = [];
+    arrayOfPost: any[] = [];
+    arrayOfPendingPost: any[] = [];
 
     constructor(private readonly postLoggedService: PostLoggedService, private readonly service: HomeService) {}
 

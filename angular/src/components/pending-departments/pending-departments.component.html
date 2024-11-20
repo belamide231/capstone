@@ -1,0 +1,12 @@
+<main>
+    <h1>LISTS OF PENDING DEPARTMENTS</h1>
+    <section class="noPendingDepartment" *ngIf="listOfPendingDepartment.length === 0">NO PENDING DEPARTMENT</section>
+    <section class="body" *ngFor="let object of listOfPendingDepartment">
+        <p class="requestedBy">Requested by: {{object.requestedBy}} (Dean)</p>
+        <p class="departmentName">{{object.department.departmentName}}</p>
+        <section>
+            <input (click)="onApprove(object.id)" type="button" value="Approve">
+            <input (click)="onDecline(object.id)" type="button" value="Decline">
+        </section>
+    </section>
+</main>

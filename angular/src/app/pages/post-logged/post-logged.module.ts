@@ -15,14 +15,14 @@ import { MessengerComponent } from "../../../components/messenger/messenger.comp
 		PostLoggedComponent
 	],
 	imports: [
-    CommonModule,
-    CustomHeaderComponent,
-    CustomAsideComponent,
-    PieChartComponent,
-    RoutesModule,
-    CustomTableComponent,
-    MessengerComponent
-],
+        CommonModule,
+        CustomHeaderComponent,
+        CustomAsideComponent,
+        PieChartComponent,
+        RoutesModule,
+        CustomTableComponent,
+        MessengerComponent
+    ],
 	exports: [
 		PostLoggedComponent
 	]
