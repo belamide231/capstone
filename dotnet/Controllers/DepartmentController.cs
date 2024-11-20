@@ -16,25 +16,17 @@ public class DepartmentController : ControllerBase {
     [Authorize(Policy = AdminOrDeanHandler._Policy)]
     [HttpPost("create")]
     public async Task<IActionResult> Create([FromBody] CreatingDepartmentDTO DTO) {
-
-        var Claims = User.Claims;
-        var Claim = Claims.FirstOrDefault();
-        var UserId = Claim!.Value;
         
-        await _Services!.CreateDepartment(DTO, UserId);
+        await _Services!.CreateDepartmentService(DTO, User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
         return Ok();
     }
 
     [Authorize]
     [Authorize(Policy = AdminHandler._Policy)]
-    [HttpPost("request")]
+    [HttpPost("getPendingDepartments")]
     public async Task<IActionResult> GetRequest() {
 
-        var claims = User.Claims;
-        var claim = claims.FirstOrDefault();
-        var userId = claim?.Value;
-
-        dynamic result = await _Services!.GetDepartmentRequestService(userId!);
+        dynamic result = await _Services!.GetDepartmentRequestService(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
         return StatusCode(result.Status, result.Result);
     }
 
@@ -54,5 +46,23 @@ public class DepartmentController : ControllerBase {
 
         dynamic result = await _Services!.GetDepartmentService(Request.Query["departmentName"]!, User.Claims.FirstOrDefault(f => f.Type == ClaimTypes.NameIdentifier)!.Value);
         return StatusCode(result.Status, result.Result);
+    }
+
+    [Authorize]
+    [Authorize(Policy = AdminHandler._Policy)]
+    [HttpPost("deletePendingDepartment")]
+    public async Task<IActionResult> DeletePendingDepartment([FromBody] DeletingApprovingPendingDepartment DTO) {
+
+        dynamic result = await _Services!.DeletingPendingDepartment(DTO);
+        return StatusCode(result);
+    }
+
+    [Authorize]
+    [Authorize(Policy = AdminHandler._Policy)]
+    [HttpPost("approvePendingDepartment")]
+    public async Task<IActionResult> ApprovePendingeDepartment([FromBody] DeletingApprovingPendingDepartment DTO) {
+
+        dynamic result = await _Services!.ApprovingPendingDepartment(DTO);
+        return StatusCode(result);
     }
 }

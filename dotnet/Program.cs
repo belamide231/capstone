@@ -35,6 +35,7 @@ builder.Services.AddTransient<DepartmentServices>();
 builder.Services.AddTransient<PostServices>();
 builder.Services.AddTransient<IAuthorizationHandler, AdminHandler>();
 builder.Services.AddTransient<IAuthorizationHandler, AdminOrDeanHandler>();
+builder.Services.AddTransient<IAuthorizationHandler, AdminOrDeanOrTeacherHandler>();
 builder.Services.AddTransient<IAuthorizationHandler, DeanHandler>();
 builder.Services.AddTransient<IAuthorizationHandler, TeacherHandler>();
 builder.Services.AddTransient<IAuthorizationHandler, StudentHandler>();
@@ -96,7 +97,6 @@ if (!app.Environment.IsDevelopment()) {
 }
 
 
-Console.WriteLine(UserInterfaceController._WebDirectory);
 app.UseCors("*");
 app.UseHttpsRedirection();
 app.UseStaticFiles(new StaticFileOptions {

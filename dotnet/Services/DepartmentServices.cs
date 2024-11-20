@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 public class DepartmentServices {
@@ -15,7 +16,7 @@ public class DepartmentServices {
         _UserManager = __UserManager;
     }
 
-    public async Task<Object> CreateDepartment(CreatingDepartmentDTO DTO, string UserId) {
+    public async Task<Object> CreateDepartmentService(CreatingDepartmentDTO DTO, string UserId) {
 
         var User = await _UserManager.FindByIdAsync(UserId);
         var Roles = User!.Roles;
@@ -167,4 +168,43 @@ public class DepartmentServices {
             }
         }
     }
+
+    public async Task<int> DeletingPendingDepartment(DeletingApprovingPendingDepartment DTO) {
+
+        try {
+
+            await _Mongo.PendingDepartmentsCollection().FindOneAndDeleteAsync(
+                Builders<PendingDepartmentSchema>.Filter.Eq(F => F.Id, DTO.PendingDepartmentId)
+            );
+
+            return StatusCodes.Status200OK;
+
+        } catch {
+
+            return StatusCodes.Status500InternalServerError;
+        }
+    }
+
+    public async Task<int> ApprovingPendingDepartment(DeletingApprovingPendingDepartment DTO) {
+
+        try {
+
+            var PendingDepartmentList = await _Mongo.PendingDepartmentsCollection().Find(
+                Builders<PendingDepartmentSchema>.Filter.Eq(F => F.Id, DTO.PendingDepartmentId)
+            ).ToListAsync();
+
+            var PendingDepartment = PendingDepartmentList.FirstOrDefault();
+            await _Mongo.DepartmentCollection().InsertOneAsync(PendingDepartment!.Department!);
+            await _Mongo.PendingDepartmentsCollection().FindOneAndDeleteAsync(
+                Builders<PendingDepartmentSchema>.Filter.Eq(F => F.Id, DTO.PendingDepartmentId)
+            );
+            
+            return StatusCodes.Status201Created;
+
+        } catch {
+
+            return StatusCodes.Status500InternalServerError;
+        }
+    }
+
 }

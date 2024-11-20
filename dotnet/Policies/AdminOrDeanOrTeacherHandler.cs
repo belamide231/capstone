@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 
 public class AdminOrDeanOrTeacherRequirement : IAuthorizationRequirement {}
-public class AdminOrDeanOrTeacherHandler : AuthorizationHandler<AdminOrDeanRequirement> {
+public class AdminOrDeanOrTeacherHandler : AuthorizationHandler<AdminOrDeanOrTeacherRequirement> {
 
     public const string _Policy = "DeanOrAdminOrTeacher";
     private readonly List<string> _Allowed = new List<string> { "dean", "admin", "teacher" };
@@ -14,25 +14,22 @@ public class AdminOrDeanOrTeacherHandler : AuthorizationHandler<AdminOrDeanRequi
         _UserManager = __UserManager;
     }
 
-    protected async override Task HandleRequirementAsync(AuthorizationHandlerContext context, AdminOrDeanRequirement requirement) {
+    protected async override Task HandleRequirementAsync(AuthorizationHandlerContext context, AdminOrDeanOrTeacherRequirement requirement) {
         
         var Result = context.User.Claims.FirstOrDefault(f => f.Type == ClaimTypes.NameIdentifier);
         if(Result == null) {
-            Console.WriteLine("Result");
             context.Fail();
-            return;
+            return; 
         }
 
         var UserId = Result.Value;
         if(string.IsNullOrEmpty(UserId)) {
-            Console.WriteLine("UserId");
             context.Fail();
             return;
         }
 
         var User = await _UserManager!.FindByIdAsync(UserId);
         if(User == null) {
-            Console.WriteLine("UserNull");
             context.Fail();
             return;
         }
@@ -40,7 +37,6 @@ public class AdminOrDeanOrTeacherHandler : AuthorizationHandler<AdminOrDeanRequi
         var Roles = User.Roles;
         var Role = Roles.FirstOrDefault();
         if(!_Allowed.Any(e => e == Role)) {
-            Console.WriteLine("False");
             context.Fail();
             return;
         }
