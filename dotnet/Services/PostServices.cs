@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
 
 public class PostServices {
@@ -157,4 +158,88 @@ public class PostServices {
             Result = (Object)null!
         };
     } 
+
+    public async Task<Object> GetStudentsPendingPostInHome(string UserId) {
+
+        try {
+
+            var result = await _Mongo.PendingPostCollection().Find(
+                Builders<PendingPostSchema>.Filter.Eq(F => F.RequestedBy, UserId)
+            ).ToListAsync();
+
+            return new {
+                Status = StatusCodes.Status200OK,
+                Data = result
+            };
+
+        } catch {
+
+            return new {
+                Status = StatusCodes.Status500InternalServerError,
+                Data = (Object)null!
+            };
+
+        }
+    }
+
+    public async Task<int> CancelStudentPendingPostService(CancelStudentPendingPostDTO DTO) {
+
+        try {
+
+            await _Mongo.PendingPostCollection().DeleteOneAsync(
+                Builders<PendingPostSchema>.Filter.Eq(F => F.Id, DTO.StudentsPendingPostId)
+            );
+
+            return StatusCodes.Status200OK;
+
+        } catch {
+
+            return StatusCodes.Status500InternalServerError;
+        }
+    }
+
+    public async Task<Object> GetAllRequestPostInHomeService() {
+
+        try {
+
+            var Result = await _Mongo.PendingPostCollection().Find(
+                Builders<PendingPostSchema>.Filter.Eq(f => f.In, "Home")
+            ).ToListAsync();
+
+            var UpdatedResult = await Task.WhenAll(Result.Select(async(obj) => {
+                obj.Post!.PostedBy = (await _UserManager.FindByIdAsync(obj.Post!.PostedBy!))!.Email;
+                return obj;
+            }));
+
+            return new {
+                Status = StatusCodes.Status200OK,
+                Data = UpdatedResult
+            };
+            
+        } catch {
+
+            return new {
+                Status = StatusCodes.Status500InternalServerError,
+                Data = (Object)null! 
+            };
+        }
+    }
+
+    public async Task<int> ApprovePendingPostInHome(CancelStudentPendingPostDTO DTO) {
+
+        try {
+
+            var Post = await _Mongo.PendingPostCollection().Find(
+                Builders<PendingPostSchema>.Filter.Eq(f => f.Id, DTO.StudentsPendingPostId)
+            ).ToListAsync();
+
+            await _Mongo.PostCollection().InsertOneAsync(Post.FirstOrDefault()!.Post!);
+
+            return StatusCodes.Status201Created;
+
+        } catch {
+
+            return StatusCodes.Status500InternalServerError;
+        }
+    }
 }

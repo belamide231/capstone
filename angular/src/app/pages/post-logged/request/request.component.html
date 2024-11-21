@@ -1,11 +1,11 @@
 <main>
     <section>
-        <pending-departments *ngIf="role === 'admin'"></pending-departments>
+        <pending-departments *ngIf="role === 'admin' "></pending-departments>
     </section>
     <section>
         <pending-class *ngIf="role === 'dean'"></pending-class>
     </section>
     <section>
-        <pending-post *ngIf="role !== 'student'"></pending-post>
+        <home-post-request></home-post-request>
     </section>
 </main> 

@@ -34,28 +34,31 @@ public class PostController : ControllerBase {
         return StatusCode(Result.Status, Result.Data);
     }
 
-    [HttpPost("getDepartmentPosts")]
-    public async Task<IActionResult> GetDepartmentPosts() {
-        return Ok();
+    //[Authorize(Policy = StudentHandler._Policy)]
+    [HttpPost("getStudentPendingPostInHome")]
+    public async Task<IActionResult> GetStudentsPendingPostInHome() {
+        dynamic Result = await _Services.GetStudentsPendingPostInHome(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+        return StatusCode(Result.Status, Result.Data);
     }
 
-    [HttpPost("getClassPosts")]
-    public async Task<IActionResult> GetClassPosts() {
-        return Ok();
+    [HttpPost("cancelStudentPendingPost")]
+    public async Task<IActionResult> CancelStudentPendingPost([FromBody] CancelStudentPendingPostDTO DTO) {
+
+        dynamic Result = await _Services.CancelStudentPendingPostService(DTO);
+        return StatusCode(Result);
     }
 
-    [HttpPost("postInPortal")]
-    public async Task<IActionResult> PostInPortal() {
-        return Ok();
+    [HttpPost("getAllRequestPostInHome")]
+    public async Task<IActionResult> GetAllRequestPostInHome() {
+
+        dynamic Result = await _Services.GetAllRequestPostInHomeService();
+        return StatusCode(Result.Status, Result.Data);
     }
 
-    [HttpPost("postInDepartment")]
-    public async Task<IActionResult> PostInDepartment() {
-        return Ok();
-    }
+    [HttpPost("approvePendingPostInHome")]
+    public async Task<IActionResult> ApprovePendingPostInHome([FromBody] CancelStudentPendingPostDTO DTO) {
 
-    [HttpPost("postInClass")]
-    public async Task<IActionResult> PostInClass() {
-        return Ok();
+        dynamic Result = await _Services.ApprovePendingPostInHome(DTO);
+        return StatusCode(Result);
     }
 }

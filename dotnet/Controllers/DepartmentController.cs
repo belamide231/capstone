@@ -49,7 +49,7 @@ public class DepartmentController : ControllerBase {
     }
 
     [Authorize]
-    [Authorize(Policy = AdminHandler._Policy)]
+    [Authorize(Policy = AdminOrDeanHandler._Policy)]
     [HttpPost("deletePendingDepartment")]
     public async Task<IActionResult> DeletePendingDepartment([FromBody] DeletingApprovingPendingDepartment DTO) {
 
@@ -64,5 +64,14 @@ public class DepartmentController : ControllerBase {
 
         dynamic result = await _Services!.ApprovingPendingDepartment(DTO);
         return StatusCode(result);
+    }
+
+    [Authorize]
+    [Authorize(Policy = DeanHandler._Policy)]
+    [HttpPost("getDeansPendingDepartment")]
+    public async Task<IActionResult> GetDeansPendingDepartment() {
+
+        dynamic result = await _Services!.GetDeansPendingDepartment(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+        return StatusCode(result.Status, result.Data);
     }
 }

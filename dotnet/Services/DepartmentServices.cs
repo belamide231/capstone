@@ -1,3 +1,4 @@
+using System.Reflection.Metadata;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -204,6 +205,31 @@ public class DepartmentServices {
         } catch {
 
             return StatusCodes.Status500InternalServerError;
+        }
+    }
+
+    public async Task<object> GetDeansPendingDepartment(string UserId) {
+
+        var User = await _UserManager.FindByIdAsync(UserId);
+
+        try {
+
+            var Result = await _Mongo.PendingDepartmentsCollection().Find(
+                Builders<PendingDepartmentSchema>.Filter.Eq(F => F.RequestedBy, User!.Email)
+            ).ToListAsync();
+
+            return new {
+                Status = StatusCodes.Status200OK,
+                Data = Result
+            };
+
+        } catch {
+
+            return new {
+                Status = StatusCodes.Status200OK,
+                Data = (Object)null!
+            };
+
         }
     }
 

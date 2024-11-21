@@ -1,1 +1,14 @@
-<p>pending-post works!</p>
+<main>
+    <h1>YOUR LIST OF YOUR PENDING POST IN HOME</h1>
+    <h3 *ngIf="studentsPendingPost.length === 0">NO PENDING POST</h3>
+    <section *ngFor="let request of studentsPendingPost">
+        <h3>Requested by: You</h3>
+        <h3>To be posted in Home</h3>
+        <section class="description">
+            <p>Description: {{request.post.description}}</p>
+        </section>
+        <section class="button">
+            <input (click)="onCancelPendingPostInHome(request.id)" type="button" value="Cancel">
+        </section>
+    </section>
+</main>

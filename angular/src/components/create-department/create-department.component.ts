@@ -27,5 +27,8 @@ export class CreateDepartmentComponent {
 
     onCreatingDepartment() {
         this.service.createDepartment(this.departmentName, this.departmentDescription);
+        this.creating = false;
+        this.departmentName = '';
+        this.departmentDescription = '';
     }
 }

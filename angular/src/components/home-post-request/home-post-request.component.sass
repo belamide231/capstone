@@ -1,73 +1,55 @@
 @import '../../styles'
-
-:host
-    width: 100%
-    height: fit-content
-    display: flex
-    justify-content: center
     
 main
-    width: 100%
-    height: fit-content
-    background-color: $secondary-color
     display: flex
     flex-direction: column
+    justify-content: center
     align-items: center
-    border-radius: 10px
+    color: $text-color
 
     h1
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
         font-weight: 100
         font-size: 35px
-        color: $text-color
 
     h3
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
-        font-weight: 100
         font-size: 17px
-        color: $text-color
+        font-weight: 100
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+
 
     section
-        height: fit-content
         width: 85%
         background-color: $primary-color
+        height: fit-content
         border-radius: 10px
         margin-bottom: 25px
 
-        h3
+        h1
             font-family: sans-serif
             font-weight: 100
-            color: $text-color
+            font-size: 17px
             text-indent: 20px
 
-        section.description
-            height: fit-content
-            width: 100%
+        section
             display: flex
             align-items: center
             justify-content: center
+            width: 100%
+            height: fit-content
 
             p
                 font-family: sans-serif
-                font-weight: 100
-                color: $text-color
-
-        section.button
-            width: 100%
-            height: fit-content
-            display: flex
-            align-items: center
-            justify-content: center
 
             input
-                margin-right: 10px
-                width: 50%
                 height: 40px
+                width: 35%
+                margin-right: 10px
                 outline: none
                 border: none
                 background-color: $secondary-color
                 color: $text-color
-                cursor: pointer
                 font-size: 17px
-                font-family: sans-serif
+                border-radius: 10px
+                cursor: pointer
                 font-weight: 100

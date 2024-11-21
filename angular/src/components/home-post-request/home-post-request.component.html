@@ -1,0 +1,14 @@
+<main>
+    <h1>LIST OF PENDING POST IN HOME</h1>
+    <h3 *ngIf="listOfPendingPostInHome.length === 0">NO PENDING POST IN HOME</h3>
+    <section *ngFor="let request of listOfPendingPostInHome">
+        <h1>Requested by: {{request.post.postedBy}}</h1>
+        <section>
+            <p>Description: {{request.post.description}}</p>
+        </section>
+        <section>
+            <input (click)="onApprovePostInHome(request.id)" type="button" value="Approve">
+            <input (click)="onDeclinePostInHome(request.id)" type="button" value="Decline">
+        </section>
+    </section>
+</main>

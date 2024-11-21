@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Cookie } from '../../helpers/cookie.helper';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { PostLoggedService } from '../../app/pages/post-logged/service/post-logged.service';
 
 
 @Component({
@@ -15,15 +16,18 @@ import { FormsModule } from '@angular/forms';
 		FormsModule
 	]
 })
-export class CustomHeaderComponent {
-	@Input() role: string = "";
-	search: string = "";
+export class CustomHeaderComponent implements OnInit {
+	role: string = '';
+	search: string = '';
 
 	menu: boolean = false;
 	notification: boolean = false;
 
-	constructor(private readonly router: Router) {}
+	constructor(private readonly router: Router, private readonly postLoggedService: PostLoggedService) {}
 
+	ngOnInit(): void {
+		this.role = this.postLoggedService.getRole()
+	}
 
 	onClearSearch() {
 		this.search = "";

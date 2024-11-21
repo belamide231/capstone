@@ -35,6 +35,8 @@ export class HomeComponent implements OnInit {
         this.service.getPost();
         this.service.getPendingPost();
         this.role = this.postLoggedService.getRole();
+
+        this.service.setListOfPostInHome.subscribe(value => this.arrayOfPost = value);
     }
 
     onUpdateDescription(updatedDescription: string): void {
@@ -43,5 +45,6 @@ export class HomeComponent implements OnInit {
 
     onPost() {
         this.service.onPost(this.description);
+        this.description = '';
     }
 }

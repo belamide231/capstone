@@ -1,1 +1,9 @@
-<p>pending-class works!</p>
+<main>
+    <h1>YOUR PENDING REQUEST</h1>
+    <h3 *ngIf="deansPendingDepartment.length === 0">YOU HAVE NO REQUEST</h3>
+    <section *ngFor="let request of deansPendingDepartment">
+        <p>Requested by: You</p>
+        <h1>{{request.department.departmentName}}</h1>
+        <input (click)="onCancelRequest(request.id)" type="button" value="Cancel">
+    </section>
+</main>

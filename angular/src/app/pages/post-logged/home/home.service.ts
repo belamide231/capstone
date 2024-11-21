@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { api } from '../../../../helpers/api.helper';
 import { Authorization } from '../../../../helpers/authorization.helper';
+import { BehaviorSubject } from 'rxjs';
 
 
 @Injectable({
@@ -8,12 +9,15 @@ import { Authorization } from '../../../../helpers/authorization.helper';
 })
 export class HomeService {
 
+    listOfPostInHome = new BehaviorSubject<any[]>([]);
+    setListOfPostInHome = this.listOfPostInHome.asObservable();
+
     async getPost() {
 
         try {
 
             const result = await api.post('api/post/getHomePosts', null, Authorization());
-            console.log("HOME POSTS " + result.data);
+            this.listOfPostInHome.next(result.data);
 
         } catch (error: any) {
 

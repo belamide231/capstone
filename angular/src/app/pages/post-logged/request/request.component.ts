@@ -5,15 +5,17 @@ import { PendingDepartmentsComponent } from "../../../../components/pending-depa
 import { PendingPostComponent } from "../../../../components/pending-post/pending-post.component";
 import { PostLoggedService } from '../service/post-logged.service';
 import { RequestService } from './request.service';
+import { HomePostRequestComponent } from "../../../../components/home-post-request/home-post-request.component";
 
 @Component({
     standalone: true,
     imports: [
-        CommonModule,
-        PendingClassComponent,
-        PendingDepartmentsComponent,
-        PendingPostComponent
-    ],
+    CommonModule,
+    PendingClassComponent,
+    PendingDepartmentsComponent,
+    PendingPostComponent,
+    HomePostRequestComponent
+],
     templateUrl: './request.component.html',
     styleUrl: './request.component.sass'
 })

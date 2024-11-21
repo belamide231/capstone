@@ -14,6 +14,7 @@ import { ExploreComponent } from './pages/post-logged/explore/explore.component'
 import { DepartmentsComponent } from './pages/post-logged/departments/departments.component';
 import { RequestComponent } from './pages/post-logged/request/request.component';
 import { DepartmentComponent } from './pages/post-logged/department/department.component';
+import { PendingComponent } from './pages/post-logged/pending/pending.component';
 
 const routes: Routes = [
     { 
@@ -29,6 +30,7 @@ const routes: Routes = [
             { path: 'departments', component: DepartmentsComponent },
             { path: 'department/:departmentName', component: DepartmentComponent },
             { path: 'request', component: RequestComponent },
+            { path: 'pending', component: PendingComponent },
             { path: '', component: HomeComponent }
         ]
     },
