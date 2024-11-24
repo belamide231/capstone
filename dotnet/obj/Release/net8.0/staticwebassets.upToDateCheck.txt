@@ -1,0 +1,6 @@
+wwwroot\3rdpartylicenses.txt
+wwwroot\browser\favicon.ico
+wwwroot\browser\index.html
+wwwroot\browser\main-JJIZSP3W.js
+wwwroot\browser\polyfills-FFHMD2TL.js
+wwwroot\browser\styles-TOY4K6UY.css

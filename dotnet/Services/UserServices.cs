@@ -264,8 +264,11 @@ public class UserServices {
                 Builders<ApplicationUser>.Update.Push(f => f.DeviceIds, deviceInfo)
             );
 
-            if(result == null && !result!.DeviceIds.Contains(deviceInfo))
-                return new CredentialVerificationResults.CredentialVerification(token.ToString(), StatusCodes.Status200OK);   
+            Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(result, Newtonsoft.Json.Formatting.Indented));
+
+            // NEEDED TO DEBUGGED
+            // if(result == null && !result!.DeviceIds.Contains(deviceInfo))
+                // return new CredentialVerificationResults.CredentialVerification(token.ToString(), StatusCodes.Status200OK);   
 
 
             return new CredentialVerificationResults.CredentialVerificationWithDeviceInfo(token.ToString(), StatusCodes.Status202Accepted, DTO.DeviceIdIdentifier, DTO.DeviceId);

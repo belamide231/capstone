@@ -1,4 +1,4 @@
-using dotenv.net;
+// using dotenv.net;
 
 public class EnvHelper {
 
@@ -12,7 +12,7 @@ public class EnvHelper {
     public static string? _GmailPassword;
     public EnvHelper() {
 
-        DotEnv.Load();
+        // DotEnv.Load();
 
         //_ServerUrl = Environment.GetEnvironmentVariable("SERVER_URL");
         //_MongoUrl = Environment.GetEnvironmentVariable("MONGO_URL");
@@ -24,7 +24,7 @@ public class EnvHelper {
         //_GmailPassword = Environment.GetEnvironmentVariable("GMAIL_PASSWORD");
 
 
-        _ServerUrl = "http://0.0.0.0:3000";
+        _ServerUrl = "http://127.0.0.1:81";
         _MongoUrl = "mongodb://localhost:27017/portal";
         _RedisUrl = "localhost:6379";
         _JwtKey = "l9KVm4D7wXnT1PgHq8dY5RfE3zjObpGZxQCyL6MsNUaWBvKJ2heSDo0tFIrlXyA7Mu9cZnJX0dLqT8gCvbR5Hk6mW3YzpNsOayGx2jQ4FP7idBH";

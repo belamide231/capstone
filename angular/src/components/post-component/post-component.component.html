@@ -1,6 +1,6 @@
 <main>
     <section class="textarea">
-        <span class="image"></span>
+        <span class="image">{{ email }}</span>
         <label #label class="textarea-container" for="textarea">
             <textarea [(ngModel)]="description" (ngModelChange)="onEmittingDescription()" #textarea name="" id="textarea" cols="1" rows="1" placeholder="Type here..."></textarea>
         </label>

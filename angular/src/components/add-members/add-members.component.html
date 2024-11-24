@@ -1,0 +1,26 @@
+<main (click)="onBlur()">
+    <section class="role" *ngIf="membersToAdd === '' " (click)="$event.stopPropagation()">
+        <input (click)="onMembersToAdd('student'); $event.stopPropagation()" type="button" value="Student">
+        <input (click)="onMembersToAdd('teacher'); $event.stopPropagation()" type="button" value="Teacher">
+    </section>
+    <section class="list" (click)="$event.stopPropagation()" *ngIf="membersToAdd">
+       <table border="1">
+            <thead>{{membersToAdd.toUpperCase()}}</thead>
+            <thead>
+                <tr>
+                    <th>Email</th>
+                    <th>Add</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let obj of QueriedUsers">
+                    <td>{{obj.email}}</td>
+                    <td><input (change)="toggleListOfMembersToBeAdded($event, obj.id)" type="checkbox"></td>
+                </tr>
+                <tr>
+                    <input (click)="toggleAddMembersButton()" type="button" value="ADD">
+                </tr>
+            </tbody>
+       </table> 
+    </section>
+</main>

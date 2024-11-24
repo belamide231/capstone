@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, ViewChild, AfterViewInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, Input, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { ElementRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { PostLoggedService } from '../../app/pages/post-logged/service/post-logged.service';
 
 @Component({
     selector: 'post-component',
@@ -12,6 +13,8 @@ import { FormsModule } from '@angular/forms';
 })
 export class PostComponentComponent implements AfterViewInit {
 
+    email: string = '';
+
     @Input() description: string = '';
     @Output() descriptionEmitter = new EventEmitter<string>(); 
     @Output() postEmitter = new EventEmitter<string>();
@@ -20,6 +23,8 @@ export class PostComponentComponent implements AfterViewInit {
     @ViewChild('textarea') textarea!: ElementRef<HTMLTextAreaElement>;
     @ViewChild('label') label!: ElementRef<HTMLLabelElement>;
     initializedLabelHeight = (50 - 20);
+
+    constructor(private cdRef: ChangeDetectorRef, private readonly postLoggedService: PostLoggedService) {}
 
     onEmittingDescription(): void {
         this.descriptionEmitter.emit(this.description);
@@ -32,6 +37,8 @@ export class PostComponentComponent implements AfterViewInit {
     ngAfterViewInit(): void {
 
         this.textarea.nativeElement.addEventListener('input', () => this.onUpdateTextareaHeight());
+        this.email = this.postLoggedService.getEmail()[0].toUpperCase();
+        this.cdRef.detectChanges();
     }
 
     onUpdateTextareaHeight(): void {

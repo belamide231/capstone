@@ -1,5 +1,4 @@
 using System.Security.Claims;
-using Amazon.Auth.AccessControlPolicy;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using MimeKit;

@@ -83,6 +83,12 @@ public class PostServices {
                 Builders<PostSchema>.Filter.Eq(F => F.In, "home")
             ).ToListAsync();
 
+
+            var UpdatedResult = await Task.WhenAll(Result.Select(async(obj) => {
+                obj.PostedBy = (await _UserManager.FindByIdAsync(obj.PostedBy!))!.Email;
+                return obj;
+            }));
+
             return new {
                 Status = StatusCodes.Status200OK,
                 Data = Result
@@ -119,45 +125,45 @@ public class PostServices {
         }
     }
 
-    public async Task<Object> GettingPostInClassService() {
+    // public async Task<Object> GettingPostInClassService() {
 
-        return new {
-            Status = StatusCodes.Status200OK,
-            Result = (Object)null!
-        };
-    }
+    //     return new {
+    //         Status = StatusCodes.Status200OK,
+    //         Result = (Object)null!
+    //     };
+    // }
 
-    public async Task<Object> GettingPostInPortalService() {
+    // public async Task<Object> GettingPostInPortalService() {
 
-        return new {
-            Status = StatusCodes.Status200OK,
-            Result = (Object)null!
-        };
-    }
+    //     return new {
+    //         Status = StatusCodes.Status200OK,
+    //         Result = (Object)null!
+    //     };
+    // }
 
-    public async Task<Object> PostingInPortalService() {
+    // public async Task<Object> PostingInPortalService() {
 
-        return new {
-            Status = StatusCodes.Status202Accepted,
-            Result = (Object)null!
-        };
-    }
+    //     return new {
+    //         Status = StatusCodes.Status202Accepted,
+    //         Result = (Object)null!
+    //     };
+    // }
 
-    public async Task<Object> PostingInDepartment() {
+    // public async Task<Object> PostingInDepartment() {
 
-        return new {
-            Status = StatusCodes.Status202Accepted,
-            Result = (Object)null!
-        };
-    }
+    //     return new {
+    //         Status = StatusCodes.Status202Accepted,
+    //         Result = (Object)null!
+    //     };
+    // }
 
-    public async Task<Object> PostingInClass() {
+    // public async Task<Object> PostingInClass() {
         
-        return new {
-            Status = StatusCodes.Status202Accepted,
-            Result = (Object)null!
-        };
-    } 
+    //     return new {
+    //         Status = StatusCodes.Status202Accepted,
+    //         Result = (Object)null!
+    //     };
+    // } 
 
     public async Task<Object> GetStudentsPendingPostInHome(string UserId) {
 

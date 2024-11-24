@@ -17,7 +17,7 @@ export class WebsocketService {
     setMessageNotification = this.messageNotification.asObservable();
     
     private socket: WebSocket | null = null;
-    private readonly url = 'http://localhost:3000/chat';
+    private readonly url = 'ws://localhost:81/chat';
 
     connect(email: string, id: string) {
         this.socket = new WebSocket(`${this.url}?email=${email}&id=${id}`);

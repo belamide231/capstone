@@ -1,4 +1,4 @@
-using dotenv.net;
+//using dotenv.net;
 using Microsoft.AspNetCore.Identity;
 
 public class CreateAdmin {
@@ -8,7 +8,7 @@ public class CreateAdmin {
 
     public CreateAdmin(UserManager<ApplicationUser> userManager, Mongo mongo) {
 
-        DotEnv.Load();
+        //DotEnv.Load();
 
         _userManager = userManager;
         _email = "belamidemills29@gmail.com";

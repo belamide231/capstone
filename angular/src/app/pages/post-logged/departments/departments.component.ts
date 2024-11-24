@@ -41,6 +41,7 @@ export class DepartmentsComponent implements OnInit {
     constructor(private readonly postLoggedService: PostLoggedService, private readonly service: DepartmentsService) {}
 
     ngOnInit(): void {
+        this.role = this.postLoggedService.getRole();
         this.service.getAllDepartments();
         this.service.setListOfDepartment.subscribe(value => this.listOfDepartment = value );
     }

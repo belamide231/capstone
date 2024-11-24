@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "FGXmzxdl/19stFRe01YgCrSruZs5gCiH86VR2bSDvdg=",
+  "Hash": "Sxp2eoXc3LvFv00bUsJPLoxiogbk1+YnspF0eU8I4ko=",
   "Source": "dotnet",
   "BasePath": "_content/dotnet",
   "Mode": "Default",
@@ -8,21 +8,21 @@
   "ReferencedProjectsConfiguration": [],
   "DiscoveryPatterns": [
     {
-      "Name": "dotnet/wwwroot",
+      "Name": "dotnet\\wwwroot",
       "Source": "dotnet",
-      "ContentRoot": "/Users/belamidemillsb/Desktop/capstone/dotnet/wwwroot/",
+      "ContentRoot": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\wwwroot\\",
       "BasePath": "_content/dotnet",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "/Users/belamidemillsb/Desktop/capstone/dotnet/obj/Release/net8.0/scopedcss/bundle/dotnet.styles.css",
+      "Identity": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\obj\\Release\\net8.0\\scopedcss\\bundle\\dotnet.styles.css",
       "SourceId": "dotnet",
       "SourceType": "Computed",
-      "ContentRoot": "/Users/belamidemillsb/Desktop/capstone/dotnet/obj/Release/net8.0/scopedcss/bundle/",
+      "ContentRoot": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\obj\\Release\\net8.0\\scopedcss\\bundle\\",
       "BasePath": "_content/dotnet",
-      "RelativePath": "dotnet.styles.css",
+      "RelativePath": "dotnet#[.{fingerprint}]?.styles.css",
       "AssetKind": "All",
       "AssetMode": "CurrentProject",
       "AssetRole": "Primary",
@@ -31,17 +31,19 @@
       "RelatedAsset": "",
       "AssetTraitName": "ScopedCss",
       "AssetTraitValue": "ApplicationBundle",
+      "Fingerprint": "ilf74psmbm",
+      "Integrity": "Su13uBNDBwynlWZfOrI3EcgN5TViiyu8v1Vcv4gPRSk=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "/Users/belamidemillsb/Desktop/capstone/dotnet/obj/Release/net8.0/scopedcss/bundle/dotnet.styles.css"
+      "OriginalItemSpec": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\obj\\Release\\net8.0\\scopedcss\\bundle\\dotnet.styles.css"
     },
     {
-      "Identity": "/Users/belamidemillsb/Desktop/capstone/dotnet/obj/Release/net8.0/scopedcss/projectbundle/dotnet.bundle.scp.css",
+      "Identity": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\obj\\Release\\net8.0\\scopedcss\\projectbundle\\dotnet.bundle.scp.css",
       "SourceId": "dotnet",
       "SourceType": "Computed",
-      "ContentRoot": "/Users/belamidemillsb/Desktop/capstone/dotnet/obj/Release/net8.0/scopedcss/projectbundle/",
+      "ContentRoot": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\obj\\Release\\net8.0\\scopedcss\\projectbundle\\",
       "BasePath": "_content/dotnet",
-      "RelativePath": "dotnet.bundle.scp.css",
+      "RelativePath": "dotnet#[.{fingerprint}]!.bundle.scp.css",
       "AssetKind": "All",
       "AssetMode": "Reference",
       "AssetRole": "Primary",
@@ -50,123 +52,795 @@
       "RelatedAsset": "",
       "AssetTraitName": "ScopedCss",
       "AssetTraitValue": "ProjectBundle",
+      "Fingerprint": "ilf74psmbm",
+      "Integrity": "Su13uBNDBwynlWZfOrI3EcgN5TViiyu8v1Vcv4gPRSk=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "/Users/belamidemillsb/Desktop/capstone/dotnet/obj/Release/net8.0/scopedcss/projectbundle/dotnet.bundle.scp.css"
+      "OriginalItemSpec": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\obj\\Release\\net8.0\\scopedcss\\projectbundle\\dotnet.bundle.scp.css"
     },
     {
-      "Identity": "/Users/belamidemillsb/Desktop/capstone/dotnet/wwwroot/3rdpartylicenses.txt",
+      "Identity": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\wwwroot\\3rdpartylicenses.txt",
       "SourceId": "dotnet",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/belamidemillsb/Desktop/capstone/dotnet/wwwroot/",
+      "ContentRoot": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\wwwroot\\",
       "BasePath": "_content/dotnet",
-      "RelativePath": "3rdpartylicenses.txt",
+      "RelativePath": "3rdpartylicenses#[.{fingerprint}]?.txt",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "0olbuonlgt",
+      "Integrity": "cDBiYucnK+95vk6gIZbvf6eTkTHY5x8NZxjBoLZP2i8=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/3rdpartylicenses.txt"
+      "OriginalItemSpec": "wwwroot\\3rdpartylicenses.txt"
     },
     {
-      "Identity": "/Users/belamidemillsb/Desktop/capstone/dotnet/wwwroot/browser/favicon.ico",
+      "Identity": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\wwwroot\\browser\\favicon.ico",
       "SourceId": "dotnet",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/belamidemillsb/Desktop/capstone/dotnet/wwwroot/",
+      "ContentRoot": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\wwwroot\\",
       "BasePath": "_content/dotnet",
-      "RelativePath": "browser/favicon.ico",
+      "RelativePath": "browser/favicon#[.{fingerprint}]?.ico",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "vagikyz9qx",
+      "Integrity": "+RAr6AKXwFKSB2B75Sd7T5C8qJ1lmI+hdxuRx4lOgV8=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/browser/favicon.ico"
+      "OriginalItemSpec": "wwwroot\\browser\\favicon.ico"
     },
     {
-      "Identity": "/Users/belamidemillsb/Desktop/capstone/dotnet/wwwroot/browser/index.html",
+      "Identity": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\wwwroot\\browser\\index.html",
       "SourceId": "dotnet",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/belamidemillsb/Desktop/capstone/dotnet/wwwroot/",
+      "ContentRoot": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\wwwroot\\",
       "BasePath": "_content/dotnet",
-      "RelativePath": "browser/index.html",
+      "RelativePath": "browser/index#[.{fingerprint}]?.html",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "m2f33s0xx4",
+      "Integrity": "DoIwu/uNJsElw1kwtpXUOYhvVNC8WQrbdEOlRUeiLv4=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/browser/index.html"
+      "OriginalItemSpec": "wwwroot\\browser\\index.html"
     },
     {
-      "Identity": "/Users/belamidemillsb/Desktop/capstone/dotnet/wwwroot/browser/main-FX6FJP2C.js",
+      "Identity": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\wwwroot\\browser\\main-JJIZSP3W.js",
       "SourceId": "dotnet",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/belamidemillsb/Desktop/capstone/dotnet/wwwroot/",
+      "ContentRoot": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\wwwroot\\",
       "BasePath": "_content/dotnet",
-      "RelativePath": "browser/main-FX6FJP2C.js",
+      "RelativePath": "browser/main-JJIZSP3W#[.{fingerprint}]?.js",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "w1mvuhxess",
+      "Integrity": "ZNMgNP+SchQmDilnThNde9MTSjTgt2RUxeHvq2xtSRQ=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/browser/main-FX6FJP2C.js"
+      "OriginalItemSpec": "wwwroot\\browser\\main-JJIZSP3W.js"
     },
     {
-      "Identity": "/Users/belamidemillsb/Desktop/capstone/dotnet/wwwroot/browser/polyfills-FFHMD2TL.js",
+      "Identity": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\wwwroot\\browser\\polyfills-FFHMD2TL.js",
       "SourceId": "dotnet",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/belamidemillsb/Desktop/capstone/dotnet/wwwroot/",
+      "ContentRoot": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\wwwroot\\",
       "BasePath": "_content/dotnet",
-      "RelativePath": "browser/polyfills-FFHMD2TL.js",
+      "RelativePath": "browser/polyfills-FFHMD2TL#[.{fingerprint}]?.js",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "39tegmrjtp",
+      "Integrity": "adzqBFZD3Q3pmKPNDMu7RrRr/yZRqHpWxzwo6yCOj5g=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/browser/polyfills-FFHMD2TL.js"
+      "OriginalItemSpec": "wwwroot\\browser\\polyfills-FFHMD2TL.js"
     },
     {
-      "Identity": "/Users/belamidemillsb/Desktop/capstone/dotnet/wwwroot/browser/styles-TOY4K6UY.css",
+      "Identity": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\wwwroot\\browser\\styles-TOY4K6UY.css",
       "SourceId": "dotnet",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/belamidemillsb/Desktop/capstone/dotnet/wwwroot/",
+      "ContentRoot": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\wwwroot\\",
       "BasePath": "_content/dotnet",
-      "RelativePath": "browser/styles-TOY4K6UY.css",
+      "RelativePath": "browser/styles-TOY4K6UY#[.{fingerprint}]?.css",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "wh11vqab1c",
+      "Integrity": "1ESkSe1dDTMDt93l0pr5omZ0V4gSMUHkeZTOVtvo+Qk=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/browser/styles-TOY4K6UY.css"
+      "OriginalItemSpec": "wwwroot\\browser\\styles-TOY4K6UY.css"
+    }
+  ],
+  "Endpoints": [
+    {
+      "Route": "3rdpartylicenses.0olbuonlgt.txt",
+      "AssetFile": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\wwwroot\\3rdpartylicenses.txt",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "23012"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/plain"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"cDBiYucnK+95vk6gIZbvf6eTkTHY5x8NZxjBoLZP2i8=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 22 Nov 2024 16:50:14 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "0olbuonlgt"
+        },
+        {
+          "Name": "label",
+          "Value": "3rdpartylicenses.txt"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-cDBiYucnK+95vk6gIZbvf6eTkTHY5x8NZxjBoLZP2i8="
+        }
+      ]
+    },
+    {
+      "Route": "3rdpartylicenses.txt",
+      "AssetFile": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\wwwroot\\3rdpartylicenses.txt",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "23012"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/plain"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"cDBiYucnK+95vk6gIZbvf6eTkTHY5x8NZxjBoLZP2i8=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 22 Nov 2024 16:50:14 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-cDBiYucnK+95vk6gIZbvf6eTkTHY5x8NZxjBoLZP2i8="
+        }
+      ]
+    },
+    {
+      "Route": "browser/favicon.ico",
+      "AssetFile": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\wwwroot\\browser\\favicon.ico",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "15086"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/x-icon"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"+RAr6AKXwFKSB2B75Sd7T5C8qJ1lmI+hdxuRx4lOgV8=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 19 Nov 2024 15:36:55 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-+RAr6AKXwFKSB2B75Sd7T5C8qJ1lmI+hdxuRx4lOgV8="
+        }
+      ]
+    },
+    {
+      "Route": "browser/favicon.vagikyz9qx.ico",
+      "AssetFile": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\wwwroot\\browser\\favicon.ico",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "15086"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/x-icon"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"+RAr6AKXwFKSB2B75Sd7T5C8qJ1lmI+hdxuRx4lOgV8=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 19 Nov 2024 15:36:55 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "vagikyz9qx"
+        },
+        {
+          "Name": "label",
+          "Value": "browser/favicon.ico"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-+RAr6AKXwFKSB2B75Sd7T5C8qJ1lmI+hdxuRx4lOgV8="
+        }
+      ]
+    },
+    {
+      "Route": "browser/index.html",
+      "AssetFile": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\wwwroot\\browser\\index.html",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "678"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/html"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"DoIwu/uNJsElw1kwtpXUOYhvVNC8WQrbdEOlRUeiLv4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 22 Nov 2024 16:50:14 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-DoIwu/uNJsElw1kwtpXUOYhvVNC8WQrbdEOlRUeiLv4="
+        }
+      ]
+    },
+    {
+      "Route": "browser/index.m2f33s0xx4.html",
+      "AssetFile": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\wwwroot\\browser\\index.html",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "678"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/html"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"DoIwu/uNJsElw1kwtpXUOYhvVNC8WQrbdEOlRUeiLv4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 22 Nov 2024 16:50:14 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "m2f33s0xx4"
+        },
+        {
+          "Name": "label",
+          "Value": "browser/index.html"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-DoIwu/uNJsElw1kwtpXUOYhvVNC8WQrbdEOlRUeiLv4="
+        }
+      ]
+    },
+    {
+      "Route": "browser/main-JJIZSP3W.js",
+      "AssetFile": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\wwwroot\\browser\\main-JJIZSP3W.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "700269"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"ZNMgNP+SchQmDilnThNde9MTSjTgt2RUxeHvq2xtSRQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 22 Nov 2024 16:50:14 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-ZNMgNP+SchQmDilnThNde9MTSjTgt2RUxeHvq2xtSRQ="
+        }
+      ]
+    },
+    {
+      "Route": "browser/main-JJIZSP3W.w1mvuhxess.js",
+      "AssetFile": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\wwwroot\\browser\\main-JJIZSP3W.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "700269"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"ZNMgNP+SchQmDilnThNde9MTSjTgt2RUxeHvq2xtSRQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 22 Nov 2024 16:50:14 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "w1mvuhxess"
+        },
+        {
+          "Name": "label",
+          "Value": "browser/main-JJIZSP3W.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-ZNMgNP+SchQmDilnThNde9MTSjTgt2RUxeHvq2xtSRQ="
+        }
+      ]
+    },
+    {
+      "Route": "browser/polyfills-FFHMD2TL.39tegmrjtp.js",
+      "AssetFile": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\wwwroot\\browser\\polyfills-FFHMD2TL.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "34519"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"adzqBFZD3Q3pmKPNDMu7RrRr/yZRqHpWxzwo6yCOj5g=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 22 Nov 2024 16:50:14 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "39tegmrjtp"
+        },
+        {
+          "Name": "label",
+          "Value": "browser/polyfills-FFHMD2TL.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-adzqBFZD3Q3pmKPNDMu7RrRr/yZRqHpWxzwo6yCOj5g="
+        }
+      ]
+    },
+    {
+      "Route": "browser/polyfills-FFHMD2TL.js",
+      "AssetFile": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\wwwroot\\browser\\polyfills-FFHMD2TL.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "34519"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"adzqBFZD3Q3pmKPNDMu7RrRr/yZRqHpWxzwo6yCOj5g=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 22 Nov 2024 16:50:14 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-adzqBFZD3Q3pmKPNDMu7RrRr/yZRqHpWxzwo6yCOj5g="
+        }
+      ]
+    },
+    {
+      "Route": "browser/styles-TOY4K6UY.css",
+      "AssetFile": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\wwwroot\\browser\\styles-TOY4K6UY.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "60"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"1ESkSe1dDTMDt93l0pr5omZ0V4gSMUHkeZTOVtvo+Qk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 22 Nov 2024 16:50:14 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-1ESkSe1dDTMDt93l0pr5omZ0V4gSMUHkeZTOVtvo+Qk="
+        }
+      ]
+    },
+    {
+      "Route": "browser/styles-TOY4K6UY.wh11vqab1c.css",
+      "AssetFile": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\wwwroot\\browser\\styles-TOY4K6UY.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "60"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"1ESkSe1dDTMDt93l0pr5omZ0V4gSMUHkeZTOVtvo+Qk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 22 Nov 2024 16:50:14 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "wh11vqab1c"
+        },
+        {
+          "Name": "label",
+          "Value": "browser/styles-TOY4K6UY.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-1ESkSe1dDTMDt93l0pr5omZ0V4gSMUHkeZTOVtvo+Qk="
+        }
+      ]
+    },
+    {
+      "Route": "dotnet.bundle.scp.css",
+      "AssetFile": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\obj\\Release\\net8.0\\scopedcss\\projectbundle\\dotnet.bundle.scp.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1124"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Su13uBNDBwynlWZfOrI3EcgN5TViiyu8v1Vcv4gPRSk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 19 Nov 2024 15:36:55 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Su13uBNDBwynlWZfOrI3EcgN5TViiyu8v1Vcv4gPRSk="
+        }
+      ]
+    },
+    {
+      "Route": "dotnet.ilf74psmbm.bundle.scp.css",
+      "AssetFile": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\obj\\Release\\net8.0\\scopedcss\\projectbundle\\dotnet.bundle.scp.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1124"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Su13uBNDBwynlWZfOrI3EcgN5TViiyu8v1Vcv4gPRSk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 19 Nov 2024 15:36:55 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "ilf74psmbm"
+        },
+        {
+          "Name": "label",
+          "Value": "dotnet.bundle.scp.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-Su13uBNDBwynlWZfOrI3EcgN5TViiyu8v1Vcv4gPRSk="
+        }
+      ]
+    },
+    {
+      "Route": "dotnet.ilf74psmbm.styles.css",
+      "AssetFile": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\obj\\Release\\net8.0\\scopedcss\\bundle\\dotnet.styles.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1124"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Su13uBNDBwynlWZfOrI3EcgN5TViiyu8v1Vcv4gPRSk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 19 Nov 2024 15:36:55 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "ilf74psmbm"
+        },
+        {
+          "Name": "label",
+          "Value": "dotnet.styles.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-Su13uBNDBwynlWZfOrI3EcgN5TViiyu8v1Vcv4gPRSk="
+        }
+      ]
+    },
+    {
+      "Route": "dotnet.styles.css",
+      "AssetFile": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\obj\\Release\\net8.0\\scopedcss\\bundle\\dotnet.styles.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1124"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Su13uBNDBwynlWZfOrI3EcgN5TViiyu8v1Vcv4gPRSk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 19 Nov 2024 15:36:55 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Su13uBNDBwynlWZfOrI3EcgN5TViiyu8v1Vcv4gPRSk="
+        }
+      ]
     }
   ]
 }

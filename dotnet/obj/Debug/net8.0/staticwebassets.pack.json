@@ -1,47 +1,47 @@
 {
   "Files": [
     {
-      "Id": "/Users/belamidemillsb/Desktop/capstone/dotnet/obj/Debug/net8.0/scopedcss/projectbundle/dotnet.bundle.scp.css",
-      "PackagePath": "staticwebassets/dotnet.bundle.scp.css"
+      "Id": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\dotnet.bundle.scp.css",
+      "PackagePath": "staticwebassets\\dotnet.bundle.scp.css"
     },
     {
-      "Id": "/Users/belamidemillsb/Desktop/capstone/dotnet/wwwroot/3rdpartylicenses.txt",
-      "PackagePath": "staticwebassets/3rdpartylicenses.txt"
+      "Id": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\wwwroot\\3rdpartylicenses.txt",
+      "PackagePath": "staticwebassets\\3rdpartylicenses.txt"
     },
     {
-      "Id": "/Users/belamidemillsb/Desktop/capstone/dotnet/wwwroot/browser/favicon.ico",
-      "PackagePath": "staticwebassets/browser/favicon.ico"
+      "Id": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\wwwroot\\browser\\favicon.ico",
+      "PackagePath": "staticwebassets\\browser\\favicon.ico"
     },
     {
-      "Id": "/Users/belamidemillsb/Desktop/capstone/dotnet/wwwroot/browser/index.html",
-      "PackagePath": "staticwebassets/browser/index.html"
+      "Id": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\wwwroot\\browser\\index.html",
+      "PackagePath": "staticwebassets\\browser\\index.html"
     },
     {
-      "Id": "/Users/belamidemillsb/Desktop/capstone/dotnet/wwwroot/browser/main-FX6FJP2C.js",
-      "PackagePath": "staticwebassets/browser/main-FX6FJP2C.js"
+      "Id": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\wwwroot\\browser\\main-JJIZSP3W.js",
+      "PackagePath": "staticwebassets\\browser\\main-JJIZSP3W.js"
     },
     {
-      "Id": "/Users/belamidemillsb/Desktop/capstone/dotnet/wwwroot/browser/polyfills-FFHMD2TL.js",
-      "PackagePath": "staticwebassets/browser/polyfills-FFHMD2TL.js"
+      "Id": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\wwwroot\\browser\\polyfills-FFHMD2TL.js",
+      "PackagePath": "staticwebassets\\browser\\polyfills-FFHMD2TL.js"
     },
     {
-      "Id": "/Users/belamidemillsb/Desktop/capstone/dotnet/wwwroot/browser/styles-TOY4K6UY.css",
-      "PackagePath": "staticwebassets/browser/styles-TOY4K6UY.css"
+      "Id": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\wwwroot\\browser\\styles-TOY4K6UY.css",
+      "PackagePath": "staticwebassets\\browser\\styles-TOY4K6UY.css"
     },
     {
-      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.build.dotnet.props",
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.dotnet.props",
       "PackagePath": "build\\dotnet.props"
     },
     {
-      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.buildMultiTargeting.dotnet.props",
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.dotnet.props",
       "PackagePath": "buildMultiTargeting\\dotnet.props"
     },
     {
-      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.buildTransitive.dotnet.props",
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.dotnet.props",
       "PackagePath": "buildTransitive\\dotnet.props"
     },
     {
-      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.dotnet.Microsoft.AspNetCore.StaticWebAssets.props",
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.dotnet.Microsoft.AspNetCore.StaticWebAssets.props",
       "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
     }
   ],

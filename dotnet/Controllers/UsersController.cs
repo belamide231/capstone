@@ -26,5 +26,14 @@ public class UsersController : ControllerBase {
         dynamic result = await _service.ChangeRole(DTO);
         return StatusCode(result);
     }
+
+
+    // WORKING
+    [HttpPost("getUsersToAddInDepartment")]
+    public async Task<IActionResult> GetUsersToAddInDepartment() {
+
+        dynamic Result = await _service.GetUsersToAddInDepartmentService(Request.Query["department"]!, Request.Query["role"]!);
+        return StatusCode(Result.Status, Result.Data);
+    }
 }
 

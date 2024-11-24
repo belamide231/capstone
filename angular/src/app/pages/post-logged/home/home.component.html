@@ -3,7 +3,7 @@
         <post-component [description]="description" (descriptionEmitter)="onUpdateDescription($event)" (postEmitter)="onPost()"></post-component>
     </section>
     <section class="feed">
-        <feeds-component [empty]="'NO POST'"></feeds-component>
+        <feeds-component [posts]="arrayOfPost" [empty]="'NO POST'"></feeds-component>
     </section>
 </main>
 <section class="activitiesOrRequest">

@@ -17,6 +17,7 @@ export class HomeService {
         try {
 
             const result = await api.post('api/post/getHomePosts', null, Authorization());
+            console.log(result.data);
             this.listOfPostInHome.next(result.data);
 
         } catch (error: any) {

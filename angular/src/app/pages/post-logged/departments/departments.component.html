@@ -1,2 +1,3 @@
-<create-department></create-department>
-<department-list *ngIf="role === 'dean' || 'admin' " [listedDepartment]="listOfDepartment"></department-list>
+<create-department *ngIf="role === 'dean' || role === 'admin' "></create-department>
+<department-list [listedDepartment]="listOfDepartment"></department-list>
+<section *ngIf="listOfDepartment.length === 0">NO DEPARTMENTS AVAILABLE YET</section>

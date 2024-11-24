@@ -1,9 +1,7 @@
 using MongoDB.Bson;
 using MongoDB.Driver;
 
-
 public class Mongo {
-
 
     private readonly IMongoDatabase _Mongo;
     public static string _ApplicationUsers = "Users";
@@ -15,13 +13,20 @@ public class Mongo {
     public static string _ApplicationPendingClass = "PendingClass";
     public static string _ApplicationPendingPost = "PendingPost";
     public static string _ApplicationPost = "Posts";
+
     public Mongo() {
 
-        var ConnectionString = MongoUrl.Create(EnvHelper._MongoUrl);
-        _Mongo = new MongoClient(ConnectionString).GetDatabase(ConnectionString.DatabaseName);
+
+        // LOCAL
+         var ConnectionString = MongoUrl.Create(EnvHelper._MongoUrl);
+         _Mongo = new MongoClient(ConnectionString).GetDatabase(ConnectionString.DatabaseName);
+
+        // CLOUD
+        //var ConnectionString = "mongodb+srv://belamide231:bnkJvEWRmL1Z4lA3@cluster0.vfu88.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+        //var client = new MongoClient(ConnectionString);
+        //_Mongo = client.GetDatabase("CEC-PORTAL");
     }
     
-
     public IMongoCollection<ApplicationUser> ApplicationUsers() => _Mongo.GetCollection<ApplicationUser>(_ApplicationUsers);
     public IMongoCollection<ApplicationRole> ApplicationRoles() => _Mongo.GetCollection<ApplicationRole>(_ApplicationRoles);
     public IMongoCollection<UsersDataSchema> UsersDataCollection() => _Mongo.GetCollection<UsersDataSchema>(_UsersData);

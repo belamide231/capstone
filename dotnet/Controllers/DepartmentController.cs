@@ -74,4 +74,10 @@ public class DepartmentController : ControllerBase {
         dynamic result = await _Services!.GetDeansPendingDepartment(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
         return StatusCode(result.Status, result.Data);
     }
+
+    [HttpPost("addMembersInDepartment")]
+    public async Task<IActionResult> AddMembersInDepartmentControl([FromBody] AddMembersInDepartmentDTO DTO) {
+        int result = await _Services!.AddingMembersService(DTO);
+        return StatusCode(result);
+    }
 }

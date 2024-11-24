@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "l46wZgU/P4Fghdl2nqcdwjMqkDUzm7hR8Dn9eMdNOsE=",
+  "Hash": "RzER+wLgA7RrlJBORCHRDi70KqHM3yQ0zHymUMVctKA=",
   "Source": "dotnet",
   "BasePath": "_content/dotnet",
   "Mode": "Default",
@@ -8,19 +8,19 @@
   "ReferencedProjectsConfiguration": [],
   "DiscoveryPatterns": [
     {
-      "Name": "dotnet/wwwroot",
+      "Name": "dotnet\\wwwroot",
       "Source": "dotnet",
-      "ContentRoot": "/Users/belamidemillsb/Desktop/capstone/dotnet/wwwroot/",
+      "ContentRoot": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\wwwroot\\",
       "BasePath": "_content/dotnet",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "/Users/belamidemillsb/Desktop/capstone/dotnet/obj/Debug/net8.0/scopedcss/bundle/dotnet.styles.css",
+      "Identity": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\obj\\Debug\\net8.0\\scopedcss\\bundle\\dotnet.styles.css",
       "SourceId": "dotnet",
       "SourceType": "Computed",
-      "ContentRoot": "/Users/belamidemillsb/Desktop/capstone/dotnet/obj/Debug/net8.0/scopedcss/bundle/",
+      "ContentRoot": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\obj\\Debug\\net8.0\\scopedcss\\bundle\\",
       "BasePath": "_content/dotnet",
       "RelativePath": "dotnet.styles.css",
       "AssetKind": "All",
@@ -33,13 +33,13 @@
       "AssetTraitValue": "ApplicationBundle",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "/Users/belamidemillsb/Desktop/capstone/dotnet/obj/Debug/net8.0/scopedcss/bundle/dotnet.styles.css"
+      "OriginalItemSpec": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\obj\\Debug\\net8.0\\scopedcss\\bundle\\dotnet.styles.css"
     },
     {
-      "Identity": "/Users/belamidemillsb/Desktop/capstone/dotnet/obj/Debug/net8.0/scopedcss/projectbundle/dotnet.bundle.scp.css",
+      "Identity": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\dotnet.bundle.scp.css",
       "SourceId": "dotnet",
       "SourceType": "Computed",
-      "ContentRoot": "/Users/belamidemillsb/Desktop/capstone/dotnet/obj/Debug/net8.0/scopedcss/projectbundle/",
+      "ContentRoot": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\",
       "BasePath": "_content/dotnet",
       "RelativePath": "dotnet.bundle.scp.css",
       "AssetKind": "All",
@@ -52,13 +52,13 @@
       "AssetTraitValue": "ProjectBundle",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "/Users/belamidemillsb/Desktop/capstone/dotnet/obj/Debug/net8.0/scopedcss/projectbundle/dotnet.bundle.scp.css"
+      "OriginalItemSpec": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\dotnet.bundle.scp.css"
     },
     {
-      "Identity": "/Users/belamidemillsb/Desktop/capstone/dotnet/wwwroot/3rdpartylicenses.txt",
+      "Identity": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\wwwroot\\3rdpartylicenses.txt",
       "SourceId": "dotnet",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/belamidemillsb/Desktop/capstone/dotnet/wwwroot/",
+      "ContentRoot": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\wwwroot\\",
       "BasePath": "_content/dotnet",
       "RelativePath": "3rdpartylicenses.txt",
       "AssetKind": "All",
@@ -71,13 +71,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/3rdpartylicenses.txt"
+      "OriginalItemSpec": "wwwroot\\3rdpartylicenses.txt"
     },
     {
-      "Identity": "/Users/belamidemillsb/Desktop/capstone/dotnet/wwwroot/browser/favicon.ico",
+      "Identity": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\wwwroot\\browser\\favicon.ico",
       "SourceId": "dotnet",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/belamidemillsb/Desktop/capstone/dotnet/wwwroot/",
+      "ContentRoot": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\wwwroot\\",
       "BasePath": "_content/dotnet",
       "RelativePath": "browser/favicon.ico",
       "AssetKind": "All",
@@ -90,13 +90,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/browser/favicon.ico"
+      "OriginalItemSpec": "wwwroot\\browser\\favicon.ico"
     },
     {
-      "Identity": "/Users/belamidemillsb/Desktop/capstone/dotnet/wwwroot/browser/index.html",
+      "Identity": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\wwwroot\\browser\\index.html",
       "SourceId": "dotnet",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/belamidemillsb/Desktop/capstone/dotnet/wwwroot/",
+      "ContentRoot": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\wwwroot\\",
       "BasePath": "_content/dotnet",
       "RelativePath": "browser/index.html",
       "AssetKind": "All",
@@ -109,15 +109,15 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/browser/index.html"
+      "OriginalItemSpec": "wwwroot\\browser\\index.html"
     },
     {
-      "Identity": "/Users/belamidemillsb/Desktop/capstone/dotnet/wwwroot/browser/main-FX6FJP2C.js",
+      "Identity": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\wwwroot\\browser\\main-JJIZSP3W.js",
       "SourceId": "dotnet",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/belamidemillsb/Desktop/capstone/dotnet/wwwroot/",
+      "ContentRoot": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\wwwroot\\",
       "BasePath": "_content/dotnet",
-      "RelativePath": "browser/main-FX6FJP2C.js",
+      "RelativePath": "browser/main-JJIZSP3W.js",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -128,13 +128,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/browser/main-FX6FJP2C.js"
+      "OriginalItemSpec": "wwwroot\\browser\\main-JJIZSP3W.js"
     },
     {
-      "Identity": "/Users/belamidemillsb/Desktop/capstone/dotnet/wwwroot/browser/polyfills-FFHMD2TL.js",
+      "Identity": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\wwwroot\\browser\\polyfills-FFHMD2TL.js",
       "SourceId": "dotnet",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/belamidemillsb/Desktop/capstone/dotnet/wwwroot/",
+      "ContentRoot": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\wwwroot\\",
       "BasePath": "_content/dotnet",
       "RelativePath": "browser/polyfills-FFHMD2TL.js",
       "AssetKind": "All",
@@ -147,13 +147,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/browser/polyfills-FFHMD2TL.js"
+      "OriginalItemSpec": "wwwroot\\browser\\polyfills-FFHMD2TL.js"
     },
     {
-      "Identity": "/Users/belamidemillsb/Desktop/capstone/dotnet/wwwroot/browser/styles-TOY4K6UY.css",
+      "Identity": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\wwwroot\\browser\\styles-TOY4K6UY.css",
       "SourceId": "dotnet",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/belamidemillsb/Desktop/capstone/dotnet/wwwroot/",
+      "ContentRoot": "C:\\Users\\Mills\\Desktop\\capstone\\dotnet\\wwwroot\\",
       "BasePath": "_content/dotnet",
       "RelativePath": "browser/styles-TOY4K6UY.css",
       "AssetKind": "All",
@@ -166,7 +166,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/browser/styles-TOY4K6UY.css"
+      "OriginalItemSpec": "wwwroot\\browser\\styles-TOY4K6UY.css"
     }
   ]
 }

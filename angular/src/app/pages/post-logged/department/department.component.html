@@ -1,9 +1,15 @@
 <header>
     <h1>{{departmentName}} </h1>
-    <p *ngIf="departmentData !== null">({{departmentMembersQuantity}}) Members</p>
+    <p *ngIf="departmentData !== null">{{departmentRole === 'creator' ? 'Position (DEAN)' : departmentRole === 'teacher' ? 'Position (TEACHER)' : departmentData === 'student' ? 'Position (STUDENT)' : 'You are not a member' }}</p>
+    <section *ngIf="departmentRole === 'creator' || departmentRole === 'teacher' ">
+        <input (click)="addModeSwitch(true)" type="button" value="Add">
+        <add-members *ngIf="addMode" (blurAddMembersMode)="blurAddMembers()"></add-members>
+    </section>
 </header>
-<main>
+<main *ngIf="departmentRole === 'creator' || departmentRole === 'teacher' || departmentRole === 'student' ">
     <section class="feed">
+        <post-component></post-component>
+        <feeds-component [empty]="'NO POST YET IN ' + departmentName"></feeds-component>
     </section>
     <section class="request">
         <request-post></request-post>

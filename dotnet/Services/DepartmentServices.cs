@@ -2,6 +2,7 @@ using System.Reflection.Metadata;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using MimeKit.Cryptography;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
@@ -233,4 +234,32 @@ public class DepartmentServices {
         }
     }
 
+    public async Task<int> AddingMembersService(AddMembersInDepartmentDTO DTO) {
+
+        try {
+
+            if(DTO.Role == "student") {
+
+                await _Mongo.DepartmentCollection().FindOneAndUpdateAsync(
+                    Builders<DepartmentSchema>.Filter.Eq(x => x.DepartmentName, DTO.DepartmentName),
+                    Builders<DepartmentSchema>.Update.PushEach(x => x.MembersId, DTO.UsersId)
+                );
+
+            } else {
+
+                await _Mongo.DepartmentCollection().FindOneAndUpdateAsync(
+                    Builders<DepartmentSchema>.Filter.Eq(x => x.DepartmentName, DTO.DepartmentName),
+                    Builders<DepartmentSchema>.Update.PushEach(x => x.TeachersId, DTO.UsersId)
+                );
+            }
+
+            return StatusCodes.Status200OK;
+
+        }
+        catch {
+
+            return StatusCodes.Status500InternalServerError;
+        }
+
+    }
 }
